@@ -30,10 +30,10 @@ extra_javascript:
 
 nav:
   - Home: index.md
-  - Phases:
+  - n Phases:
       - Pre-Training: ./training_phases/pre_training.md
       - Mid-Training: ./training_phases/mid_training.md
-      - Post-Training: ./training_phases/sft.md
+      - Post-Training: ./training_phases/post_training.md
   - Distributed Training:
       - Distributed Training System: ./distributed_training/distributed_training_systems.md
       - FSDP & DeepSpeed: ./distributed_training/fsdp_deepspeed.md
