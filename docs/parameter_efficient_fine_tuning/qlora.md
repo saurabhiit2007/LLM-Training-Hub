@@ -38,7 +38,7 @@ In addition, QLoRA leverages **block quantization** and **double quantization** 
 * **Double Quantization:** Instead of storing the full-scale values for each block, these scale values are themselves quantized (typically to 8 bits).
   This reduces memory overhead by ~0.37 bits per parameter on average.
 
-> 🔗 *Detailed explanation:* [Block & Double Quantization in QLoRA](../optimization/blockwise_kbit_quantization.md)
+> 🔗 *Detailed explanation:* [Block & Double Quantization in QLoRA](blockwise_kbit_quantization.md)
 
 ---
 
@@ -170,7 +170,7 @@ QLoRA’s key innovation is the **combination of 4-bit quantization with LoRA fi
 | Training instability  | LR too high, quant noise       | Lower LR or α, use LoRA dropout               |
 | Underfitting          | Too low rank                   | Increase `r` or apply adapters to more layers |
 | Overfitting           | Too high capacity              | Reduce epochs or use dropout                  |
-| Quantization mismatch | [NF4 calibration drift](../optimization/4bit_normal_float.md) | Re-quantize base model, validate small batch  |
+| Quantization mismatch | [NF4 calibration drift](4bit_normal_float.md) | Re-quantize base model, validate small batch  |
 
 ---
 

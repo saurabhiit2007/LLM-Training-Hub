@@ -35,7 +35,7 @@ This local normalization:
 - Prevents **outliers** from distorting scaling.
 - Keeps data within a roughly standard normal distribution - perfectly matching NF4’s codebook assumptions.  
 
-For deeper details on the **block structure and scale storage**, refer to [Blockwise & Double Quantization doc](./blockwise_kbit_quantization.md).
+For deeper details on the **block structure and scale storage**, refer to [Blockwise & Double Quantization doc](blockwise_kbit_quantization.md).
 
 ---
 

@@ -30,13 +30,17 @@ extra_javascript:
 
 nav:
   - Home: index.md
-  - n Phases:
+  - Training Phases:
       - Pre-Training: ./training_phases/pre_training.md
       - Mid-Training: ./training_phases/mid_training.md
       - Post-Training: ./training_phases/post_training.md
   - Distributed Training:
-      - Distributed Training System: ./distributed_training/distributed_training_systems.md
-      - FSDP & DeepSpeed: ./distributed_training/fsdp_deepspeed.md
+      - Parallelism Overview: ./distributed_training/parallelism_overview.md
+      - Data Parallelism: ./distributed_training/data_parallelism.md
+      - Tensor Parallelism: ./distributed_training/tensor_parallelism.md
+      - Pipeline Parallelism: ./distributed_training/pipeline_parallelism.md
+      - Zero-Deepspeed: ./distributed_training/zero_deepspeed.md
+      - FSDP: ./distributed_training/fsdp.md
   - PEFT Techniques:
       - LoRA: ./parameter_efficient_fine_tuning/lora.md
       - QLoRA: ./parameter_efficient_fine_tuning/qlora.md
