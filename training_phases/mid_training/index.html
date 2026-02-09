@@ -13,6 +13,10 @@
       
       
       
+        <link rel="prev" href="../pre_training/">
+      
+      
+        <link rel="next" href="../post_training/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +24,7 @@
     
     
       
-        <title>⚡ Accelerate: Efficient Training for Large Language Models - Fine-Tuning Methods Documentation</title>
+        <title>Mid-Training - Fine-Tuning Methods Documentation</title>
       
     
     
@@ -72,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#accelerate-efficient-training-for-large-language-models" class="md-skip">
+        <a href="#1-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -108,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ⚡ Accelerate: Efficient Training for Large Language Models
+              Mid-Training
             
           </span>
         </div>
@@ -270,20 +274,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -299,7 +303,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Training Phases
@@ -313,7 +317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../training_phases/pre_training/" class="md-nav__link">
+      <a href="../pre_training/" class="md-nav__link">
         
   
   
@@ -333,10 +337,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../training_phases/mid_training/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Mid-Training
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -347,6 +371,330 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-strategic-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Strategic Value
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Strategic Value">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-domain-deep-diving" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Domain Deep-Diving
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-reasoning-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Reasoning Architecture
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-capability-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Capability Extensions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-resource-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Resource Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-training-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Training Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Training Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-mixture-typical-2026-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Mixture (Typical 2026 Recipe)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Rate Schedule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Training Objectives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-extension-rope-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Extension (RoPE Scaling)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-efficiency-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Efficiency Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameter Efficiency Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selective-training-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selective Training Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-common-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Common Failure Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-evaluation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Evaluation Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Evaluation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#online-metrics-during-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Online Metrics (During Training)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offline-probes-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Offline Probes (Checkpoints)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact-on-downstream-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Impact on Downstream Stages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-recent-advances-2025-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Recent Advances (2025-2026)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Recent Advances (2025-2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentic-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agentic Synthesis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internalized-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internalized RL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-curriculum-mixing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Curriculum Mixing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-training-phase-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Training Phase Comparison
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conceptual Understanding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Decisions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging &amp; Evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Topics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Reference Checklist
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -359,7 +707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../training_phases/post_training/" class="md-nav__link">
+      <a href="../post_training/" class="md-nav__link">
         
   
   
@@ -1162,8 +1510,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1181,190 +1527,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-features" class="md-nav__link">
+  <a href="#2-strategic-value" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Features
+      2. Strategic Value
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-problem-statement" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Problem Statement
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-core-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Core Components
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Core Components">
+    <nav class="md-nav" aria-label="2. Strategic Value">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-accelerator" class="md-nav__link">
+  <a href="#1-domain-deep-diving" class="md-nav__link">
     <span class="md-ellipsis">
-      🧩 3.1. Accelerator
+      1. Domain Deep-Diving
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-device-management" class="md-nav__link">
+  <a href="#2-reasoning-architecture" class="md-nav__link">
     <span class="md-ellipsis">
-      ⚙️ 3.2. Device Management
+      2. Reasoning Architecture
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-distributed-data-parallelism-ddp" class="md-nav__link">
+  <a href="#3-capability-extensions" class="md-nav__link">
     <span class="md-ellipsis">
-      🔁 3.3. Distributed Data Parallelism (DDP)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🔁 3.3. Distributed Data Parallelism (DDP)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚙️ Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mathematical-representation" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧮 Mathematical Representation
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-gradient-accumulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      💾 3.4. Gradient Accumulation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="💾 3.4. Gradient Accumulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mathematical-formulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧮 Mathematical Formulation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#implementation-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧑‍💻 Implementation Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#35-mixed-precision-training" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧮 3.5. Mixed Precision Training
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🧮 3.5. Mixed Precision Training">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mechanism" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚙️ Mechanism
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outcomes" class="md-nav__link">
-    <span class="md-ellipsis">
-      🚀 Outcomes
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#36-optimizer-and-scheduler-wrappers" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚡ 3.6. Optimizer and Scheduler Wrappers
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#37-checkpointing-and-state-management" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧱 3.7. Checkpointing and State Management
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#38-logging-and-monitoring" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔍 3.8. Logging and Monitoring
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#39-memory-and-compute-efficiency-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧠 3.9. Memory and Compute Efficiency Tools
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#310-backend-support" class="md-nav__link">
-    <span class="md-ellipsis">
-      🌐 3.10. Backend Support
+      3. Capability Extensions
     </span>
   </a>
   
@@ -1376,9 +1569,255 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-accelerate-training-workflow" class="md-nav__link">
+  <a href="#3-resource-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Accelerate Training Workflow
+      3. Resource Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-training-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Training Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Training Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-mixture-typical-2026-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Mixture (Typical 2026 Recipe)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-rate-schedule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Rate Schedule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Training Objectives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#context-extension-rope-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context Extension (RoPE Scaling)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-efficiency-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Efficiency Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameter Efficiency Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selective-training-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Selective Training Options
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-common-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Common Failure Modes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-evaluation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Evaluation Strategy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Evaluation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#online-metrics-during-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Online Metrics (During Training)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#offline-probes-checkpoints" class="md-nav__link">
+    <span class="md-ellipsis">
+      Offline Probes (Checkpoints)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-impact-on-downstream-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Impact on Downstream Stages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-recent-advances-2025-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Recent Advances (2025-2026)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Recent Advances (2025-2026)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentic-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agentic Synthesis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internalized-rl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internalized RL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-curriculum-mixing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Curriculum Mixing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-training-phase-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Training Phase Comparison
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conceptual Understanding
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#technical-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Technical Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Decisions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging &amp; Evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-topics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Topics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-reference-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Reference Checklist
     </span>
   </a>
   
@@ -1403,234 +1842,352 @@
   
 
 
-<h1 id="accelerate-efficient-training-for-large-language-models">⚡ Accelerate: Efficient Training for Large Language Models<a class="headerlink" href="#accelerate-efficient-training-for-large-language-models" title="Permanent link">&para;</a></h1>
-<h3 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h3>
-<p>Accelerate is a lightweight framework by Hugging Face that simplifies distributed and mixed-precision training for large models, including LLMs. It abstracts device placement, process coordination, and backend integration so developers can scale from single GPU to multi-node setups with minimal code changes.</p>
-<p>Accelerate works as an orchestration layer on top of PyTorch DDP, FSDP, DeepSpeed ZeRO, and TPU/XLA, without introducing new training algorithms.</p>
-<hr />
-<h3 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Multi-GPU, multi-node, and TPU training with minimal code changes</li>
-<li>Mixed precision support (FP16, BF16)</li>
-<li>Gradient accumulation</li>
-<li>Integration with FSDP and DeepSpeed ZeRO for memory efficiency</li>
-<li>Distributed-safe checkpointing and logging</li>
-</ul>
-<hr />
-<h3 id="2-problem-statement">2. Problem Statement<a class="headerlink" href="#2-problem-statement" title="Permanent link">&para;</a></h3>
-<p>Training large transformer models introduces key challenges:</p>
-<ol>
-<li><strong>Memory limits</strong> - Models often exceed single-GPU memory.</li>
-<li><strong>Distributed complexity</strong> - Manual DDP setup is error-prone.</li>
-<li><strong>Scaling</strong> - Efficient multi-GPU or multi-node scaling is non-trivial.</li>
-<li><strong>Numerical stability</strong> - Mixed-precision training requires careful handling.</li>
-</ol>
-<p>Accelerate addresses these by providing a unified, backend-agnostic interface for distributed training.</p>
-<hr />
-<h3 id="3-core-components">3. Core Components<a class="headerlink" href="#3-core-components" title="Permanent link">&para;</a></h3>
-<h4 id="31-accelerator">🧩 3.1. <code>Accelerator</code><a class="headerlink" href="#31-accelerator" title="Permanent link">&para;</a></h4>
-<p>The central abstraction that manages:</p>
-<ul>
-<li>Device placement</li>
-<li>Distributed backend setup</li>
-<li>Mixed precision</li>
-<li>Gradient accumulation</li>
-<li>Process coordination for logging and checkpointing</li>
-</ul>
-<p><strong>Initialization:</strong>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">accelerate</span> <span class="kn">import</span> <span class="n">Accelerator</span>
-<span class="n">accelerator</span> <span class="o">=</span> <span class="n">Accelerator</span><span class="p">()</span>
+  <h1>Mid-Training</h1>
 
-<span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataloader</span> <span class="o">=</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">)</span>
-</code></pre></div></p>
-<p>What Accelerate does automatically:</p>
-<ul>
-<li>Moves models and data to the correct device </li>
-<li>Wraps models with DDP, FSDP, or DeepSpeed </li>
-<li>Handles mixed-precision context and gradient scaling</li>
-</ul>
-<h4 id="32-device-management">⚙️ 3.2. Device Management<a class="headerlink" href="#32-device-management" title="Permanent link">&para;</a></h4>
-<p>Accelerate auto-detects available hardware and exposes a unified device handle.</p>
-<ul>
-<li>Supports CPU, CUDA GPUs, and TPUs</li>
-<li>Avoids manual .cuda() or rank-specific logic</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">accelerator</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-</code></pre></div>
-<p>Benefit: Prevents CUDA placement errors and maximizes hardware utilization.</p>
-<h4 id="33-distributed-data-parallelism-ddp">🔁 3.3. Distributed Data Parallelism (DDP)<a class="headerlink" href="#33-distributed-data-parallelism-ddp" title="Permanent link">&para;</a></h4>
-<p>Each device holds a replica of the model and processes a shard of data.</p>
-<h5 id="workflow">⚙️ Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h5>
-<ol>
-<li>Each GPU computes gradients on its <strong>local data shard</strong>.  </li>
-<li>Gradients are <strong>averaged across all GPUs</strong>.  </li>
-<li>Parameter updates are <strong>synchronized globally</strong>.</li>
-</ol>
+<h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
+<p><strong>Mid-training</strong>, also known as <strong>Continued Pre-Training</strong> or the <strong>Annealing Phase</strong>, is a critical intermediate stage in modern LLM development that bridges general pre-training and task-specific alignment (SFT/RLHF).</p>
+<p><strong>Core Purpose:</strong> Transform a general-purpose foundation model into a high-reasoning, domain-specialized system while minimizing catastrophic forgetting.</p>
+<p><strong>Key Benefits:</strong>
+- Domain specialization at scale
+- Enhanced reasoning capabilities
+- Reduced downstream alignment complexity
+- 2-5× reduction in SFT data requirements</p>
 <hr />
-<h5 id="mathematical-representation">🧮 Mathematical Representation<a class="headerlink" href="#mathematical-representation" title="Permanent link">&para;</a></h5>
-<div class="arithmatex">\[
-g = \frac{1}{D} \sum_{d=1}^{D} g_d
-\]</div>
-<p>Where:</p>
+<hr />
+<h2 id="2-strategic-value">2. Strategic Value<a class="headerlink" href="#2-strategic-value" title="Permanent link">&para;</a></h2>
+<p>Mid-training has become essential for frontier models, serving three primary functions:</p>
+<h3 id="1-domain-deep-diving">1. Domain Deep-Diving<a class="headerlink" href="#1-domain-deep-diving" title="Permanent link">&para;</a></h3>
+<p>Injection of large-scale, curated domain corpora (law, biomedical, mathematics, code) that would dilute general pre-training but enable deep specialization.</p>
+<h3 id="2-reasoning-architecture">2. Reasoning Architecture<a class="headerlink" href="#2-reasoning-architecture" title="Permanent link">&para;</a></h3>
+<p>Transition from pattern matching to structured reasoning through exposure to:
+- Synthetic reasoning trajectories
+- Mathematical proofs
+- Multi-step problem-solving traces</p>
+<h3 id="3-capability-extensions">3. Capability Extensions<a class="headerlink" href="#3-capability-extensions" title="Permanent link">&para;</a></h3>
 <ul>
-<li><span class="arithmatex">\( D \)</span>: Number of devices  </li>
-<li><span class="arithmatex">\( g_d \)</span>: Gradient computed on device <span class="arithmatex">\( d \)</span></li>
+<li>Long-context reasoning</li>
+<li>Tool usage priors</li>
+<li>Agentic behaviors</li>
 </ul>
 <hr />
-<p>Accelerate provides:</p>
-<ul>
-<li>Simple configuration for DDP</li>
-<li>Support for FSDP and DeepSpeed ZeRO</li>
-<li>Efficient gradient synchronization using PyTorch primitives </li>
-<li>
-<p><strong>Gradient bucketing</strong> - combining many small gradient updates into a few larger batches before sharing them between GPUs - this reduces communication time and makes training faster.</p>
-<details class="info">
-<summary>Difference b/w Gradient Accumulation and Bucketing</summary>
-<ul>
-<li>Gradient Accumulation helps with memory limits — it adds up gradients over several mini-batches before taking an optimizer step, so you can simulate larger batch sizes on limited GPU memory. </li>
-<li>Gradient Bucketing helps with communication overhead — it groups many small gradients together before synchronizing across GPUs, so data exchange between devices is faster and more efficient.</li>
-</ul>
-</details>
-</li>
-</ul>
 <hr />
-<h4 id="34-gradient-accumulation">💾 3.4. Gradient Accumulation<a class="headerlink" href="#34-gradient-accumulation" title="Permanent link">&para;</a></h4>
-<p>Simulates <strong>large batch sizes</strong> without exceeding GPU memory limits by <strong>accumulating gradients</strong> over multiple mini-batches before performing an optimizer step.</p>
-<hr />
-<h5 id="mathematical-formulation">🧮 Mathematical Formulation<a class="headerlink" href="#mathematical-formulation" title="Permanent link">&para;</a></h5>
-<div class="arithmatex">\[
-\bar{g} = \frac{1}{N} \sum_{i=1}^{N} g_i
-\]</div>
-<p>Where:</p>
-<ul>
-<li><span class="arithmatex">\( N \)</span>: Number of mini-batches accumulated  </li>
-<li><span class="arithmatex">\( g_i \)</span>: Gradient from the <span class="arithmatex">\( i^{th} \)</span> mini-batch</li>
-</ul>
-<h5 id="implementation-example">🧑‍💻 Implementation Example<a class="headerlink" href="#implementation-example" title="Permanent link">&para;</a></h5>
-<p><div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">batch</span><span class="p">)</span><span class="o">.</span><span class="n">loss</span>
-    <span class="n">accelerator</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-</code></pre></div>
-🚀 Benefits</p>
-<ul>
-<li>Enables stable training even on smaller GPUs.</li>
-<li>Effectively increases batch size without additional memory requirements.</li>
-</ul>
-<h4 id="35-mixed-precision-training">🧮 3.5. Mixed Precision Training<a class="headerlink" href="#35-mixed-precision-training" title="Permanent link">&para;</a></h4>
-<p><strong>Accelerate</strong> integrates <strong>Automatic Mixed Precision (AMP)</strong> for performing computations using <strong>FP16</strong> or <strong>BF16</strong>, while maintaining numerical stability and high throughput.</p>
-<hr />
-<h5 id="mechanism">⚙️ Mechanism<a class="headerlink" href="#mechanism" title="Permanent link">&para;</a></h5>
-<ul>
-<li><strong>Forward Pass:</strong> Forward pass uses lower precision FP16  </li>
-<li><strong>Backward Pass:</strong> Applies dynamic loss scaling to prevent gradient underflow (mainly FP16).  </li>
-<li><strong>Optimizer Step:</strong> Performed in FP32 for numerical stability during parameter updates.</li>
-</ul>
-<hr />
-<h5 id="outcomes">🚀 Outcomes<a class="headerlink" href="#outcomes" title="Permanent link">&para;</a></h5>
-<ul>
-<li>2× faster training  </li>
-<li>~50% less GPU memory usage  </li>
-<li>Comparable accuracy to full FP32 training  </li>
-</ul>
-<hr />
-<h4 id="36-optimizer-and-scheduler-wrappers">⚡ 3.6. Optimizer and Scheduler Wrappers<a class="headerlink" href="#36-optimizer-and-scheduler-wrappers" title="Permanent link">&para;</a></h4>
-<p>Accelerate automatically scales and synchronizes optimizers and schedulers.</p>
-<div class="highlight"><pre><span></span><code><span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span> <span class="o">=</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">)</span>
-</code></pre></div>
-<p>Key Functions:</p>
-<ul>
-<li>Synchronizes state across distributed workers. </li>
-<li>Compatibility with sharded optimizers (FSDP, ZeRO)  </li>
-<li>Works with common optimizers like AdamW and Adafactor</li>
-</ul>
-<h4 id="37-checkpointing-and-state-management">🧱 3.7. Checkpointing and State Management<a class="headerlink" href="#37-checkpointing-and-state-management" title="Permanent link">&para;</a></h4>
-<p>Manages distributed checkpointing with process coordination:</p>
-<ul>
-<li>Consolidates multi-GPU state into single checkpoints. </li>
-<li>Includes model weights, optimizer states, RNG, and scheduler. </li>
-<li>Compatible with FSDP and ZeRO partitioned states.</li>
-</ul>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code><span class="n">accelerator</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;checkpoints/&quot;</span><span class="p">)</span>
-</code></pre></div>
-<blockquote>
-<p>Benefit: Fault-tolerant and restart-safe training in multi-node clusters.</p>
-</blockquote>
-<h4 id="38-logging-and-monitoring">🔍 3.8. Logging and Monitoring<a class="headerlink" href="#38-logging-and-monitoring" title="Permanent link">&para;</a></h4>
-<p>Supports built-in and third-party loggers:</p>
-<ul>
-<li>TensorBoard, Weights &amp; Biases, MLflow, or custom. </li>
-<li>Ensures only the main process logs globally aggregated metrics.</li>
-<li>Built-in accelerator.print() avoids duplicate console output.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">accelerator</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">get_last_lr</span><span class="p">()[</span><span class="mi">0</span><span class="p">]})</span>
-</code></pre></div>
-<h4 id="39-memory-and-compute-efficiency-tools">🧠 3.9. Memory and Compute Efficiency Tools<a class="headerlink" href="#39-memory-and-compute-efficiency-tools" title="Permanent link">&para;</a></h4>
-<p>Accelerate provides hooks for reducing memory footprint:</p>
-<ul>
-<li><strong>Gradient Checkpointing:</strong> Recomputes intermediate activations during backprop.</li>
-<li><strong>Model Parameter Sharding (FSDP/ZeRO):</strong> Splits model weights across GPUs.</li>
-<li><strong>Dynamic Padding:</strong> Reduces unnecessary computation on padded tokens.</li>
-</ul>
-<p>Useful for long-sequence transformer models where input lengths vary widely.</p>
-<h4 id="310-backend-support">🌐 3.10. Backend Support<a class="headerlink" href="#310-backend-support" title="Permanent link">&para;</a></h4>
-<p>Accelerate integrates seamlessly across various distributed backends:</p>
+<h2 id="3-resource-requirements">3. Resource Requirements<a class="headerlink" href="#3-resource-requirements" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Backend</th>
-<th>Description</th>
-<th>Typical Use</th>
+<th>Resource</th>
+<th>Requirement</th>
+<th>Notes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>PyTorch DDP</strong></td>
-<td>Default distributed backend</td>
-<td>Multi-GPU training</td>
+<td><strong>Compute</strong></td>
+<td>5-15% of pre-training FLOPs</td>
+<td>H100/B200 GPU clusters required</td>
 </tr>
 <tr>
-<td><strong>FSDP</strong></td>
-<td>Fully sharded parameter and optimizer state</td>
-<td>Memory-constrained setups</td>
+<td><strong>Optimizer States</strong></td>
+<td>Full Adam/AdamW moments</td>
+<td>Critical for stability</td>
 </tr>
 <tr>
-<td><strong>DeepSpeed ZeRO</strong></td>
-<td>Offloads parameters to CPU/NVMe</td>
-<td>Ultra-large LLMs (10B–100B+)</td>
+<td><strong>Data Quality</strong></td>
+<td>&gt;95% signal-to-noise ratio</td>
+<td>Aggressive filtering needed</td>
 </tr>
 <tr>
-<td><strong>TPU/XLA</strong></td>
-<td>TPU support via PyTorch/XLA</td>
-<td>Cloud TPU pods</td>
+<td><strong>Replay Buffer</strong></td>
+<td>10-20% general data</td>
+<td>Prevents catastrophic forgetting</td>
 </tr>
 </tbody>
 </table>
-<h3 id="4-accelerate-training-workflow">4. Accelerate Training Workflow<a class="headerlink" href="#4-accelerate-training-workflow" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">accelerate</span> <span class="kn">import</span> <span class="n">Accelerator</span>
-
-<span class="c1"># Initialize Accelerator</span>
-<span class="n">accelerator</span> <span class="o">=</span> <span class="n">Accelerator</span><span class="p">()</span>
-
-<span class="c1"># Prepare model, optimizer, dataloader</span>
-<span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">train_loader</span> <span class="o">=</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">prepare</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span>
-
-<span class="c1"># Training Loop</span>
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
-        <span class="k">with</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-            <span class="k">with</span> <span class="n">accelerator</span><span class="o">.</span><span class="n">autocast</span><span class="p">():</span>
-                <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="o">**</span><span class="n">batch</span><span class="p">)</span>
-                <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">loss</span>
-
-            <span class="n">accelerator</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-            <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-            <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
-
-    <span class="c1"># Save checkpoint and log metrics</span>
-    <span class="n">accelerator</span><span class="o">.</span><span class="n">save_state</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;checkpoints/epoch_</span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">accelerator</span><span class="o">.</span><span class="n">log</span><span class="p">({</span><span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span> <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()})</span>
-</code></pre></div>
+<hr />
+<hr />
+<h2 id="4-training-configuration">4. Training Configuration<a class="headerlink" href="#4-training-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="data-mixture-typical-2026-recipe">Data Mixture (Typical 2026 Recipe)<a class="headerlink" href="#data-mixture-typical-2026-recipe" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>40%</strong> Specialist corpora (textbooks, technical manuals, papers)</li>
+<li><strong>30%</strong> Synthetic reasoning (teacher model trajectories)</li>
+<li><strong>20%</strong> High-quality web data (e.g., FineWeb-Edu)</li>
+<li><strong>10%</strong> Long-form documents (books, full codebases)</li>
+</ul>
+<hr />
+<h3 id="learning-rate-schedule">Learning Rate Schedule<a class="headerlink" href="#learning-rate-schedule" title="Permanent link">&para;</a></h3>
+<p>Mid-training uses a <strong>Cool-down/Annealing</strong> strategy:</p>
+<ol>
+<li><strong>Re-warmup:</strong> Short stabilization on new data distribution</li>
+<li><strong>Cosine Decay:</strong> Deep decay toward zero for weight settling</li>
+</ol>
+<p><strong>Critical:</strong> Full optimizer state restoration is mandatory—partial resets often cause irrecoverable divergence.</p>
+<hr />
+<h3 id="training-objectives">Training Objectives<a class="headerlink" href="#training-objectives" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Primary:</strong> Causal language modeling (same as pre-training)</li>
+<li><strong>Auxiliary (optional, lightly weighted):</strong></li>
+<li>Contrastive losses for retrieval</li>
+<li>Outcome-conditioned losses for tool use</li>
+<li>Self-consistency rewards for reasoning</li>
+</ul>
+<hr />
+<h3 id="context-extension-rope-scaling">Context Extension (RoPE Scaling)<a class="headerlink" href="#context-extension-rope-scaling" title="Permanent link">&para;</a></h3>
+<p>To enable long-context understanding, modify Rotary Positional Embeddings:</p>
+<div class="arithmatex">\[f(q, i, \theta) = R_{\Theta, i}^d q\]</div>
+<p>Increase base frequency θ (base scaling) to extend interpretable token distances.</p>
+<hr />
+<h2 id="parameter-efficiency-strategies">Parameter Efficiency Strategies<a class="headerlink" href="#parameter-efficiency-strategies" title="Permanent link">&para;</a></h2>
+<h3 id="selective-training-options">Selective Training Options<a class="headerlink" href="#selective-training-options" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Frozen components:</strong> Token embeddings, early layers, normalization stats</li>
+<li><strong>Progressive unfreezing:</strong> Gradually activate higher layers</li>
+<li><strong>Adapter-based:</strong> Train low-rank adapters, merge later</li>
+</ul>
+<p><strong>Benefits:</strong> Reduced forgetting, improved stability, lower compute cost</p>
+<hr />
+<hr />
+<h2 id="5-common-failure-modes">5. Common Failure Modes<a class="headerlink" href="#5-common-failure-modes" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Failure Mode</th>
+<th>Cause</th>
+<th>Detection</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loss Spikes</strong></td>
+<td>Optimizer state mismatch</td>
+<td>Monitor loss curves post-resume</td>
+</tr>
+<tr>
+<td><strong>Reasoning Overfitting</strong></td>
+<td>Excessive synthetic data</td>
+<td>Check output diversity, verbosity</td>
+</tr>
+<tr>
+<td><strong>Semantic Drift</strong></td>
+<td>Insufficient replay buffer</td>
+<td>Test general knowledge perplexity</td>
+</tr>
+<tr>
+<td><strong>Context Illusions</strong></td>
+<td>RoPE issues without true understanding</td>
+<td>Needle-in-haystack tasks</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h2 id="6-evaluation-strategy">6. Evaluation Strategy<a class="headerlink" href="#6-evaluation-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="online-metrics-during-training">Online Metrics (During Training)<a class="headerlink" href="#online-metrics-during-training" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Replay buffer perplexity</li>
+<li>Long-context loss by position</li>
+<li>Reasoning trace self-consistency</li>
+</ul>
+<h3 id="offline-probes-checkpoints">Offline Probes (Checkpoints)<a class="headerlink" href="#offline-probes-checkpoints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Needle-in-haystack retrieval</li>
+<li>Math/code reasoning benchmarks</li>
+<li>Tool-use simulation accuracy</li>
+<li>General knowledge retention tests</li>
+</ul>
+<p><strong>Why it matters:</strong> High rollback costs make early regression detection critical.</p>
+<hr />
+<hr />
+<h2 id="7-impact-on-downstream-stages">7. Impact on Downstream Stages<a class="headerlink" href="#7-impact-on-downstream-stages" title="Permanent link">&para;</a></h2>
+<p>A well-executed mid-training phase:
+- ✅ Reduces SFT data needs by 2-5×
+- ✅ Improves RLHF stability
+- ✅ Lowers reward hacking risk
+- ✅ Pre-internalizes reasoning norms</p>
+<hr />
+<hr />
+<h2 id="8-recent-advances-2025-2026">8. Recent Advances (2025-2026)<a class="headerlink" href="#8-recent-advances-2025-2026" title="Permanent link">&para;</a></h2>
+<h3 id="agentic-synthesis">Agentic Synthesis<a class="headerlink" href="#agentic-synthesis" title="Permanent link">&para;</a></h3>
+<p>Including tool-use action logs during mid-training improves agentic performance more effectively than SFT alone.</p>
+<h3 id="internalized-rl">Internalized RL<a class="headerlink" href="#internalized-rl" title="Permanent link">&para;</a></h3>
+<p>Applying RL during mid-training to reward correct reasoning paths in math and code domains.</p>
+<h3 id="dynamic-curriculum-mixing">Dynamic Curriculum Mixing<a class="headerlink" href="#dynamic-curriculum-mixing" title="Permanent link">&para;</a></h3>
+<p>Using a "proctor" model to adjust data mixture in real-time based on primary model's loss patterns.</p>
+<hr />
+<hr />
+<h2 id="9-training-phase-comparison">9. Training Phase Comparison<a class="headerlink" href="#9-training-phase-comparison" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Pre-Training</th>
+<th>Mid-Training</th>
+<th>Post-Training (SFT)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Token Count</strong></td>
+<td>5T - 15T</td>
+<td>100B - 500B</td>
+<td>10M - 50M</td>
+</tr>
+<tr>
+<td><strong>Focus</strong></td>
+<td>Breadth</td>
+<td>Depth + Reasoning</td>
+<td>Behavior + Safety</td>
+</tr>
+<tr>
+<td><strong>Data Source</strong></td>
+<td>Raw web scrapes</td>
+<td>Curated + Synthetic</td>
+<td>Human demonstrations</td>
+</tr>
+<tr>
+<td><strong>Compute</strong></td>
+<td>~100%</td>
+<td>~5-15%</td>
+<td>&lt;1%</td>
+</tr>
+<tr>
+<td><strong>Forgetting Risk</strong></td>
+<td>N/A</td>
+<td>High (needs replay)</td>
+<td>Moderate</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<hr />
+<h2 id="10-common-interview-questions">10. Common Interview Questions<a class="headerlink" href="#10-common-interview-questions" title="Permanent link">&para;</a></h2>
+<h3 id="conceptual-understanding">Conceptual Understanding<a class="headerlink" href="#conceptual-understanding" title="Permanent link">&para;</a></h3>
+<p><strong>Q1: What is the primary difference between pre-training and mid-training?</strong></p>
+<p><strong>A:</strong> Pre-training focuses on broad language understanding from diverse web data (5-15T tokens), while mid-training specializes the model on curated/synthetic data (100-500B tokens) for reasoning and domain expertise. Pre-training builds breadth; mid-training builds depth.</p>
+<hr />
+<p><strong>Q2: Why can't we just add specialized data during pre-training?</strong></p>
+<p><strong>A:</strong> Specialized data (math proofs, code, domain texts) would be diluted in the massive pre-training corpus. Mid-training allows controlled, high-concentration exposure after general capabilities are established, preventing domain data from being "drowned out."</p>
+<hr />
+<p><strong>Q3: What is catastrophic forgetting and how does mid-training address it?</strong></p>
+<p><strong>A:</strong> Catastrophic forgetting occurs when training on new data causes the model to lose previously learned knowledge. Mid-training mitigates this by:
+- Including 10-20% general data in the replay buffer
+- Using lower learning rates (annealing)
+- Selectively freezing early layers
+- Continuous evaluation on general benchmarks</p>
+<hr />
+<h3 id="technical-implementation">Technical Implementation<a class="headerlink" href="#technical-implementation" title="Permanent link">&para;</a></h3>
+<p><strong>Q4: Why is full optimizer state restoration critical in mid-training?</strong></p>
+<p><strong>A:</strong> Optimizer states (Adam/AdamW momentum and variance) encode the training trajectory and landscape geometry. Resetting them causes:
+- Loss spikes and divergence
+- Inefficient exploration of the new data distribution
+- Potential inability to recover model quality</p>
+<p>Full state restoration ensures smooth continuation from pre-training.</p>
+<hr />
+<p><strong>Q5: Explain the learning rate schedule used in mid-training and why it differs from pre-training.</strong></p>
+<p><strong>A:</strong> Mid-training uses a <strong>re-warmup + cosine decay</strong> schedule:
+1. <strong>Re-warmup:</strong> Briefly increases LR to help the model adapt to the new data distribution
+2. <strong>Cosine decay to near-zero:</strong> Ensures weights settle deeply into specialized loss landscape valleys</p>
+<p>This differs from pre-training's longer, more gradual decay because mid-training starts from an already-trained model.</p>
+<hr />
+<p><strong>Q6: How does RoPE scaling enable long-context understanding?</strong></p>
+<p><strong>A:</strong> RoPE (Rotary Positional Embeddings) encodes position through rotation in embedding space. By increasing the base frequency θ (base scaling), we:
+- Compress the positional encoding frequency
+- Allow the model to interpret larger token distances
+- Extend the effective context window beyond pre-training limits</p>
+<p>The model then learns to reason over these extended contexts during mid-training.</p>
+<hr />
+<h3 id="design-decisions">Design Decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h3>
+<p><strong>Q7: What are the trade-offs between full fine-tuning vs. adapter-based mid-training?</strong></p>
+<p><strong>A:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full Fine-tuning</strong></td>
+<td>Maximum specialization, no architectural constraints</td>
+<td>Higher compute, more forgetting risk</td>
+</tr>
+<tr>
+<td><strong>Adapter-based</strong></td>
+<td>Lower compute, less forgetting, modular</td>
+<td>Potential capacity bottleneck, merge complexity</td>
+</tr>
+</tbody>
+</table>
+<p>Choice depends on available compute, forgetting tolerance, and desired specialization depth.</p>
+<hr />
+<p><strong>Q8: Why include synthetic reasoning trajectories in the data mixture?</strong></p>
+<p><strong>A:</strong> Synthetic data from larger "teacher" models provides:
+- Explicit reasoning chains (step-by-step logic)
+- Higher density of correct reasoning patterns than web data
+- Controlled difficulty and coverage of reasoning types
+- Scalability beyond human-annotated examples</p>
+<p>This has proven more effective for reasoning than raw data alone.</p>
+<hr />
+<h3 id="debugging-evaluation">Debugging &amp; Evaluation<a class="headerlink" href="#debugging-evaluation" title="Permanent link">&para;</a></h3>
+<p><strong>Q9: Your mid-training run shows increasing perplexity on general benchmarks despite improving on domain tasks. What's happening and how do you fix it?</strong></p>
+<p><strong>A:</strong> This indicates <strong>catastrophic forgetting</strong>. Solutions:
+1. Increase replay buffer proportion (from 10% to 20-30%)
+2. Reduce learning rate more aggressively
+3. Freeze more early layers
+4. Add explicit general knowledge checkpointing
+5. Mix in more diverse general data</p>
+<p>Monitor the ratio of domain improvement to general degradation.</p>
+<hr />
+<p><strong>Q10: How do you detect "context length illusions" where the model appears to handle long contexts but isn't actually reasoning over them?</strong></p>
+<p><strong>A:</strong> Use <strong>needle-in-haystack</strong> tests:
+- Place specific information at various positions in long contexts
+- Ask questions requiring that information
+- Verify the model retrieves from all positions (especially middle)
+- Check if removal of key information changes answers</p>
+<p>Also analyze loss by token position—true long-context models show stable loss across positions.</p>
+<hr />
+<h3 id="advanced-topics">Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permanent link">&para;</a></h3>
+<p><strong>Q11: Describe the concept of "Internalized RL" during mid-training.</strong></p>
+<p><strong>A:</strong> Instead of applying RL only during post-training, some recent approaches apply lightweight RL during mid-training to:
+- Reward correct reasoning paths in real-time
+- Shape the model's reasoning prior before behavioral alignment
+- Reduce need for heavy RLHF later</p>
+<p>This creates models that inherently prefer correct reasoning structures.</p>
+<hr />
+<p><strong>Q12: You have limited compute budget. Should you extend pre-training or invest in mid-training?</strong></p>
+<p><strong>A:</strong> <strong>Generally mid-training</strong> if:
+- You need domain specialization or reasoning
+- Pre-training already achieved good general capabilities
+- You have high-quality curated/synthetic data
+- Downstream efficiency (less SFT data) matters</p>
+<p><strong>Extend pre-training</strong> if:
+- General knowledge gaps remain
+- You have abundant diverse web data
+- Target domains are broad and varied</p>
+<p>Mid-training offers better ROI for specialization at 5-15% of pre-training cost.</p>
+<hr />
+<hr />
+<h2 id="quick-reference-checklist">Quick Reference Checklist<a class="headerlink" href="#quick-reference-checklist" title="Permanent link">&para;</a></h2>
+<p><strong>Before Mid-Training:</strong>
+- [ ] Full optimizer state saved from pre-training
+- [ ] Data mixture designed and validated (&gt;95% quality)
+- [ ] Replay buffer prepared (10-20% general data)
+- [ ] Evaluation suite ready (general + domain tests)
+- [ ] RoPE scaling strategy defined (if extending context)</p>
+<p><strong>During Mid-Training:</strong>
+- [ ] Monitor replay buffer perplexity
+- [ ] Track reasoning consistency metrics
+- [ ] Check loss by token position
+- [ ] Validate context length understanding
+- [ ] Test tool-use capabilities (if applicable)</p>
+<p><strong>After Mid-Training:</strong>
+- [ ] Run full eval suite (general + specialized)
+- [ ] Conduct needle-in-haystack tests
+- [ ] Measure SFT data efficiency gains
+- [ ] Document mixture recipe and outcomes
+- [ ] Save final checkpoint + optimizer state</p>
+<hr />
 
 
 

@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../../optimization/prefix_caching/">
+        <link rel="prev" href="../parallelism_overview/">
       
       
-        <link rel="next" href="../thinking_llms/">
+        <link rel="next" href="../tensor_parallelism/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Foundation - Fine-Tuning Methods Documentation</title>
+        <title>Data Parallelism - Fine-Tuning Methods Documentation</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-an-llm-optimizing" class="md-skip">
+        <a href="#data-parallelism-dp" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Foundation
+              Data Parallelism
             
           </span>
         </div>
@@ -390,20 +390,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -419,7 +419,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Distributed Training
@@ -433,7 +433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/parallelism_overview/" class="md-nav__link">
+      <a href="../parallelism_overview/" class="md-nav__link">
         
   
   
@@ -453,10 +453,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../distributed_training/data_parallelism/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Data Parallelism
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -467,6 +489,281 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concept
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch-ddp-implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      PyTorch DDP Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch DDP Implementation Details">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gradient-bucketing" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Gradient Bucketing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-asynchronous-gradient-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Asynchronous Gradient Reduction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-synchronization-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Synchronization Timing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Requirements
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Communication Cost">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#all-reduce-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      All-Reduce Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandwidth-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bandwidth Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-accumulation-with-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradient Accumulation with DDP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-what-happens-during-ddp-gradient-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: "What happens during DDP gradient synchronization?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-why-does-ddp-use-all-reduce-instead-of-parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: "Why does DDP use All-Reduce instead of Parameter Server?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-what-are-ddps-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: "What are DDP's limitations?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-how-does-ddp-differ-from-zero-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: "How does DDP differ from ZeRO-1?"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bucket-size-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Bucket Size Tuning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gradient-clipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Gradient Clipping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-find-unused-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Find Unused Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-static-graph-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Static Graph Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-out-of-memory-with-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "Out of Memory with DDP"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -479,7 +776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/tensor_parallelism/" class="md-nav__link">
+      <a href="../tensor_parallelism/" class="md-nav__link">
         
   
   
@@ -502,7 +799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/pipeline_parallelism/" class="md-nav__link">
+      <a href="../pipeline_parallelism/" class="md-nav__link">
         
   
   
@@ -525,7 +822,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/zero_deepspeed/" class="md-nav__link">
+      <a href="../zero_deepspeed/" class="md-nav__link">
         
   
   
@@ -548,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/fsdp/" class="md-nav__link">
+      <a href="../fsdp/" class="md-nav__link">
         
   
   
@@ -1038,20 +1335,20 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -1067,7 +1364,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Training Pipeline
@@ -1078,30 +1375,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Foundation
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../training_techniques/foundation/" class="md-nav__link">
         
   
   
@@ -1112,282 +1389,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-what-is-an-llm-optimizing" class="md-nav__link">
-    <span class="md-ellipsis">
-      1 What is an LLM Optimizing?
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="1 What is an LLM Optimizing?">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#11-the-autoregressive-objective" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.1 The Autoregressive Objective
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#12-the-loss-function-negative-log-likelihood" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.2 The Loss Function: Negative Log-Likelihood
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#13-cross-entropy-kl-divergence-and-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.3 Cross-Entropy, KL Divergence, and Learning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#14-why-next-token-prediction-works-the-compression-hypothesis" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.4 Why Next-Token Prediction Works (The Compression Hypothesis)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-language-modeling-and-likelihood-minimization" class="md-nav__link">
-    <span class="md-ellipsis">
-      2 Language Modeling and Likelihood Minimization
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2 Language Modeling and Likelihood Minimization">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#21-maximum-likelihood-estimation-mle" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.1 Maximum Likelihood Estimation (MLE)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#22-teacher-forcing" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.2 Teacher Forcing
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2.2 Teacher Forcing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-training-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Training data
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-training-with-teacher-forcing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2: Training with teacher forcing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-inference-time-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 3: Inference time behavior
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-perplexity-as-an-evaluation-metric" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.3 Perplexity as an Evaluation Metric
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2.3 Perplexity as an Evaluation Metric">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#intuition" class="md-nav__link">
-    <span class="md-ellipsis">
-      Intuition
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-lower-perplexity-is-better" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why Lower Perplexity Is Better
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#important-clarification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Important Clarification
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-why-scaling-works-and-where-it-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Why Scaling Works and Where it Breaks
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. Why Scaling Works and Where it Breaks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-empirical-scaling-laws" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.1 Empirical Scaling Laws
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3.1 Empirical Scaling Laws">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#kaplan-scaling-laws-2020" class="md-nav__link">
-    <span class="md-ellipsis">
-      Kaplan Scaling Laws (2020)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#chinchilla-scaling-laws-2022" class="md-nav__link">
-    <span class="md-ellipsis">
-      Chinchilla Scaling Laws (2022)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#32-where-scaling-breaks" class="md-nav__link">
-    <span class="md-ellipsis">
-      3.2 Where Scaling Breaks
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3.2 Where Scaling Breaks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-data-scarcity-and-synthetic-feedback-loops" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Data Scarcity and Synthetic Feedback Loops
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-capability-saturation" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Capability Saturation
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-inference-cost-and-latency" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Inference Cost and Latency
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-test-time-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Test-Time Scaling
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1400,7 +1401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../thinking_llms/" class="md-nav__link">
+      <a href="../../training_techniques/thinking_llms/" class="md-nav__link">
         
   
   
@@ -1462,6 +1463,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1470,46 +1473,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-what-is-an-llm-optimizing" class="md-nav__link">
+  <a href="#core-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      1 What is an LLM Optimizing?
+      Core Concept
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1 What is an LLM Optimizing?">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pytorch-ddp-implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      PyTorch DDP Implementation Details
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PyTorch DDP Implementation Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#11-the-autoregressive-objective" class="md-nav__link">
+  <a href="#1-gradient-bucketing" class="md-nav__link">
     <span class="md-ellipsis">
-      1.1 The Autoregressive Objective
+      1. Gradient Bucketing
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-the-loss-function-negative-log-likelihood" class="md-nav__link">
+  <a href="#2-asynchronous-gradient-reduction" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 The Loss Function: Negative Log-Likelihood
+      2. Asynchronous Gradient Reduction
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#13-cross-entropy-kl-divergence-and-learning" class="md-nav__link">
+  <a href="#3-synchronization-timing" class="md-nav__link">
     <span class="md-ellipsis">
-      1.3 Cross-Entropy, KL Divergence, and Learning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#14-why-next-token-prediction-works-the-compression-hypothesis" class="md-nav__link">
-    <span class="md-ellipsis">
-      1.4 Why Next-Token Prediction Works (The Compression Hypothesis)
+      3. Synchronization Timing
     </span>
   </a>
   
@@ -1521,105 +1533,39 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-language-modeling-and-likelihood-minimization" class="md-nav__link">
+  <a href="#memory-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      2 Language Modeling and Likelihood Minimization
+      Memory Requirements
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2 Language Modeling and Likelihood Minimization">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Cost
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Communication Cost">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#21-maximum-likelihood-estimation-mle" class="md-nav__link">
+  <a href="#all-reduce-complexity" class="md-nav__link">
     <span class="md-ellipsis">
-      2.1 Maximum Likelihood Estimation (MLE)
+      All-Reduce Complexity
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-teacher-forcing" class="md-nav__link">
+  <a href="#bandwidth-requirements" class="md-nav__link">
     <span class="md-ellipsis">
-      2.2 Teacher Forcing
+      Bandwidth Requirements
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="2.2 Teacher Forcing">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-training-data" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 1: Training data
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-training-with-teacher-forcing" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 2: Training with teacher forcing
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-inference-time-behavior" class="md-nav__link">
-    <span class="md-ellipsis">
-      Step 3: Inference time behavior
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-perplexity-as-an-evaluation-metric" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.3 Perplexity as an Evaluation Metric
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="2.3 Perplexity as an Evaluation Metric">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#intuition" class="md-nav__link">
-    <span class="md-ellipsis">
-      Intuition
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-lower-perplexity-is-better" class="md-nav__link">
-    <span class="md-ellipsis">
-      Why Lower Perplexity Is Better
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#important-clarification" class="md-nav__link">
-    <span class="md-ellipsis">
-      Important Clarification
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1629,38 +1575,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-why-scaling-works-and-where-it-breaks" class="md-nav__link">
+  <a href="#gradient-accumulation-with-ddp" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Why Scaling Works and Where it Breaks
+      Gradient Accumulation with DDP
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Why Scaling Works and Where it Breaks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-empirical-scaling-laws" class="md-nav__link">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-interview-questions" class="md-nav__link">
     <span class="md-ellipsis">
-      3.1 Empirical Scaling Laws
+      Common Interview Questions
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3.1 Empirical Scaling Laws">
+    <nav class="md-nav" aria-label="Common Interview Questions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#kaplan-scaling-laws-2020" class="md-nav__link">
+  <a href="#q1-what-happens-during-ddp-gradient-synchronization" class="md-nav__link">
     <span class="md-ellipsis">
-      Kaplan Scaling Laws (2020)
+      Q1: "What happens during DDP gradient synchronization?"
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#chinchilla-scaling-laws-2022" class="md-nav__link">
+  <a href="#q2-why-does-ddp-use-all-reduce-instead-of-parameter-server" class="md-nav__link">
     <span class="md-ellipsis">
-      Chinchilla Scaling Laws (2022)
+      Q2: "Why does DDP use All-Reduce instead of Parameter Server?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-what-are-ddps-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: "What are DDP's limitations?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-how-does-ddp-differ-from-zero-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: "How does DDP differ from ZeRO-1?"
     </span>
   </a>
   
@@ -1670,48 +1633,48 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#32-where-scaling-breaks" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
-      3.2 Where Scaling Breaks
+      Best Practices
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3.2 Where Scaling Breaks">
+    <nav class="md-nav" aria-label="Best Practices">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-data-scarcity-and-synthetic-feedback-loops" class="md-nav__link">
+  <a href="#1-bucket-size-tuning" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Data Scarcity and Synthetic Feedback Loops
+      1. Bucket Size Tuning
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-capability-saturation" class="md-nav__link">
+  <a href="#2-gradient-clipping" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Capability Saturation
+      2. Gradient Clipping
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-inference-cost-and-latency" class="md-nav__link">
+  <a href="#3-find-unused-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Inference Cost and Latency
+      3. Find Unused Parameters
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-test-time-scaling" class="md-nav__link">
+  <a href="#4-static-graph-optimization" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Test-Time Scaling
+      4. Static Graph Optimization
     </span>
   </a>
   
@@ -1721,9 +1684,46 @@
     </nav>
   
 </li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-out-of-memory-with-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "Out of Memory with DDP"
+    </span>
+  </a>
+  
+</li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
   
 </li>
       
@@ -1746,200 +1746,222 @@
   
 
 
-  <h1>Foundation</h1>
+<h1 id="data-parallelism-dp">Data Parallelism (DP)<a class="headerlink" href="#data-parallelism-dp" title="Permanent link">&para;</a></h1>
+<h2 id="core-concept">Core Concept<a class="headerlink" href="#core-concept" title="Permanent link">&para;</a></h2>
+<p>The most widely used baseline parallelism strategy:
+- <strong>Full model replicated</strong> across N workers
+- Each worker processes a <strong>different shard</strong> of the input batch
+- Gradients are <strong>synchronized</strong> after backward pass
+- All replicas apply <strong>identical optimizer updates</strong></p>
+<hr />
+<h2 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>GPU 0: Model Copy | Batch[0:32]   → Forward → Backward → Gradients_0
+GPU 1: Model Copy | Batch[32:64]  → Forward → Backward → Gradients_1
+GPU 2: Model Copy | Batch[64:96]  → Forward → Backward → Gradients_2
+GPU 3: Model Copy | Batch[96:128] → Forward → Backward → Gradients_3
 
-<h2 id="1-what-is-an-llm-optimizing">1 What is an LLM Optimizing?<a class="headerlink" href="#1-what-is-an-llm-optimizing" title="Permanent link">&para;</a></h2>
-<p>At its core, a Large Language Model (LLM) is a probabilistic system designed to model the distribution of natural language. Despite emergent reasoning and planning behaviors, the training objective itself is simple: <strong>reduce uncertainty about the next token given prior context</strong>.</p>
-<h3 id="11-the-autoregressive-objective">1.1 The Autoregressive Objective<a class="headerlink" href="#11-the-autoregressive-objective" title="Permanent link">&para;</a></h3>
-<p>Most LLMs are trained using an <strong>Autoregressive (AR)</strong> or <strong>Causal Language Modeling (CLM)</strong> objective. The joint probability of a token sequence is factorized as a product of conditional probabilities:</p>
-<div class="arithmatex">\[
-P(x_1, \dots, x_T) = \prod_{t=1}^{T} P(x_t \mid x_{&lt;t})
-\]</div>
-<p>This formulation assumes:</p>
-<ul>
-<li>Tokens are conditionally independent given their history</li>
-<li>Knowledge is captured implicitly through long context dependencies</li>
-<li>Tokenization defines the atomic units of prediction</li>
-</ul>
-<h3 id="12-the-loss-function-negative-log-likelihood">1.2 The Loss Function: Negative Log-Likelihood<a class="headerlink" href="#12-the-loss-function-negative-log-likelihood" title="Permanent link">&para;</a></h3>
-<p>Training minimizes the <strong>Negative Log-Likelihood (NLL)</strong> of the observed data, which is equivalent to <strong>Cross-Entropy Loss</strong>:</p>
-<div class="arithmatex">\[
-\mathcal{L}(\theta) = - \mathbb{E}_{(x_1,\dots,x_T) \sim D} \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{&lt;t})
-\]</div>
-<p>Where:
-- <span class="arithmatex">\(\theta\)</span> are the model parameters
-- <span class="arithmatex">\(x_{&lt;t}\)</span> is the context window
-- <span class="arithmatex">\(P_\theta\)</span> is the predicted probability distribution produced by a Softmax layer</p>
-<h3 id="13-cross-entropy-kl-divergence-and-learning">1.3 Cross-Entropy, KL Divergence, and Learning<a class="headerlink" href="#13-cross-entropy-kl-divergence-and-learning" title="Permanent link">&para;</a></h3>
-<p>Minimizing cross-entropy implicitly minimizes the <strong>KL divergence</strong> between the true data distribution <span class="arithmatex">\(P_{data}\)</span> and the model distribution <span class="arithmatex">\(P_\theta\)</span>:</p>
-<div class="arithmatex">\[
-H(P_{data}, P_\theta) = H(P_{data}) + D_{KL}(P_{data} \| P_\theta)
-\]</div>
-<p>Since <span class="arithmatex">\(H(P_{data})\)</span> is fixed, training pushes the model distribution closer to the real language distribution. This connects LLM training directly to information theory and compression.</p>
-<h3 id="14-why-next-token-prediction-works-the-compression-hypothesis">1.4 Why Next-Token Prediction Works (The Compression Hypothesis)<a class="headerlink" href="#14-why-next-token-prediction-works-the-compression-hypothesis" title="Permanent link">&para;</a></h3>
-<p>Predicting the next token forces the model to internalize structure across many domains.</p>
-<ul>
-<li><strong>Compression implies abstraction:</strong> To compress diverse text, the model must learn syntax, semantics, facts, and procedures.</li>
-<li><strong>Softmax competition:</strong> Increasing probability mass for the correct token necessarily decreases mass for alternatives, encouraging fine-grained representations.</li>
-<li><strong>Generalization pressure:</strong> Predicting well across domains requires reusable internal features, which later appear as reasoning, translation, or coding skills.</li>
-</ul>
+                      ↓ All-Reduce ↓
+
+GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
+</code></pre></div>
+<p><strong>Result</strong>: Effective batch size = N × local batch size</p>
 <hr />
-<h2 id="2-language-modeling-and-likelihood-minimization">2 Language Modeling and Likelihood Minimization<a class="headerlink" href="#2-language-modeling-and-likelihood-minimization" title="Permanent link">&para;</a></h2>
-<h3 id="21-maximum-likelihood-estimation-mle">2.1 Maximum Likelihood Estimation (MLE)<a class="headerlink" href="#21-maximum-likelihood-estimation-mle" title="Permanent link">&para;</a></h3>
-<p>LLM training is an instance of <strong>Maximum Likelihood Estimation</strong>, where we seek parameters <span class="arithmatex">\(\theta^*\)</span> that maximize the likelihood of observed text:</p>
-<div class="arithmatex">\[
-\theta^* = \arg\max_\theta \mathbb{E}_{x \sim D} [\log P_\theta(x)]
-\]</div>
-<p>MLE provides a stable and scalable objective but does not encode preferences such as helpfulness, safety, or instruction following.</p>
-<h3 id="22-teacher-forcing">2.2 Teacher Forcing<a class="headerlink" href="#22-teacher-forcing" title="Permanent link">&para;</a></h3>
-<p>Teacher forcing is a training strategy where the model is conditioned on the <strong>ground-truth previous token</strong> rather than its own prediction when computing the next-token loss. For a sequence <span class="arithmatex">\(x_1, \dots, x_T\)</span>, the model always receives <span class="arithmatex">\(x_{t-1}\)</span> as input when predicting <span class="arithmatex">\(x_t\)</span>, even if it would have predicted a different token at step <span class="arithmatex">\(t-1\)</span>.</p>
-<p><strong>Small Practical Example</strong></p>
-<p><strong>Task:</strong> Predict the sentence  </p>
+<h2 id="pytorch-ddp-implementation-details">PyTorch DDP Implementation Details<a class="headerlink" href="#pytorch-ddp-implementation-details" title="Permanent link">&para;</a></h2>
+<h3 id="1-gradient-bucketing">1. Gradient Bucketing<a class="headerlink" href="#1-gradient-bucketing" title="Permanent link">&para;</a></h3>
+<p><strong>Problem</strong>: Waiting for all gradients before communication wastes time.</p>
+<p><strong>Solution</strong>: Group parameters into ~25MB buckets
+- Communication starts as soon as a bucket is ready
+- Reduces idle time by avoiding one large sync at the end</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Conceptual example</span>
+<span class="c1"># Parameters grouped by size:</span>
+<span class="c1"># Bucket 1: [layer1.weight, layer1.bias] → 23MB</span>
+<span class="c1"># Bucket 2: [layer2.weight, layer2.bias] → 24MB</span>
+<span class="c1"># As soon as Bucket 1 gradients ready → All-Reduce starts</span>
+</code></pre></div>
+<p><strong>Configuration</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">bucket_cap_mb</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>  <span class="c1"># Default: 25MB</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2-asynchronous-gradient-reduction">2. Asynchronous Gradient Reduction<a class="headerlink" href="#2-asynchronous-gradient-reduction" title="Permanent link">&para;</a></h3>
+<p><strong>Key Optimization</strong>: Overlap communication with computation</p>
+<p><strong>How it works</strong>:
+1. Backward pass computes gradients layer-by-layer (last → first)
+2. When a bucket's gradients are ready, DDP launches <strong>async All-Reduce</strong>
+3. While communication runs in background, backward continues on earlier layers
+4. Ideally, by the time backward finishes, most communication is done</p>
+<div class="highlight"><pre><span></span><code>Timeline:
+────────────────────────────────────────────────
+Computation: [Layer N] [Layer N-1] ... [Layer 1]
+                 ↓        ↓             ↓
+Comm:        [Bucket 1 All-Reduce─────────────]
+                     [Bucket 2 All-Reduce────]
+                           [Bucket 3 All-Reduce]
+────────────────────────────────────────────────
+</code></pre></div>
 <blockquote>
-<p><em>“The cat sat on the mat”</em></p>
+<p><strong>Common Misconception</strong>: DDP does NOT sync after every layer. Synchronization is event-driven and overlaps with backpropagation.</p>
 </blockquote>
-<h4 id="step-1-training-data">Step 1: Training data<a class="headerlink" href="#step-1-training-data" title="Permanent link">&para;</a></h4>
-<p>Tokens:<br />
-<code>[The, cat, sat, on, the, mat]</code></p>
-<h4 id="step-2-training-with-teacher-forcing">Step 2: Training with teacher forcing<a class="headerlink" href="#step-2-training-with-teacher-forcing" title="Permanent link">&para;</a></h4>
-<p>At each step, the model is conditioned on the <strong>ground-truth previous token</strong>.</p>
-<ol>
-<li>
-<p><strong>Input:</strong> <code>The</code><br />
-<strong>Target:</strong> <code>cat</code></p>
-</li>
-<li>
-<p><strong>Input:</strong> <code>The cat</code><br />
-<strong>Target:</strong> <code>sat</code></p>
-</li>
-<li>
-<p><strong>Input:</strong> <code>The cat sat</code><br />
-<strong>Target:</strong> <code>on</code></p>
-</li>
-<li>
-<p><strong>Input:</strong> <code>The cat sat on</code><br />
-<strong>Target:</strong> <code>the</code></p>
-</li>
-<li>
-<p><strong>Input:</strong> <code>The cat sat on the</code><br />
-<strong>Target:</strong> <code>mat</code></p>
-</li>
-</ol>
-<p>Even if the model predicts an incorrect token at any step, the <strong>next input still uses the true token</strong> from the dataset.</p>
-<h4 id="step-3-inference-time-behavior">Step 3: Inference time behavior<a class="headerlink" href="#step-3-inference-time-behavior" title="Permanent link">&para;</a></h4>
-<p>At inference, the model must condition on its <strong>own predictions</strong>.</p>
-<ol>
-<li>
-<p><strong>Input:</strong> <code>The</code><br />
-<strong>Prediction:</strong> <code>dog</code></p>
-</li>
-<li>
-<p><strong>Next input:</strong> <code>The dog</code><br />
-   Errors now propagate forward</p>
-</li>
-</ol>
-<p>This train–test mismatch is known as <strong>exposure bias</strong> and is a key limitation of teacher forcing.</p>
-<p><strong>Advantages:</strong></p>
+<hr />
+<h3 id="3-synchronization-timing">3. Synchronization Timing<a class="headerlink" href="#3-synchronization-timing" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Full parallelization</strong> of loss computation across all positions in a Transformer</li>
-<li><strong>Stable gradients</strong>, since errors do not compound during training</li>
+<li>Gradients synchronized <strong>once per training iteration</strong> (not per layer)</li>
+<li>Each parameter's gradient reduced <strong>exactly once</strong> after computation</li>
+<li>Optimizer step happens only after <strong>all reductions complete</strong></li>
 </ul>
-<p><strong>Limitation: Exposure Bias</strong></p>
-<ul>
-<li>Introduces <strong>exposure bias</strong>: during inference, the model must condition on its own past predictions, a distribution shift that can lead to error accumulation. This gap motivates post-training techniques such as supervised fine-tuning and reinforcement learning based alignment.</li>
-</ul>
-<h3 id="23-perplexity-as-an-evaluation-metric">2.3 Perplexity as an Evaluation Metric<a class="headerlink" href="#23-perplexity-as-an-evaluation-metric" title="Permanent link">&para;</a></h3>
-<p><strong>Perplexity</strong> measures how uncertain a language model is, on average, when predicting the next token in a sequence.</p>
-<p>Formally, if a model is trained using cross-entropy loss <span class="arithmatex">\(\mathcal{L}\)</span>, then perplexity is defined as:</p>
-<div class="arithmatex">\[
-\text{PPL} = \exp(\mathcal{L})
-\]</div>
-<p>where <span class="arithmatex">\(\mathcal{L}\)</span> is the <strong>average negative log-probability</strong> assigned to the correct next token.</p>
-<h4 id="intuition">Intuition<a class="headerlink" href="#intuition" title="Permanent link">&para;</a></h4>
-<p>A language model repeatedly answers the question:</p>
+<hr />
+<h2 id="memory-requirements">Memory Requirements<a class="headerlink" href="#memory-requirements" title="Permanent link">&para;</a></h2>
+<p>Each GPU must store:
+- <strong>Model parameters</strong>: 2Ψ (FP16) or 4Ψ (FP32)
+- <strong>Gradients</strong>: 2Ψ (FP16) or 4Ψ (FP32)
+- <strong>Optimizer states (Adam)</strong>: 12Ψ (FP32 master + momentum + variance)
+- <strong>Activations</strong>: Depends on batch size and sequence length</p>
+<p><strong>Total</strong>: ~16Ψ bytes per GPU (excluding activations)</p>
+<hr />
+<h2 id="communication-cost">Communication Cost<a class="headerlink" href="#communication-cost" title="Permanent link">&para;</a></h2>
+<h3 id="all-reduce-complexity">All-Reduce Complexity<a class="headerlink" href="#all-reduce-complexity" title="Permanent link">&para;</a></h3>
+<p>For N GPUs and Ψ parameters:
+- <strong>Data transferred</strong>: 2Ψ(N-1)/N per GPU (ring All-Reduce)
+- <strong>Latency</strong>: O(log N) for tree-based, O(N) for ring-based
+- Grows <strong>linearly</strong> with number of GPUs</p>
+<h3 id="bandwidth-requirements">Bandwidth Requirements<a class="headerlink" href="#bandwidth-requirements" title="Permanent link">&para;</a></h3>
+<p>For 7B model (14GB gradients in FP16):
+- 100Gbps network: ~1.1 seconds just for communication
+- 400Gbps network: ~0.28 seconds</p>
 <blockquote>
-<p>How many plausible choices do I believe the next token could be?</p>
+<p>Communication overhead becomes significant beyond 64-128 GPUs</p>
 </blockquote>
-<p>Perplexity converts log probabilities back into an interpretable scale representing the <strong>effective number of choices</strong>.</p>
-<ul>
-<li>
-<p><strong>PPL = 1</strong><br />
-  The model is fully confident and assigns probability 1 to the correct token.</p>
-</li>
-<li>
-<p><strong>PPL = 10</strong><br />
-  The model behaves as if it is choosing uniformly among about 10 tokens.</p>
-</li>
-<li>
-<p><strong>PPL = 100</strong><br />
-  The model is highly uncertain, with roughly 100 plausible next tokens.</p>
-</li>
-</ul>
-<p>This is why perplexity is often described as the model’s <strong>average branching factor</strong>.</p>
-<h4 id="why-lower-perplexity-is-better">Why Lower Perplexity Is Better<a class="headerlink" href="#why-lower-perplexity-is-better" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Lower PPL means the model assigns higher probability to the correct next token.</li>
-<li>This corresponds to lower uncertainty and better next-token prediction.</li>
-<li>Minimizing cross-entropy during training directly minimizes perplexity.</li>
-</ul>
-<h4 id="important-clarification">Important Clarification<a class="headerlink" href="#important-clarification" title="Permanent link">&para;</a></h4>
-<p>Perplexity is <strong>not</strong> a direct measure of:
-- Reasoning ability
-- Factual correctness
-- Alignment or instruction following</p>
-<p>It only measures how well the model predicts the data distribution. While lower perplexity often correlates with better text quality, it does not guarantee better downstream performance.</p>
 <hr />
-<h2 id="3-why-scaling-works-and-where-it-breaks">3. Why Scaling Works and Where it Breaks<a class="headerlink" href="#3-why-scaling-works-and-where-it-breaks" title="Permanent link">&para;</a></h2>
-<h3 id="31-empirical-scaling-laws">3.1 Empirical Scaling Laws<a class="headerlink" href="#31-empirical-scaling-laws" title="Permanent link">&para;</a></h3>
-<p>Performance improves predictably as a power-law function of:</p>
-<ul>
-<li>Model parameters</li>
-<li>Training tokens</li>
-<li>Compute budget</li>
-</ul>
-<p>This empirical behavior explains the rapid gains from larger models.</p>
-<h4 id="kaplan-scaling-laws-2020">Kaplan Scaling Laws (2020)<a class="headerlink" href="#kaplan-scaling-laws-2020" title="Permanent link">&para;</a></h4>
-<p>Early results suggested scaling model size was the dominant factor.</p>
-<ul>
-<li>Loss scales roughly as a power-law in parameter count</li>
-<li>Data was treated as effectively unlimited</li>
-</ul>
-<h4 id="chinchilla-scaling-laws-2022">Chinchilla Scaling Laws (2022)<a class="headerlink" href="#chinchilla-scaling-laws-2022" title="Permanent link">&para;</a></h4>
-<p>Later work showed most large models were undertrained.</p>
-<p>Key findings:</p>
-<ul>
-<li>Optimal performance requires balancing parameters and tokens</li>
-<li>Roughly <strong>20 training tokens per parameter</strong> is compute optimal</li>
-<li>Smaller models trained on more data can outperform larger undertrained models</li>
-</ul>
-<p>This led to data-centric model design such as LLaMA and Mistral.</p>
+<h2 id="gradient-accumulation-with-ddp">Gradient Accumulation with DDP<a class="headerlink" href="#gradient-accumulation-with-ddp" title="Permanent link">&para;</a></h2>
+<p><strong>Purpose</strong>: Simulate larger batch size without increasing memory</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">outputs</span><span class="o">.</span><span class="n">loss</span> <span class="o">/</span> <span class="n">accumulation_steps</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Gradients accumulate</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">accumulation_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># Only sync here</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div>
+<p><strong>Benefits</strong>:
+- Effective batch = <code>accumulation_steps × local_batch × num_gpus</code>
+- <strong>Reduces sync frequency</strong> from every step to every K steps
+- Saves communication bandwidth</p>
+<p><strong>Trade-off</strong>: Slower convergence per step (but same per sample)</p>
 <hr />
-<h3 id="32-where-scaling-breaks">3.2 Where Scaling Breaks<a class="headerlink" href="#32-where-scaling-breaks" title="Permanent link">&para;</a></h3>
-<h4 id="1-data-scarcity-and-synthetic-feedback-loops">1. Data Scarcity and Synthetic Feedback Loops<a class="headerlink" href="#1-data-scarcity-and-synthetic-feedback-loops" title="Permanent link">&para;</a></h4>
-<ul>
-<li>High-quality human text is limited</li>
-<li>Synthetic data risks reducing diversity</li>
-<li>Repeated self-training can lead to model collapse</li>
-</ul>
-<h4 id="2-capability-saturation">2. Capability Saturation<a class="headerlink" href="#2-capability-saturation" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Loss improves smoothly, but abilities emerge discontinuously</li>
-<li>Reasoning, planning, and tool use do not scale linearly with perplexity</li>
-<li>Small loss gains can hide large behavioral differences</li>
-</ul>
-<h4 id="3-inference-cost-and-latency">3. Inference Cost and Latency<a class="headerlink" href="#3-inference-cost-and-latency" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Larger models increase memory, latency, and cost</li>
-<li>This motivates inference-efficient designs</li>
-</ul>
-<h4 id="4-test-time-scaling">4. Test-Time Scaling<a class="headerlink" href="#4-test-time-scaling" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Recent systems scale inference compute rather than parameters</li>
-<li>Models generate longer internal reasoning traces</li>
-<li>This shifts scaling from training time to inference time</li>
-</ul>
-<p>Examples include OpenAI o1 and DeepSeek-R1.</p>
+<h2 id="common-interview-questions">Common Interview Questions<a class="headerlink" href="#common-interview-questions" title="Permanent link">&para;</a></h2>
+<h3 id="q1-what-happens-during-ddp-gradient-synchronization">Q1: "What happens during DDP gradient synchronization?"<a class="headerlink" href="#q1-what-happens-during-ddp-gradient-synchronization" title="Permanent link">&para;</a></h3>
+<p><strong>Strong Answer</strong>:
+1. Each GPU computes gradients on its local batch
+2. Gradients are bucketed (default: 25MB buckets)
+3. As each bucket is ready, DDP launches <strong>async All-Reduce</strong>
+4. All-Reduce computes average across GPUs: <code>grad_avg = sum(grad_i) / N</code>
+5. Result is written back to each GPU's gradient buffer
+6. Optimizer updates using averaged gradients</p>
+<p><strong>Not</strong>: Gradients aren't sent to a central server and back. All-Reduce is a collective operation.</p>
 <hr />
+<h3 id="q2-why-does-ddp-use-all-reduce-instead-of-parameter-server">Q2: "Why does DDP use All-Reduce instead of Parameter Server?"<a class="headerlink" href="#q2-why-does-ddp-use-all-reduce-instead-of-parameter-server" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:
+- <strong>Parameter Server</strong>: Central node becomes bottleneck (bandwidth: O(Ψ))
+- <strong>All-Reduce</strong>: Peer-to-peer communication (bandwidth: O(Ψ/N) per GPU)
+- Ring All-Reduce scales much better for large clusters
+- No single point of failure</p>
+<hr />
+<h3 id="q3-what-are-ddps-limitations">Q3: "What are DDP's limitations?"<a class="headerlink" href="#q3-what-are-ddps-limitations" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:
+1. <strong>Memory</strong>: Full model must fit on single GPU
+   - For 7B model: ~112GB needed (doesn't fit on 80GB GPU)
+2. <strong>Scaling</strong>: Communication cost grows linearly with GPUs
+3. <strong>Batch size</strong>: Global batch = N × local_batch can become too large
+   - Large batches hurt generalization
+   - Require careful LR tuning</p>
+<p><strong>Solution</strong>: Use ZeRO/FSDP for memory, Tensor/Pipeline Parallelism for scaling</p>
+<hr />
+<h3 id="q4-how-does-ddp-differ-from-zero-1">Q4: "How does DDP differ from ZeRO-1?"<a class="headerlink" href="#q4-how-does-ddp-differ-from-zero-1" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>DDP</th>
+<th>ZeRO-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parameters</strong></td>
+<td>Replicated</td>
+<td>Replicated</td>
+</tr>
+<tr>
+<td><strong>Gradients</strong></td>
+<td>Replicated</td>
+<td>Replicated</td>
+</tr>
+<tr>
+<td><strong>Optimizer States</strong></td>
+<td>Replicated</td>
+<td><strong>Sharded</strong></td>
+</tr>
+<tr>
+<td><strong>Memory per GPU</strong></td>
+<td>16Ψ</td>
+<td>~12Ψ (saves 4Ψ)</td>
+</tr>
+<tr>
+<td><strong>Communication</strong></td>
+<td>All-Reduce gradients</td>
+<td>All-Reduce gradients + Gather optimizer states</td>
+</tr>
+</tbody>
+</table>
+<p>ZeRO-1 is a strict improvement over DDP for memory, with minimal communication overhead.</p>
+<hr />
+<h2 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-bucket-size-tuning">1. Bucket Size Tuning<a class="headerlink" href="#1-bucket-size-tuning" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Smaller buckets: More overlap, but more overhead</span>
+<span class="c1"># Larger buckets: Less overhead, but less overlap</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">bucket_cap_mb</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>  <span class="c1"># Default is usually good</span>
+</code></pre></div>
+<h3 id="2-gradient-clipping">2. Gradient Clipping<a class="headerlink" href="#2-gradient-clipping" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Must happen BEFORE optimizer step</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="3-find-unused-parameters">3. Find Unused Parameters<a class="headerlink" href="#3-find-unused-parameters" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># If model has conditional branches</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">find_unused_parameters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Warning: Adds overhead, only use when necessary</span>
+</code></pre></div>
+<h3 id="4-static-graph-optimization">4. Static Graph Optimization<a class="headerlink" href="#4-static-graph-optimization" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># If model structure doesn&#39;t change</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">static_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># PyTorch 1.11+</span>
+<span class="c1"># Reduces overhead by ~10%</span>
+</code></pre></div>
+<hr />
+<h2 id="debugging-tips">Debugging Tips<a class="headerlink" href="#debugging-tips" title="Permanent link">&para;</a></h2>
+<h3 id="issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration">Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"<a class="headerlink" href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" title="Permanent link">&para;</a></h3>
+<p><strong>Cause</strong>: Uneven workload across GPUs (e.g., variable sequence lengths)</p>
+<p><strong>Fix</strong>:
+<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Pad to same length</span>
+<span class="c1"># Option 2: Use find_unused_parameters=True</span>
+<span class="c1"># Option 3: Manual synchronization</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+</code></pre></div></p>
+<h3 id="issue-out-of-memory-with-ddp">Issue: "Out of Memory with DDP"<a class="headerlink" href="#issue-out-of-memory-with-ddp" title="Permanent link">&para;</a></h3>
+<p><strong>Checklist</strong>:
+1. Check if activation memory is the issue (use activation checkpointing)
+2. Reduce local batch size
+3. Switch to ZeRO-2/FSDP to shard optimizer and gradients</p>
+<hr />
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>DDP is the baseline</strong> - start here before more complex strategies</li>
+<li><strong>Gradient bucketing + async reduction</strong> enables communication-computation overlap</li>
+<li><strong>Memory limitation</strong> is the main constraint - model must fit on single GPU</li>
+<li><strong>Communication grows linearly</strong> with GPUs - becomes bottleneck at large scale</li>
+<li><strong>Gradient accumulation</strong> reduces sync frequency and effective communication cost</li>
+<li><strong>All-Reduce is distributed</strong> - no central parameter server</li>
+</ol>
 
 
 

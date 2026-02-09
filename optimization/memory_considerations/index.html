@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../bp16/">
+        <link rel="prev" href="../quantization/">
       
       
-        <link rel="next" href="../paged_adam/">
+        <link rel="next" href="../prefix_caching/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Memory Consideration - Fine-Tuning Methods Documentation</title>
+        <title>Memory Considerations - Fine-Tuning Methods Documentation</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-gpu-and-cpu-memory-and-transfer-rates" class="md-skip">
+        <a href="#memory-considerations-for-llm-training-and-inference" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Memory Consideration
+              Memory Considerations
             
           </span>
         </div>
@@ -295,7 +295,7 @@
   
   
   <span class="md-ellipsis">
-    Phases
+    Training Phases
     
   </span>
   
@@ -306,7 +306,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
-            Phases
+            Training Phases
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -317,7 +317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phases/pre_training/" class="md-nav__link">
+      <a href="../../training_phases/pre_training/" class="md-nav__link">
         
   
   
@@ -340,7 +340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phases/mid_training/" class="md-nav__link">
+      <a href="../../training_phases/mid_training/" class="md-nav__link">
         
   
   
@@ -363,7 +363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phases/sft/" class="md-nav__link">
+      <a href="../../training_phases/post_training/" class="md-nav__link">
         
   
   
@@ -433,12 +433,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/distributed_training_systems/" class="md-nav__link">
+      <a href="../../distributed_training/parallelism_overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Distributed Training System
+    Parallelism Overview
     
   </span>
   
@@ -456,12 +456,104 @@
   
   
     <li class="md-nav__item">
-      <a href="../../distributed_training/fsdp_deepspeed/" class="md-nav__link">
+      <a href="../../distributed_training/data_parallelism/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    FSDP & DeepSpeed
+    Data Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/tensor_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensor Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/pipeline_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipeline Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/zero_deepspeed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zero-Deepspeed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/fsdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FSDP
     
   </span>
   
@@ -595,12 +687,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../../parameter_efficient_fine_tuning/prefix_tuning/" class="md-nav__link">
+      <a href="../../parameter_efficient_fine_tuning/prefix_tuning.md" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Prefix Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/4bit_normal_float/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4-bit NormalFloat (NF4)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/blockwise_kbit_quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Block-wise k-bit Quantization
     
   </span>
   
@@ -665,12 +803,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../4bit_normal_float/" class="md-nav__link">
+      <a href="../mixed_precision/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    4-bit NormalFloat (NF4)
+    Mixed Precision
     
   </span>
   
@@ -688,12 +826,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../blockwise_kbit_quantization/" class="md-nav__link">
+      <a href="../gradient_checkpointing/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Block-wise k-bit Quantization
+    Gradient Checkpointing
     
   </span>
   
@@ -711,12 +849,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../accelerate.md" class="md-nav__link">
+      <a href="../memory_efficient_optimizers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Accelerate Framework
+    Memory Efficient Optimizers
     
   </span>
   
@@ -734,12 +872,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../bp16/" class="md-nav__link">
+      <a href="../optimizers_schedules/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    BP16
+    Optimizers-Schedules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quantization
     
   </span>
   
@@ -763,13 +924,15 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
   
   <span class="md-ellipsis">
-    Memory Consideration
+    Memory Considerations
     
   </span>
   
@@ -782,7 +945,7 @@
   
   
   <span class="md-ellipsis">
-    Memory Consideration
+    Memory Considerations
     
   </span>
   
@@ -794,6 +957,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -855,36 +1020,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#21-bandwidth" class="md-nav__link">
+  <a href="#21-bandwidth-vs-latency-vs-compute" class="md-nav__link">
     <span class="md-ellipsis">
-      2.1 Bandwidth
+      2.1 Bandwidth vs Latency vs Compute
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-latency" class="md-nav__link">
+  <a href="#22-compute-vs-memory-bound-regimes" class="md-nav__link">
     <span class="md-ellipsis">
-      2.2 Latency
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-compute" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.3 Compute
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#24-compute-vs-memory-bound-regimes" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.4 Compute vs Memory Bound Regimes
+      2.2 Compute vs Memory Bound Regimes
     </span>
   </a>
   
@@ -896,13 +1043,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-training-considerations-for-a-7b-model-on-a-single-a100" class="md-nav__link">
+  <a href="#3-training-memory-for-a-7b-model-on-a-single-a100" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Training Considerations for a 7B Model on a Single A100
+      3. Training Memory for a 7B Model on a Single A100
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Training Considerations for a 7B Model on a Single A100">
+    <nav class="md-nav" aria-label="3. Training Memory for a 7B Model on a Single A100">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -914,15 +1061,6 @@
   
     <nav class="md-nav" aria-label="3.1 Memory Components During Training">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameter-definitions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameter Definitions
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#311-model-weights" class="md-nav__link">
@@ -943,9 +1081,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#313-optimizer-states-adam-or-adamw" class="md-nav__link">
+  <a href="#313-optimizer-states-adamadamw" class="md-nav__link">
     <span class="md-ellipsis">
-      3.1.3 Optimizer States (Adam or AdamW)
+      3.1.3 Optimizer States (Adam/AdamW)
     </span>
   </a>
   
@@ -1008,27 +1146,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-training-memory-profile" class="md-nav__link">
+  <a href="#41-training-vs-inference-memory-profile" class="md-nav__link">
     <span class="md-ellipsis">
-      4.1 Training Memory Profile
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#42-inference-memory-profile" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.2 Inference Memory Profile
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#43-quantitative-difference" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.3 Quantitative Difference
+      4.1 Training vs Inference Memory Profile
     </span>
   </a>
   
@@ -1076,15 +1196,195 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#54-kv-cache-management-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 KV Cache Management Techniques
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-summary" class="md-nav__link">
+  <a href="#6-multi-gpu-memory-considerations" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Summary
+      6. Multi-GPU Memory Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Multi-GPU Memory Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-data-parallelism-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Data Parallelism (DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-zero-zero-redundancy-optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 ZeRO (Zero Redundancy Optimizer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-tensor-and-pipeline-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Tensor and Pipeline Parallelism
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-why-does-training-a-7b-model-require-100gb-but-inference-only-20gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: Why does training a 7B model require ~100GB but inference only ~20GB?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-walk-through-the-memory-bottleneck-when-fine-tuning-a-13b-model-on-a-single-80gb-a100" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: Walk through the memory bottleneck when fine-tuning a 13B model on a single 80GB A100.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-explain-why-attention-becomes-memory-bound-for-long-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: Explain why attention becomes memory-bound for long sequences.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-youre-serving-100-requests-with-a-7b-model-kv-cache-is-60gb-how-can-you-reduce-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: You're serving 100 requests with a 7B model. KV cache is 60GB. How can you reduce this?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-compare-memory-patterns-of-data-parallel-vs-zero-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: Compare memory patterns of Data Parallel vs ZeRO-3.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-design-a-memory-budget-for-serving-a-70b-model-at-1000-qps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q6: Design a memory budget for serving a 70B model at 1000 QPS.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-vs-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Training vs Inference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-vs-memory-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute vs Memory Bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-optimization-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Optimization Techniques
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Principles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Further Reading
     </span>
   </a>
   
@@ -1094,52 +1394,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../paged_adam/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Paged Adam Optimizer
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../training_optimization_and_stability/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Training Optimization and Stability
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -1200,7 +1454,7 @@
   
   
   <span class="md-ellipsis">
-    Training Pipeline
+    Frameworks
     
   </span>
   
@@ -1210,6 +1464,76 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Frameworks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accelerate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accelerate Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Pipeline
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Training Pipeline
           </label>
@@ -1307,6 +1631,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1367,36 +1693,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#21-bandwidth" class="md-nav__link">
+  <a href="#21-bandwidth-vs-latency-vs-compute" class="md-nav__link">
     <span class="md-ellipsis">
-      2.1 Bandwidth
+      2.1 Bandwidth vs Latency vs Compute
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#22-latency" class="md-nav__link">
+  <a href="#22-compute-vs-memory-bound-regimes" class="md-nav__link">
     <span class="md-ellipsis">
-      2.2 Latency
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#23-compute" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.3 Compute
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#24-compute-vs-memory-bound-regimes" class="md-nav__link">
-    <span class="md-ellipsis">
-      2.4 Compute vs Memory Bound Regimes
+      2.2 Compute vs Memory Bound Regimes
     </span>
   </a>
   
@@ -1408,13 +1716,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-training-considerations-for-a-7b-model-on-a-single-a100" class="md-nav__link">
+  <a href="#3-training-memory-for-a-7b-model-on-a-single-a100" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Training Considerations for a 7B Model on a Single A100
+      3. Training Memory for a 7B Model on a Single A100
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Training Considerations for a 7B Model on a Single A100">
+    <nav class="md-nav" aria-label="3. Training Memory for a 7B Model on a Single A100">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1426,15 +1734,6 @@
   
     <nav class="md-nav" aria-label="3.1 Memory Components During Training">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameter-definitions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Parameter Definitions
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#311-model-weights" class="md-nav__link">
@@ -1455,9 +1754,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#313-optimizer-states-adam-or-adamw" class="md-nav__link">
+  <a href="#313-optimizer-states-adamadamw" class="md-nav__link">
     <span class="md-ellipsis">
-      3.1.3 Optimizer States (Adam or AdamW)
+      3.1.3 Optimizer States (Adam/AdamW)
     </span>
   </a>
   
@@ -1520,27 +1819,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-training-memory-profile" class="md-nav__link">
+  <a href="#41-training-vs-inference-memory-profile" class="md-nav__link">
     <span class="md-ellipsis">
-      4.1 Training Memory Profile
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#42-inference-memory-profile" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.2 Inference Memory Profile
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#43-quantitative-difference" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.3 Quantitative Difference
+      4.1 Training vs Inference Memory Profile
     </span>
   </a>
   
@@ -1588,15 +1869,195 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#54-kv-cache-management-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 KV Cache Management Techniques
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-summary" class="md-nav__link">
+  <a href="#6-multi-gpu-memory-considerations" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Summary
+      6. Multi-GPU Memory Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Multi-GPU Memory Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-data-parallelism-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Data Parallelism (DP)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-zero-zero-redundancy-optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 ZeRO (Zero Redundancy Optimizer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-tensor-and-pipeline-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Tensor and Pipeline Parallelism
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-why-does-training-a-7b-model-require-100gb-but-inference-only-20gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: Why does training a 7B model require ~100GB but inference only ~20GB?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-walk-through-the-memory-bottleneck-when-fine-tuning-a-13b-model-on-a-single-80gb-a100" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: Walk through the memory bottleneck when fine-tuning a 13B model on a single 80GB A100.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-explain-why-attention-becomes-memory-bound-for-long-sequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: Explain why attention becomes memory-bound for long sequences.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-youre-serving-100-requests-with-a-7b-model-kv-cache-is-60gb-how-can-you-reduce-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: You're serving 100 requests with a 7B model. KV cache is 60GB. How can you reduce this?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-compare-memory-patterns-of-data-parallel-vs-zero-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: Compare memory patterns of Data Parallel vs ZeRO-3.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-design-a-memory-budget-for-serving-a-70b-model-at-1000-qps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q6: Design a memory budget for serving a 70B model at 1000 QPS.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#training-vs-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Training vs Inference
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compute-vs-memory-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      Compute vs Memory Bound
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-optimization-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Optimization Techniques
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Principles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Further Reading
     </span>
   </a>
   
@@ -1621,289 +2082,662 @@
   
 
 
-  <h1>Memory Consideration</h1>
-
+<h1 id="memory-considerations-for-llm-training-and-inference">💾 Memory Considerations for LLM Training and Inference<a class="headerlink" href="#memory-considerations-for-llm-training-and-inference" title="Permanent link">&para;</a></h1>
 <h2 id="1-gpu-and-cpu-memory-and-transfer-rates">1. GPU and CPU Memory and Transfer Rates<a class="headerlink" href="#1-gpu-and-cpu-memory-and-transfer-rates" title="Permanent link">&para;</a></h2>
 <h3 id="11-gpu-memory">1.1 GPU Memory<a class="headerlink" href="#11-gpu-memory" title="Permanent link">&para;</a></h3>
-<p>GPU memory, often called HBM (High Bandwidth Memory) or VRAM, is high bandwidth memory physically attached to the GPU package. It is designed to feed thousands of parallel compute cores efficiently.</p>
-<p>Key characteristics:</p>
+<p>GPU memory (HBM - High Bandwidth Memory) is high bandwidth memory physically attached to the GPU package, designed to feed thousands of parallel compute cores efficiently.</p>
+<p><strong>Key characteristics:</strong></p>
 <ul>
 <li>Very high bandwidth</li>
 <li>Low access latency relative to CPU memory</li>
 <li>Limited capacity compared to system RAM</li>
 </ul>
-<p>Typical values for NVIDIA A100:</p>
+<p><strong>Typical values for NVIDIA A100:</strong></p>
 <ul>
 <li>Capacity: 40GB or 80GB HBM2e</li>
 <li>Peak bandwidth: ~1.6 TB/s</li>
 </ul>
-<p>GPU memory stores:</p>
+<p><strong>GPU memory stores:</strong></p>
 <ul>
 <li>Model weights</li>
 <li>Activations</li>
 <li>Gradients</li>
 <li>Optimizer states</li>
-<li>KV cache during inference and decoding</li>
+<li>KV cache during inference</li>
 </ul>
 <hr />
 <h3 id="12-cpu-memory">1.2 CPU Memory<a class="headerlink" href="#12-cpu-memory" title="Permanent link">&para;</a></h3>
-<p>CPU memory refers to system RAM, typically DDR4 or DDR5, located on the motherboard.</p>
-<p>Key characteristics:</p>
+<p>CPU memory refers to system RAM (DDR4 or DDR5) located on the motherboard.</p>
+<p><strong>Key characteristics:</strong></p>
 <ul>
-<li>Much larger capacity</li>
-<li>Significantly lower bandwidth</li>
+<li>Much larger capacity (64GB to 1TB+)</li>
+<li>Significantly lower bandwidth (~50 to 100 GB/s per socket)</li>
 <li>Higher latency compared to GPU memory</li>
 </ul>
-<p>Typical values:</p>
-<ul>
-<li>Capacity: 64GB to 1TB+</li>
-<li>Bandwidth: ~50 to 100 GB/s per socket</li>
-</ul>
-<p>CPU memory is commonly used for:</p>
+<p><strong>CPU memory is used for:</strong></p>
 <ul>
 <li>Data loading and preprocessing</li>
 <li>Checkpoint storage before transfer</li>
-<li>Offloaded parameters or optimizer states in memory constrained setups</li>
+<li>Offloaded parameters or optimizer states (ZeRO-Offload, Paged Adam)</li>
 </ul>
 <hr />
 <h3 id="13-gpu-to-cpu-transfer-rates">1.3 GPU to CPU Transfer Rates<a class="headerlink" href="#13-gpu-to-cpu-transfer-rates" title="Permanent link">&para;</a></h3>
 <p>Data movement between GPU and CPU happens over interconnects.</p>
-<p>Approximate peak transfer rates:</p>
+<p><strong>Approximate peak transfer rates:</strong></p>
 <ul>
 <li>PCIe Gen4: ~32 GB/s</li>
 <li>PCIe Gen5: ~64 GB/s</li>
 <li>NVLink (A100): ~300 GB/s</li>
 </ul>
-<p>Even with NVLink, transfer bandwidth is far lower than on-device GPU memory bandwidth, making frequent transfers expensive.</p>
+<p><strong>Key insight:</strong> Even with NVLink, transfer bandwidth is far lower than on-device GPU memory bandwidth (1.6 TB/s), making frequent transfers expensive.</p>
 <hr />
 <hr />
 <h2 id="2-bandwidth-latency-and-compute">2. Bandwidth, Latency, and Compute<a class="headerlink" href="#2-bandwidth-latency-and-compute" title="Permanent link">&para;</a></h2>
-<h3 id="21-bandwidth">2.1 Bandwidth<a class="headerlink" href="#21-bandwidth" title="Permanent link">&para;</a></h3>
-<p>Bandwidth measures how much data can be transferred per unit time, typically in GB/s or TB/s.</p>
-<p>In training and inference:</p>
-<ul>
-<li>Large tensors are streamed repeatedly</li>
-<li>Sustained bandwidth determines throughput</li>
-<li>Many transformer operations are memory bandwidth bound</li>
-</ul>
-<hr />
-<h3 id="22-latency">2.2 Latency<a class="headerlink" href="#22-latency" title="Permanent link">&para;</a></h3>
-<p>Latency is the delay to access the first byte of data.</p>
-<ul>
-<li>GPU memory latency is lower than CPU memory</li>
-<li>PCIe transfers have high latency relative to on-device access</li>
-</ul>
-<p>Latency matters for:</p>
-<ul>
-<li>Small tensor operations</li>
-<li>Kernel launch overhead</li>
-<li>Synchronization points</li>
-</ul>
-<p>For large matrix operations, bandwidth dominates over latency.</p>
-<hr />
-<h3 id="23-compute">2.3 Compute<a class="headerlink" href="#23-compute" title="Permanent link">&para;</a></h3>
-<p>Compute refers to the raw arithmetic capability of the processor, measured in FLOPs.</p>
-<p>A100 peak performance:
-- FP16 or BF16 Tensor Core: ~312 TFLOPs</p>
-<p>In practice:
-- Many LLM workloads are not compute bound
+<h3 id="21-bandwidth-vs-latency-vs-compute">2.1 Bandwidth vs Latency vs Compute<a class="headerlink" href="#21-bandwidth-vs-latency-vs-compute" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>Typical Values (A100)</th>
+<th>Matters For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bandwidth</strong></td>
+<td>Data transfer rate</td>
+<td>~1.6 TB/s (HBM)</td>
+<td>Large tensor operations</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Time to first byte</td>
+<td>~100-200 ns (HBM)</td>
+<td>Small tensor ops, kernel launch</td>
+</tr>
+<tr>
+<td><strong>Compute</strong></td>
+<td>Arithmetic capability</td>
+<td>~312 TFLOPs (BF16)</td>
+<td>Matrix multiplications</td>
+</tr>
+</tbody>
+</table>
+<p><strong>In practice:</strong>
+- Many LLM workloads are <strong>memory bandwidth bound</strong>, not compute bound
 - Compute units often wait on memory due to limited data reuse</p>
 <hr />
-<h3 id="24-compute-vs-memory-bound-regimes">2.4 Compute vs Memory Bound Regimes<a class="headerlink" href="#24-compute-vs-memory-bound-regimes" title="Permanent link">&para;</a></h3>
+<h3 id="22-compute-vs-memory-bound-regimes">2.2 Compute vs Memory Bound Regimes<a class="headerlink" href="#22-compute-vs-memory-bound-regimes" title="Permanent link">&para;</a></h3>
+<p><strong>Arithmetic intensity</strong> determines the bottleneck:
+$$
+\text{Arithmetic Intensity} = \frac{\text{FLOPs}}{\text{Bytes transferred}}
+$$</p>
+<p><strong>Transformers are often memory bound during:</strong></p>
 <ul>
-<li>Compute bound: performance limited by FLOPs</li>
-<li>Memory bound: performance limited by data movement</li>
-</ul>
-<p>Transformers often become memory bound during:</p>
-<ul>
-<li>Attention</li>
+<li>Attention (especially long sequences)</li>
 <li>Layer normalization</li>
-<li>Optimizer updates during training</li>
+<li>Optimizer updates</li>
+<li>Embedding lookups</li>
+</ul>
+<p><strong>Compute bound operations:</strong></p>
+<ul>
+<li>Large matrix multiplications (when batch size and dimensions are large)</li>
 </ul>
 <hr />
 <hr />
-<h2 id="3-training-considerations-for-a-7b-model-on-a-single-a100">3. Training Considerations for a 7B Model on a Single A100<a class="headerlink" href="#3-training-considerations-for-a-7b-model-on-a-single-a100" title="Permanent link">&para;</a></h2>
+<h2 id="3-training-memory-for-a-7b-model-on-a-single-a100">3. Training Memory for a 7B Model on a Single A100<a class="headerlink" href="#3-training-memory-for-a-7b-model-on-a-single-a100" title="Permanent link">&para;</a></h2>
 <h3 id="31-memory-components-during-training">3.1 Memory Components During Training<a class="headerlink" href="#31-memory-components-during-training" title="Permanent link">&para;</a></h3>
-<p>Training requires storing four major components in GPU memory:</p>
+<p>Training requires four major components in GPU memory:</p>
 <ol>
 <li>Model weights</li>
 <li>Gradients</li>
 <li>Optimizer states</li>
 <li>Activations</li>
 </ol>
-<p>We quantify each component explicitly.</p>
-<h4 id="parameter-definitions">Parameter Definitions<a class="headerlink" href="#parameter-definitions" title="Permanent link">&para;</a></h4>
-<p>Let:</p>
-<ul>
-<li><span class="arithmatex">\(P = 7 \times 10^9\)</span> parameters  </li>
-<li>BF16 precision for weights and gradients: 2 bytes  </li>
-<li>FP32 precision for optimizer states: 4 bytes  </li>
-</ul>
-<hr />
+<p><strong>Quantifying each component:</strong></p>
+<p>Let <span class="arithmatex">\(P = 7 \times 10^9\)</span> parameters, BF16 for weights/gradients (2 bytes), FP32 for optimizer (4 bytes).</p>
 <h4 id="311-model-weights">3.1.1 Model Weights<a class="headerlink" href="#311-model-weights" title="Permanent link">&para;</a></h4>
 <div class="arithmatex">\[
-M_{\text{weights}} = P \times 2 \text{ bytes}
+M_{\text{weights}} = P \times 2 \text{ bytes} = 14 \text{ GB}
 \]</div>
-<div class="arithmatex">\[
-= 7 \times 10^9 \times 2 = 14 \text{ GB}
-\]</div>
-<hr />
 <h4 id="312-gradients">3.1.2 Gradients<a class="headerlink" href="#312-gradients" title="Permanent link">&para;</a></h4>
-<p>Each trainable parameter produces one gradient tensor.</p>
 <div class="arithmatex">\[
-M_{\text{grads}} = P \times 2 \text{ bytes}
+M_{\text{grads}} = P \times 2 \text{ bytes} = 14 \text{ GB}
 \]</div>
+<h4 id="313-optimizer-states-adamadamw">3.1.3 Optimizer States (Adam/AdamW)<a class="headerlink" href="#313-optimizer-states-adamadamw" title="Permanent link">&para;</a></h4>
+<p>Adam maintains two FP32 states per parameter (momentum and variance):</p>
 <div class="arithmatex">\[
-= 14 \text{ GB}
+M_{\text{optimizer}} = P \times 2 \times 4 \text{ bytes} = 56 \text{ GB}
 \]</div>
-<p>Running total so far:</p>
-<div class="arithmatex">\[
-28 \text{ GB}
-\]</div>
-<hr />
-<h4 id="313-optimizer-states-adam-or-adamw">3.1.3 Optimizer States (Adam or AdamW)<a class="headerlink" href="#313-optimizer-states-adam-or-adamw" title="Permanent link">&para;</a></h4>
-<p>Adam maintains two FP32 states per parameter:</p>
-<ul>
-<li>First moment</li>
-<li>Second moment</li>
-</ul>
-<div class="arithmatex">\[
-M_{\text{optimizer}} = P \times 2 \times 4 \text{ bytes}
-\]</div>
-<div class="arithmatex">\[
-= 7 \times 10^9 \times 8 = 56 \text{ GB}
-\]</div>
-<p>Running total:</p>
-<div class="arithmatex">\[
-14 + 14 + 56 = 84 \text{ GB}
-\]</div>
-<p>This already exceeds the memory of an A100 80GB.</p>
-<hr />
+<p><strong>Running total: 14 + 14 + 56 = 84 GB</strong> (already exceeds A100 80GB!)</p>
 <h4 id="314-activations">3.1.4 Activations<a class="headerlink" href="#314-activations" title="Permanent link">&para;</a></h4>
-<p>Activation memory depends on:</p>
-<ul>
-<li>Number of layers <span class="arithmatex">\(L\)</span></li>
-<li>Batch size <span class="arithmatex">\(B\)</span></li>
-<li>Sequence length <span class="arithmatex">\(T\)</span></li>
-<li>Hidden dimension <span class="arithmatex">\(H\)</span></li>
-</ul>
-<p>A simplified scaling relation:</p>
+<p>Activation memory depends on layers <span class="arithmatex">\(L\)</span>, batch size <span class="arithmatex">\(B\)</span>, sequence length <span class="arithmatex">\(S\)</span>, hidden dimension <span class="arithmatex">\(d\)</span>:</p>
 <div class="arithmatex">\[
-M_{\text{act}} = O(L \times B \times T \times H \times 2 \text{ bytes})
+M_{\text{act}} \approx L \times B \times S \times d \times C \times 2 \text{ bytes}
 \]</div>
-<p>For a 7B transformer with gradient checkpointing:</p>
-<ul>
-<li>Activations typically consume 5 to 15 GB</li>
-</ul>
-<hr />
+<p>Where <span class="arithmatex">\(C\)</span> is a constant (typically 10-20 without gradient checkpointing).</p>
+<p><strong>For 7B model:</strong>
+- Without checkpointing: ~32 GB
+- With checkpointing: ~2-5 GB</p>
 <h4 id="315-total-training-memory">3.1.5 Total Training Memory<a class="headerlink" href="#315-total-training-memory" title="Permanent link">&para;</a></h4>
 <div class="arithmatex">\[
 M_{\text{total}} = M_{\text{weights}} + M_{\text{grads}} + M_{\text{optimizer}} + M_{\text{act}}
 \]</div>
-<div class="arithmatex">\[
-\approx 90 \text{ to } 100 \text{ GB}
-\]</div>
-<p>This explains why full fine-tuning of a 7B model does not fit on a single A100.</p>
+<p><strong>Without gradient checkpointing:</strong> ~116 GB<br />
+<strong>With gradient checkpointing:</strong> ~89 GB</p>
+<p><strong>This explains why full fine-tuning of a 7B model doesn't fit on a single A100.</strong></p>
 <hr />
 <h3 id="32-techniques-that-enable-feasible-training">3.2 Techniques That Enable Feasible Training<a class="headerlink" href="#32-techniques-that-enable-feasible-training" title="Permanent link">&para;</a></h3>
-<p>Common strategies include:</p>
-<ul>
-<li>Parameter-efficient fine-tuning such as LoRA or adapters</li>
-<li>Mixed precision training using BF16</li>
-<li>Gradient checkpointing to reduce activation memory</li>
-<li>Small micro-batches with gradient accumulation</li>
-<li>Limiting sequence length</li>
-</ul>
-<p>These techniques primarily reduce:</p>
-<ul>
-<li>Gradient memory</li>
-<li>Optimizer state memory</li>
-<li>Activation memory</li>
-</ul>
+<p><strong>Common strategies:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Memory Savings</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LoRA</strong></td>
+<td>100-1000× (trainable params)</td>
+<td>Slightly lower quality</td>
+</tr>
+<tr>
+<td><strong>Gradient checkpointing</strong></td>
+<td>80-90% (activations)</td>
+<td>+25-33% compute time</td>
+</tr>
+<tr>
+<td><strong>8-bit optimizers</strong></td>
+<td>75% (optimizer states)</td>
+<td>Minimal quality loss</td>
+</tr>
+<tr>
+<td><strong>Gradient accumulation</strong></td>
+<td>50-75% (activations)</td>
+<td>Longer iteration time</td>
+</tr>
+<tr>
+<td><strong>Mixed precision (BF16)</strong></td>
+<td>50% (weights/grads/acts)</td>
+<td>Requires compatible hardware</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Typical combination for 7B on 80GB A100:</strong>
+- BF16 mixed precision
+- Gradient checkpointing
+- 8-bit Adam
+- Batch size 1-2 with gradient accumulation</p>
 <hr />
 <h3 id="33-cpu-offloading">3.3 CPU Offloading<a class="headerlink" href="#33-cpu-offloading" title="Permanent link">&para;</a></h3>
-<p>CPU offloading can move:</p>
-<ul>
-<li>Optimizer states</li>
-<li>Parameters</li>
-</ul>
-<p>Tradeoffs:</p>
-<ul>
-<li>Enables fitting larger models</li>
-<li>Severely reduces training throughput</li>
-<li>Often impractical for production training</li>
-</ul>
+<p><strong>What can be offloaded:</strong>
+- Optimizer states (ZeRO-Offload, Paged Adam)
+- Parameters (ZeRO-Infinity with NVMe)</p>
+<p><strong>Trade-offs:</strong></p>
+<p>✅ Enables fitting larger models<br />
+❌ Severely reduces training throughput (50-100× slower optimizer step)<br />
+❌ Often impractical for production pretraining</p>
+<p><strong>When to use:</strong> Single-GPU fine-tuning with memory constraints.</p>
 <hr />
 <hr />
 <h2 id="4-memory-differences-between-training-and-inference">4. Memory Differences Between Training and Inference<a class="headerlink" href="#4-memory-differences-between-training-and-inference" title="Permanent link">&para;</a></h2>
-<h3 id="41-training-memory-profile">4.1 Training Memory Profile<a class="headerlink" href="#41-training-memory-profile" title="Permanent link">&para;</a></h3>
-<p>Training requires:</p>
-<ul>
-<li>Weights</li>
-<li>Activations from forward pass</li>
-<li>Gradients from backward pass</li>
-<li>Optimizer states</li>
-</ul>
-<p>Memory usage is dominated by optimizer states and activations.</p>
-<hr />
-<h3 id="42-inference-memory-profile">4.2 Inference Memory Profile<a class="headerlink" href="#42-inference-memory-profile" title="Permanent link">&para;</a></h3>
-<p>Inference requires:</p>
-<ul>
-<li>Model weights</li>
-<li>Activations for current forward pass</li>
-<li>KV cache for attention</li>
-</ul>
-<p>Notably absent:</p>
-<ul>
-<li>Gradients</li>
-<li>Optimizer states</li>
-</ul>
-<p>This is why inference fits models that training cannot.</p>
-<hr />
-<h3 id="43-quantitative-difference">4.3 Quantitative Difference<a class="headerlink" href="#43-quantitative-difference" title="Permanent link">&para;</a></h3>
-<p>For a 7B model:</p>
-<ul>
-<li>Training memory: ~90GB or more</li>
-<li>Inference memory: ~20 to 30GB depending on sequence length and KV cache size</li>
-</ul>
+<h3 id="41-training-vs-inference-memory-profile">4.1 Training vs Inference Memory Profile<a class="headerlink" href="#41-training-vs-inference-memory-profile" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Training</th>
+<th>Inference</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Weights</strong></td>
+<td>14 GB</td>
+<td>14 GB</td>
+<td>Same</td>
+</tr>
+<tr>
+<td><strong>Gradients</strong></td>
+<td>14 GB</td>
+<td>0 GB</td>
+<td>No backward pass</td>
+</tr>
+<tr>
+<td><strong>Optimizer</strong></td>
+<td>56 GB</td>
+<td>0 GB</td>
+<td>Not needed</td>
+</tr>
+<tr>
+<td><strong>Activations</strong></td>
+<td>5-32 GB</td>
+<td>1-2 GB</td>
+<td>No need to store for backprop</td>
+</tr>
+<tr>
+<td><strong>KV cache</strong></td>
+<td>0 GB</td>
+<td>5-20 GB</td>
+<td>Autoregressive decoding</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>89-116 GB</strong></td>
+<td><strong>20-36 GB</strong></td>
+<td><strong>3-5× difference</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> Training requires 3-5× more memory than inference for the same model.</p>
+<p><strong>Why inference fits models that training cannot:</strong>
+- No gradients
+- No optimizer states
+- Minimal activation storage</p>
 <hr />
 <hr />
 <h2 id="5-kv-cache-memory-usage">5. KV Cache Memory Usage<a class="headerlink" href="#5-kv-cache-memory-usage" title="Permanent link">&para;</a></h2>
 <h3 id="51-what-is-the-kv-cache">5.1 What Is the KV Cache<a class="headerlink" href="#51-what-is-the-kv-cache" title="Permanent link">&para;</a></h3>
-<p>The KV cache stores the key and value tensors from the attention mechanism for previously processed tokens.</p>
-<p>It avoids recomputing attention over the full context during autoregressive decoding.</p>
+<p>The KV cache stores key and value tensors from attention for previously processed tokens during <strong>autoregressive decoding</strong>.</p>
+<p><strong>Purpose:</strong> Avoid recomputing attention over the full context for each new token.</p>
+<p><strong>Speed-up:</strong> <span class="arithmatex">\(O(S^2) \rightarrow O(S)\)</span> for generating <span class="arithmatex">\(S\)</span> tokens.</p>
 <hr />
 <h3 id="52-which-memory-does-kv-cache-use">5.2 Which Memory Does KV Cache Use<a class="headerlink" href="#52-which-memory-does-kv-cache-use" title="Permanent link">&para;</a></h3>
-<p>KV cache resides in:</p>
-<ul>
-<li>GPU memory during standard inference and serving</li>
-<li>CPU memory only in specialized offloading or paging setups</li>
-</ul>
-<p>During high throughput inference:</p>
-<ul>
-<li>KV cache must stay in GPU memory</li>
-<li>Frequent access makes CPU storage impractical</li>
-</ul>
+<p><strong>KV cache resides in:</strong></p>
+<p>✅ GPU memory (during standard inference)<br />
+❌ CPU memory (only in specialized offloading setups)</p>
+<p><strong>Why GPU?</strong> Attention computation requires fast access; CPU storage would destroy throughput.</p>
 <hr />
 <h3 id="53-kv-cache-memory-scaling">5.3 KV Cache Memory Scaling<a class="headerlink" href="#53-kv-cache-memory-scaling" title="Permanent link">&para;</a></h3>
-<p>KV cache memory scales with:</p>
+<p><strong>KV cache memory formula:</strong></p>
+<div class="arithmatex">\[
+M_{\text{KV}} = 2 \times L \times B \times S \times d \times \text{bytes per element}
+\]</div>
+<p>Where:
+- Factor of 2: both K and V
+- <span class="arithmatex">\(L\)</span>: number of layers
+- <span class="arithmatex">\(B\)</span>: batch size
+- <span class="arithmatex">\(S\)</span>: sequence length
+- <span class="arithmatex">\(d\)</span>: hidden dimension</p>
+<p><strong>Example (7B LLaMA, BF16):</strong></p>
+<p>For single request (<span class="arithmatex">\(B=1\)</span>), sequence length 4096:
+$$
+M_{\text{KV}} = 2 \times 32 \times 1 \times 4096 \times 4096 \times 2 = 2.15 \text{ GB}
+$$</p>
+<p>For batch size 8:
+$$
+M_{\text{KV}} = 2.15 \times 8 = 17.2 \text{ GB}
+$$</p>
+<p><strong>This makes KV cache the dominant memory consumer during long-context inference.</strong></p>
+<hr />
+<h3 id="54-kv-cache-management-techniques">5.4 KV Cache Management Techniques<a class="headerlink" href="#54-kv-cache-management-techniques" title="Permanent link">&para;</a></h3>
+<p><strong>Problem:</strong> KV cache grows linearly with generated tokens and batch size.</p>
+<p><strong>Solutions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Memory Reduction</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sliding window</strong></td>
+<td>Caps at fixed size</td>
+<td>Only keep last W tokens</td>
+</tr>
+<tr>
+<td><strong>PagedAttention (vLLM)</strong></td>
+<td>10-30%</td>
+<td>Better packing, shared prefixes</td>
+</tr>
+<tr>
+<td><strong>Grouped-Query Attention (GQA)</strong></td>
+<td>4-32×</td>
+<td>Fewer KV heads (requires model change)</td>
+</tr>
+<tr>
+<td><strong>KV cache quantization (INT8)</strong></td>
+<td>50%</td>
+<td>Store K/V in INT8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>GQA example (7B model, seq=4096):</strong></p>
 <ul>
-<li>Number of layers</li>
-<li>Number of attention heads</li>
-<li>Sequence length</li>
-<li>Batch size</li>
+<li>Multi-Head (32 KV heads): 2.15 GB</li>
+<li>GQA (8 KV heads): 0.54 GB (4× reduction)</li>
+<li>MQA (1 KV head): 0.07 GB (32× reduction)</li>
 </ul>
-<p>This makes KV cache the dominant memory consumer during long context inference.</p>
 <hr />
 <hr />
-<h2 id="6-summary">6. Summary<a class="headerlink" href="#6-summary" title="Permanent link">&para;</a></h2>
-<p>Key takeaways:
-- GPU memory is the primary constraint for both training and inference
-- Bandwidth often limits performance more than compute
-- Training requires additional memory for gradients and optimizer states
-- Inference is cheaper because it avoids optimizer and gradient storage
-- KV cache lives in GPU memory and dominates long-context inference memory</p>
-<p>Understanding these tradeoffs is essential for designing and debugging large-scale LLM systems.</p>
+<h2 id="6-multi-gpu-memory-considerations">6. Multi-GPU Memory Considerations<a class="headerlink" href="#6-multi-gpu-memory-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="61-data-parallelism-dp">6.1 Data Parallelism (DP)<a class="headerlink" href="#61-data-parallelism-dp" title="Permanent link">&para;</a></h3>
+<p><strong>Memory per GPU:</strong>
+- Each GPU holds full model copy
+- Activations/gradients split across batch</p>
+<div class="arithmatex">\[
+M_{\text{GPU}} = M_{\text{weights}} + M_{\text{optimizer}} + \frac{M_{\text{activations}}}{N_{\text{GPUs}}}
+\]</div>
+<p><strong>Limitation:</strong> Model must fit on single GPU.</p>
+<hr />
+<h3 id="62-zero-zero-redundancy-optimizer">6.2 ZeRO (Zero Redundancy Optimizer)<a class="headerlink" href="#62-zero-zero-redundancy-optimizer" title="Permanent link">&para;</a></h3>
+<p><strong>ZeRO partitions optimizer states, gradients, and parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Partitions</th>
+<th>Memory Savings (vs DP)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ZeRO-1</strong></td>
+<td>Optimizer states</td>
+<td>4×</td>
+</tr>
+<tr>
+<td><strong>ZeRO-2</strong></td>
+<td>+ Gradients</td>
+<td>8×</td>
+</tr>
+<tr>
+<td><strong>ZeRO-3</strong></td>
+<td>+ Parameters</td>
+<td>Up to <span class="arithmatex">\(N_{\text{GPUs}}\)</span>×</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example (7B model, 8 GPUs, ZeRO-3):</strong></p>
+<p>Per GPU memory:
+$$
+\frac{14 + 14 + 56}{8} = 10.5 \text{ GB}
+$$</p>
+<p>Enables training on GPUs with &lt;16 GB memory.</p>
+<p><strong>Trade-off:</strong> More communication (all-gather parameters each layer) vs Data Parallel.</p>
+<hr />
+<h3 id="63-tensor-and-pipeline-parallelism">6.3 Tensor and Pipeline Parallelism<a class="headerlink" href="#63-tensor-and-pipeline-parallelism" title="Permanent link">&para;</a></h3>
+<p><strong>Tensor Parallelism (TP):</strong>
+- Model weights sharded across GPUs
+- Each GPU computes a slice (e.g., split attention heads)</p>
+<p><strong>Pipeline Parallelism (PP):</strong>
+- Layers distributed across GPUs
+- Sequential processing with pipeline stages</p>
+<p><strong>Both reduce per-GPU memory but require careful implementation.</strong></p>
+<hr />
+<hr />
+<h2 id="7-interview-questions">7. Interview Questions<a class="headerlink" href="#7-interview-questions" title="Permanent link">&para;</a></h2>
+<h3 id="q1-why-does-training-a-7b-model-require-100gb-but-inference-only-20gb">Q1: Why does training a 7B model require ~100GB but inference only ~20GB?<a class="headerlink" href="#q1-why-does-training-a-7b-model-require-100gb-but-inference-only-20gb" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Training (7B model):</strong>
+- Weights: 14 GB
+- Gradients: 14 GB
+- Optimizer (Adam): 56 GB
+- Activations: 5-32 GB
+- <strong>Total: 89-116 GB</strong></p>
+<p><strong>Inference (7B model):</strong>
+- Weights: 14 GB
+- Activations: 1-2 GB (minimal)
+- KV cache: 5-20 GB
+- <strong>Total: 20-36 GB</strong></p>
+<p><strong>Key differences:</strong>
+- No gradients in inference (no backward pass)
+- No optimizer states (not training)
+- Activations only for current layer (not stored for backprop)</p>
+<p>Optimizer states alone (56 GB) exceed entire inference budget.</p>
+<hr />
+<h3 id="q2-walk-through-the-memory-bottleneck-when-fine-tuning-a-13b-model-on-a-single-80gb-a100">Q2: Walk through the memory bottleneck when fine-tuning a 13B model on a single 80GB A100.<a class="headerlink" href="#q2-walk-through-the-memory-bottleneck-when-fine-tuning-a-13b-model-on-a-single-80gb-a100" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Memory breakdown (13B parameters, BF16):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weights</td>
+<td>26 GB</td>
+</tr>
+<tr>
+<td>Gradients</td>
+<td>26 GB</td>
+</tr>
+<tr>
+<td>Adam states</td>
+<td>104 GB ⚠️</td>
+</tr>
+<tr>
+<td>Activations</td>
+<td>10-40 GB</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>166-196 GB</strong> ❌</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem:</strong> Optimizer states alone exceed GPU capacity.</p>
+<p><strong>Solutions (stacked):</strong></p>
+<ol>
+<li><strong>Gradient checkpointing:</strong> 40 GB → 5 GB (activations)</li>
+<li>
+<p>New total: ~161 GB (still doesn't fit)</p>
+</li>
+<li>
+<p><strong>8-bit optimizer:</strong> 104 GB → 26 GB (optimizer)</p>
+</li>
+<li>
+<p>New total: 26 + 26 + 26 + 5 = <strong>83 GB</strong> (still over)</p>
+</li>
+<li>
+<p><strong>Reduce batch size:</strong> 4 → 1 with gradient accumulation</p>
+</li>
+<li>Activations: 5 GB → 2 GB</li>
+<li>New total: <strong>80 GB</strong> ✅ (barely fits!)</li>
+</ol>
+<p><strong>Alternative: LoRA (rank 32)</strong>
+- Trainable params: ~50M (0.4% of 13B)
+- Total memory: 26 (weights) + 0.1 (grads) + 0.4 (optimizer) + 2 (act) = <strong>28.5 GB</strong> ✅</p>
+<p><strong>Recommendation:</strong> LoRA for efficiency, or 8-bit Adam + checkpointing + small batch for full fine-tuning.</p>
+<hr />
+<h3 id="q3-explain-why-attention-becomes-memory-bound-for-long-sequences">Q3: Explain why attention becomes memory-bound for long sequences.<a class="headerlink" href="#q3-explain-why-attention-becomes-memory-bound-for-long-sequences" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Attention computation:</strong>
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$</p>
+<p><strong>The bottleneck:</strong> The intermediate <span class="arithmatex">\(S \times S\)</span> attention matrix.</p>
+<p>For sequence length <span class="arithmatex">\(S=8192\)</span>:
+- Attention matrix size: <span class="arithmatex">\(8192^2 \times 2 \text{ bytes} = 134\)</span> MB per head
+- 32 heads: <span class="arithmatex">\(32 \times 134 = 4.3\)</span> GB just for attention scores
+- This must be materialized in memory → <strong>memory bound</strong></p>
+<p><strong>Arithmetic intensity is low:</strong></p>
+<p>For large <span class="arithmatex">\(S\)</span>, most operations are reading/writing the <span class="arithmatex">\(S^2\)</span> matrix, not computing.</p>
+<p><strong>Flash Attention solution:</strong>
+- Never materializes full <span class="arithmatex">\(S \times S\)</span> matrix
+- Recomputes attention in blocks (tiling)
+- Reduces memory: <span class="arithmatex">\(O(S^2) \rightarrow O(S)\)</span></p>
+<hr />
+<h3 id="q4-youre-serving-100-requests-with-a-7b-model-kv-cache-is-60gb-how-can-you-reduce-this">Q4: You're serving 100 requests with a 7B model. KV cache is 60GB. How can you reduce this?<a class="headerlink" href="#q4-youre-serving-100-requests-with-a-7b-model-kv-cache-is-60gb-how-can-you-reduce-this" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Current state:</strong> 60 GB / 100 requests = 0.6 GB per request</p>
+<p>This implies ~1,144 tokens per request average (context + generation).</p>
+<p><strong>Reduction strategies:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Reduction</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reduce context to 512 tokens</strong></td>
+<td>55%</td>
+<td>May truncate important context</td>
+</tr>
+<tr>
+<td><strong>Use GQA model (8 KV heads vs 32)</strong></td>
+<td>75%</td>
+<td>Requires different model</td>
+</tr>
+<tr>
+<td><strong>PagedAttention (vLLM)</strong></td>
+<td>10-30%</td>
+<td>Better packing, no quality loss</td>
+</tr>
+<tr>
+<td><strong>KV cache quantization (INT8)</strong></td>
+<td>50%</td>
+<td>Slight quality degradation</td>
+</tr>
+<tr>
+<td><strong>Reduce concurrent requests (100→50)</strong></td>
+<td>50%</td>
+<td>Lower throughput</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended:</strong>
+- vLLM with PagedAttention + context limit (1024 tokens)
+- Achieves ~70% reduction without quality loss
+- Total: ~18-24 GB</p>
+<hr />
+<h3 id="q5-compare-memory-patterns-of-data-parallel-vs-zero-3">Q5: Compare memory patterns of Data Parallel vs ZeRO-3.<a class="headerlink" href="#q5-compare-memory-patterns-of-data-parallel-vs-zero-3" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Setup:</strong> 8 GPUs, 7B model (14 GB parameters)</p>
+<p><strong>Data Parallel (DP):</strong></p>
+<p>Memory per GPU:
+- Full model copy: 14 GB
+- Full optimizer: 56 GB
+- 1/8 of activations/gradients
+- <strong>Total: ~84 GB</strong></p>
+<p>Communication:
+- All-reduce gradients: 14 GB per GPU
+- Simple, efficient</p>
+<p><strong>ZeRO-3:</strong></p>
+<p>Memory per GPU:
+- 1/8 of model: 1.75 GB
+- 1/8 of optimizer: 7 GB
+- 1/8 of gradients: 1.75 GB
+- <strong>Total: ~12-15 GB</strong> (5-7× less!)</p>
+<p>Communication:
+- All-gather parameters before each layer
+- Reduce-scatter gradients
+- Total: ~28 GB per GPU (2× DP)</p>
+<p><strong>Trade-off:</strong>
+- ZeRO-3: Less memory, more communication
+- DP: More memory, less communication</p>
+<p><strong>When to use:</strong>
+- <strong>DP:</strong> Model fits on single GPU, want max throughput
+- <strong>ZeRO-3:</strong> Model doesn't fit, willing to trade speed for capacity</p>
+<hr />
+<h3 id="q6-design-a-memory-budget-for-serving-a-70b-model-at-1000-qps">Q6: Design a memory budget for serving a 70B model at 1000 QPS.<a class="headerlink" href="#q6-design-a-memory-budget-for-serving-a-70b-model-at-1000-qps" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Model:</strong> 70B parameters (140 GB in BF16)</p>
+<p><strong>Throughput analysis:</strong>
+- QPS: 1000 requests/sec
+- Average latency: ~6 seconds (input processing + generation)
+- Concurrent requests: 1000 × 6 = 6000 ⚠️</p>
+<p><strong>This is unrealistic.</strong> Must optimize:</p>
+<p><strong>1. Use Grouped-Query Attention:</strong>
+- Reduce KV heads 80 → 8 (10× reduction)</p>
+<p><strong>2. Realistic concurrent batching:</strong>
+- vLLM continuous batching
+- Actual concurrent: ~500-1000 (not 6000)</p>
+<p><strong>3. Average active tokens:</strong>
+- Not all requests at max length
+- Effective: ~300 tokens per request</p>
+<p><strong>KV cache estimate:</strong>
+- 1000 concurrent × 300 tokens × 0.26 MB/token = <strong>78 GB</strong></p>
+<p><strong>System design (8× H100 80GB):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Memory per GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model (TP-8)</td>
+<td>140 GB / 8 = 17.5 GB</td>
+</tr>
+<tr>
+<td>KV cache</td>
+<td>78 GB / 8 = 9.75 GB</td>
+</tr>
+<tr>
+<td>Workspace</td>
+<td>2 GB</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>29.25 GB</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Architecture:</strong>
+- 8× H100 80GB (tensor parallelism)
+- vLLM with PagedAttention
+- 70B model with GQA
+- Expected: 800-1200 QPS sustained</p>
+<hr />
+<h2 id="8-summary">8. Summary<a class="headerlink" href="#8-summary" title="Permanent link">&para;</a></h2>
+<p><strong>Key takeaways:</strong></p>
+<h3 id="memory-hierarchy">Memory Hierarchy<a class="headerlink" href="#memory-hierarchy" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GPU HBM: ~1.6 TB/s, 40-80 GB capacity (keep hot data here)</li>
+<li>CPU RAM: ~80 GB/s, 64GB-2TB capacity (offload cold data)</li>
+<li>PCIe: ~32 GB/s (minimize transfers)</li>
+</ul>
+<h3 id="training-vs-inference">Training vs Inference<a class="headerlink" href="#training-vs-inference" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Training: 3-5× more memory (gradients + optimizer states dominate)</li>
+<li>Inference: KV cache dominates for long contexts</li>
+<li>Can infer models that won't fit for training</li>
+</ul>
+<h3 id="compute-vs-memory-bound">Compute vs Memory Bound<a class="headerlink" href="#compute-vs-memory-bound" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Most Transformer ops are memory-bound (attention, LayerNorm, embeddings)</li>
+<li>Only large matrix multiplications are compute-bound</li>
+<li>Optimize for memory bandwidth, not just FLOPs</li>
+</ul>
+<h3 id="key-optimization-techniques">Key Optimization Techniques<a class="headerlink" href="#key-optimization-techniques" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Gradient checkpointing:</strong> 80-90% activation memory reduction</li>
+<li><strong>8-bit optimizers:</strong> 75% optimizer state reduction</li>
+<li><strong>LoRA:</strong> 100-1000× trainable parameter reduction</li>
+<li><strong>ZeRO-3:</strong> 5-7× memory reduction in multi-GPU training</li>
+<li><strong>GQA/MQA:</strong> 4-32× KV cache reduction</li>
+<li><strong>PagedAttention:</strong> 10-30% better KV cache utilization</li>
+</ul>
+<h3 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Keep hot data on GPU (avoid CPU-GPU transfers)</li>
+<li>Use gradient checkpointing for memory-constrained training</li>
+<li>Consider LoRA/PEFT before full fine-tuning</li>
+<li>For serving: use vLLM, GQA models, and batching</li>
+<li>For multi-GPU: ZeRO-3 if memory-limited, DP if throughput-critical</li>
+</ol>
+<hr />
+<h2 id="9-further-reading">9. Further Reading<a class="headerlink" href="#9-further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>ZeRO:</strong> <a href="https://arxiv.org/abs/1910.02054">Memory Optimizations Toward Training Trillion Parameter Models (2019)</a></li>
+<li><strong>Flash Attention:</strong> <a href="https://arxiv.org/abs/2205.14135">Fast and Memory-Efficient Exact Attention (2022)</a></li>
+<li><strong>PagedAttention:</strong> <a href="https://arxiv.org/abs/2309.06180">Efficient Memory Management for LLM Serving (2023)</a></li>
+<li><strong>GQA:</strong> <a href="https://arxiv.org/abs/2305.13245">Training Generalized Multi-Query Transformer Models (2023)</a></li>
+</ul>
 
 
 

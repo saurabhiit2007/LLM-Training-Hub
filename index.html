@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="phases/pre_training/">
+        <link rel="next" href="training_phases/pre_training/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -303,7 +303,7 @@
   
   
   <span class="md-ellipsis">
-    Phases
+    Training Phases
     
   </span>
   
@@ -314,7 +314,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
-            Phases
+            Training Phases
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -325,7 +325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="phases/pre_training/" class="md-nav__link">
+      <a href="training_phases/pre_training/" class="md-nav__link">
         
   
   
@@ -348,7 +348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="phases/mid_training/" class="md-nav__link">
+      <a href="training_phases/mid_training/" class="md-nav__link">
         
   
   
@@ -371,7 +371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="phases/sft/" class="md-nav__link">
+      <a href="training_phases/post_training/" class="md-nav__link">
         
   
   
@@ -441,12 +441,12 @@
   
   
     <li class="md-nav__item">
-      <a href="distributed_training/distributed_training_systems/" class="md-nav__link">
+      <a href="distributed_training/parallelism_overview/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Distributed Training System
+    Parallelism Overview
     
   </span>
   
@@ -464,12 +464,104 @@
   
   
     <li class="md-nav__item">
-      <a href="distributed_training/fsdp_deepspeed/" class="md-nav__link">
+      <a href="distributed_training/data_parallelism/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    FSDP & DeepSpeed
+    Data Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributed_training/tensor_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensor Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributed_training/pipeline_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipeline Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributed_training/zero_deepspeed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zero-Deepspeed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributed_training/fsdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FSDP
     
   </span>
   
@@ -603,12 +695,58 @@
   
   
     <li class="md-nav__item">
-      <a href="parameter_efficient_fine_tuning/prefix_tuning/" class="md-nav__link">
+      <a href="parameter_efficient_fine_tuning/prefix_tuning.md" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Prefix Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="parameter_efficient_fine_tuning/4bit_normal_float/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4-bit NormalFloat (NF4)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="parameter_efficient_fine_tuning/blockwise_kbit_quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Block-wise k-bit Quantization
     
   </span>
   
@@ -673,12 +811,12 @@
   
   
     <li class="md-nav__item">
-      <a href="optimization/4bit_normal_float/" class="md-nav__link">
+      <a href="optimization/mixed_precision/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    4-bit NormalFloat (NF4)
+    Mixed Precision
     
   </span>
   
@@ -696,12 +834,12 @@
   
   
     <li class="md-nav__item">
-      <a href="optimization/blockwise_kbit_quantization/" class="md-nav__link">
+      <a href="optimization/gradient_checkpointing/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Block-wise k-bit Quantization
+    Gradient Checkpointing
     
   </span>
   
@@ -719,12 +857,12 @@
   
   
     <li class="md-nav__item">
-      <a href="optimization/accelerate.md" class="md-nav__link">
+      <a href="optimization/memory_efficient_optimizers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Accelerate Framework
+    Memory Efficient Optimizers
     
   </span>
   
@@ -742,12 +880,35 @@
   
   
     <li class="md-nav__item">
-      <a href="optimization/bp16/" class="md-nav__link">
+      <a href="optimization/optimizers_schedules/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    BP16
+    Optimizers-Schedules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="optimization/quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quantization
     
   </span>
   
@@ -770,53 +931,7 @@
   
   
   <span class="md-ellipsis">
-    Memory Consideration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="optimization/paged_adam/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Paged Adam Optimizer
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="optimization/training_optimization_and_stability/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Training Optimization and Stability
+    Memory Considerations
     
   </span>
   
@@ -882,7 +997,7 @@
   
   
   <span class="md-ellipsis">
-    Training Pipeline
+    Frameworks
     
   </span>
   
@@ -892,6 +1007,76 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Frameworks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="optimization/accelerate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accelerate Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Pipeline
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             Training Pipeline
           </label>

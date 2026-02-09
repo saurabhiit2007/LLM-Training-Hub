@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../../distributed_training/fsdp/">
+        <link rel="prev" href="../4bit_normal_float/">
       
       
-        <link rel="next" href="../qlora/">
+        <link rel="next" href="../../optimization/mixed_precision/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>LoRA - Fine-Tuning Methods Documentation</title>
+        <title>Block-wise k-bit Quantization - Fine-Tuning Methods Documentation</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lora-low-rank-adaptation" class="md-skip">
+        <a href="#block-wise-k-bit-quantization" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LoRA
+              Block-wise k-bit Quantization
             
           </span>
         </div>
@@ -615,32 +615,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    LoRA
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../lora/" class="md-nav__link">
         
   
   
@@ -651,194 +629,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Overview
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-motivation" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Motivation
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-core-idea" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Core Idea
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-lora-in-attention-layers" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. LoRA in Attention Layers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-objective-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Objective Function
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-implementation-details-pseudo-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Implementation Details (Pseudo-Code)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-hyperparameters-heuristics" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Hyperparameters &amp; Heuristics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-training-configurations-memory-optimizations" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Training Configurations &amp; Memory Optimizations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-common-issues-and-concrete-solutions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Issues and Concrete Solutions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Issues and Concrete Solutions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oom-cuda-out-of-memory" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧠 OOM / CUDA Out of Memory
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#training-instability-divergence" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚡ Training Instability / Divergence
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#underfitting-insufficient-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      🪫 Underfitting (Insufficient Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#overfitting-on-small-datasets" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧩 Overfitting on Small Datasets
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#quantization-compatibility-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚙️ Quantization Compatibility Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adapter-conflicts-when-stacking" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔗 Adapter Conflicts When Stacking
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-best-practices-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Best Practices &amp; Checklist
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-limitations-challenges" class="md-nav__link">
-    <span class="md-ellipsis">
-      11. Limitations &amp; Challenges
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-comparison-lora-vs-other-methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. Comparison: LoRA vs Other Methods
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -940,10 +730,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../blockwise_kbit_quantization/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Block-wise k-bit Quantization
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -954,6 +766,215 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Motivation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Motivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem-outliers-in-weight-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🧠 Problem: Outliers in Weight Distributions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solution-block-wise-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      ✅ Solution: Block-wise Quantization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-mathematical-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Mathematical Formulation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Mathematical Formulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-compute-local-scale-and-zero-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Compute Local Scale and Zero-Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-dequantization-reconstruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Dequantization (Reconstruction)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-double-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Double Quantization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Double Quantization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation-in-bitsandbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Implementation in Bitsandbytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-key-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Key Notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-implementation-details-pseudo-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Implementation Details (Pseudo-Code)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-example-4-bit-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Example (4-bit Quantization)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Advantages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-hardware-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Hardware Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Visualization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-relationship-to-qlora" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Relationship to QLoRA
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1401,121 +1422,22 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-core-idea" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Core Idea
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-lora-in-attention-layers" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. LoRA in Attention Layers
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-objective-function" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Objective Function
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-implementation-details-pseudo-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Implementation Details (Pseudo-Code)
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-hyperparameters-heuristics" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Hyperparameters &amp; Heuristics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-training-configurations-memory-optimizations" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Training Configurations &amp; Memory Optimizations
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-common-issues-and-concrete-solutions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Issues and Concrete Solutions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Issues and Concrete Solutions">
+    <nav class="md-nav" aria-label="2. Motivation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#oom-cuda-out-of-memory" class="md-nav__link">
+  <a href="#problem-outliers-in-weight-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      🧠 OOM / CUDA Out of Memory
+      🧠 Problem: Outliers in Weight Distributions
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#training-instability-divergence" class="md-nav__link">
+  <a href="#solution-block-wise-quantization" class="md-nav__link">
     <span class="md-ellipsis">
-      ⚡ Training Instability / Divergence
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#underfitting-insufficient-capacity" class="md-nav__link">
-    <span class="md-ellipsis">
-      🪫 Underfitting (Insufficient Capacity)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#overfitting-on-small-datasets" class="md-nav__link">
-    <span class="md-ellipsis">
-      🧩 Overfitting on Small Datasets
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#quantization-compatibility-issues" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚙️ Quantization Compatibility Issues
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#adapter-conflicts-when-stacking" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔗 Adapter Conflicts When Stacking
+      ✅ Solution: Block-wise Quantization
     </span>
   </a>
   
@@ -1527,27 +1449,147 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-best-practices-checklist" class="md-nav__link">
+  <a href="#3-mathematical-formulation" class="md-nav__link">
     <span class="md-ellipsis">
-      10. Best Practices &amp; Checklist
+      3. Mathematical Formulation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Mathematical Formulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-compute-local-scale-and-zero-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Compute Local Scale and Zero-Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Quantization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-dequantization-reconstruction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Dequantization (Reconstruction)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-double-quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Double Quantization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Double Quantization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation-in-bitsandbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. Implementation in Bitsandbytes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-key-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Key Notes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-implementation-details-pseudo-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Implementation Details (Pseudo-Code)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#11-limitations-challenges" class="md-nav__link">
+  <a href="#6-example-4-bit-quantization" class="md-nav__link">
     <span class="md-ellipsis">
-      11. Limitations &amp; Challenges
+      6. Example (4-bit Quantization)
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#12-comparison-lora-vs-other-methods" class="md-nav__link">
+  <a href="#7-advantages" class="md-nav__link">
     <span class="md-ellipsis">
-      12. Comparison: LoRA vs Other Methods
+      7. Advantages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-hardware-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Hardware Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Visualization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-relationship-to-qlora" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Relationship to QLoRA
     </span>
   </a>
   
@@ -1572,245 +1614,274 @@
   
 
 
-<h1 id="lora-low-rank-adaptation">🧩 LORA: Low-Rank Adaptation<a class="headerlink" href="#lora-low-rank-adaptation" title="Permanent link">&para;</a></h1>
+<h1 id="block-wise-k-bit-quantization">⚙️ Block-wise k-bit Quantization<a class="headerlink" href="#block-wise-k-bit-quantization" title="Permanent link">&para;</a></h1>
 <hr />
 <h3 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h3>
-<p>Large Language Models (LLMs) contain billions of parameters, making full fine-tuning computationally expensive and memory intensive.  </p>
-<p><strong>Low-Rank Adaptation (LoRA)</strong> provides a <strong>parameter-efficient</strong> way to adapt pretrained models by freezing the original weights and introducing small trainable <strong>low-rank update matrices</strong>.  </p>
-<p>LoRA decomposes weight updates into a <strong>low-rank factorization</strong>, allowing fine-tuning with only a fraction of the original parameters while retaining model quality.</p>
+<p><strong>Block-wise k-bit quantization</strong> is a technique that compresses model weights into low-bit representations (e.g., 4-bit, 8-bit) while preserving performance and minimizing quantization error.
+Instead of quantizing each value independently, <strong>block-wise quantization</strong> divides the weight matrix into smaller <strong>blocks (chunks)</strong> and performs quantization relative to <strong>local statistics</strong> (like scale and zero-point) of each block.</p>
+<p>This local normalization significantly reduces quantization error caused by <strong>outlier values</strong> — a common issue in transformer weights.</p>
 <hr />
 <h3 id="2-motivation">2. Motivation<a class="headerlink" href="#2-motivation" title="Permanent link">&para;</a></h3>
-<p>Fine-tuning a pretrained model requires adjusting all parameters, which can be:</p>
+<h4 id="problem-outliers-in-weight-distributions">🧠 Problem: Outliers in Weight Distributions<a class="headerlink" href="#problem-outliers-in-weight-distributions" title="Permanent link">&para;</a></h4>
+<p>Weights in large models (especially in attention layers) often follow <strong>heavy-tailed distributions</strong> — a few large values coexist with many small ones.<br />
+In <strong>global quantization</strong>, a single scale <span class="arithmatex">\( s_{\text{global}} = \frac{\max(|W|)}{2^{k-1}-1} \)</span> is used for all weights.<br />
+Large outliers force the scale up, making most small weights collapse to zero after quantization.</p>
+<hr />
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>Consider:
+$$
+W = [0.01, 0.02, -0.03, 0.05, 3.0]
+$$</p>
+<p>With <strong>4-bit global quantization</strong>:
+$$
+s_{\text{global}} = \frac{3.0}{7} \approx 0.43
+$$</p>
+<p>Quantized weights → <code>[0, 0, 0, 0, 7]</code> — almost all small weights vanish due to the single large outlier.</p>
+</div>
+<hr />
+<h4 id="solution-block-wise-quantization">✅ Solution: Block-wise Quantization<a class="headerlink" href="#solution-block-wise-quantization" title="Permanent link">&para;</a></h4>
+<p>Split weights into small <strong>blocks</strong> (e.g., 64–256 values each), and compute a separate scale per block:
+$$
+s_b = \frac{\max(|W_b|)}{2^{k-1}-1}
+$$
+Each block adapts to its local range, preserving fine details while still compressing efficiently.</p>
+<p>By partitioning weights into <strong>blocks</strong> and computing <strong>scale/offset per block</strong>, quantization adapts to local statistics and better preserves precision.</p>
+<hr />
+<h3 id="3-mathematical-formulation">3. Mathematical Formulation<a class="headerlink" href="#3-mathematical-formulation" title="Permanent link">&para;</a></h3>
+<div class="admonition example">
+<p class="admonition-title">📘 Steps for block quantization</p>
+<p>Let:</p>
 <ul>
-<li><strong>Expensive</strong> — requires large GPU memory and long training time.</li>
-<li><strong>Inefficient</strong> — multiple downstream tasks need separate full fine-tunes.</li>
-<li><strong>Redundant</strong> — many weight updates lie in a low intrinsic dimension subspace.</li>
+<li><span class="arithmatex">\(W \in \mathbb{R}^{d \times k}\)</span>: full-precision weight matrix</li>
+<li><span class="arithmatex">\(B_i \subset W\)</span>: the i-th block of size <span class="arithmatex">\(n_b\)</span></li>
+<li><span class="arithmatex">\(k\)</span>: number of bits used for quantization (e.g., 4 or 8)</li>
 </ul>
-<p>LoRA aims to address these issues by <strong>restricting weight updates to a low-rank subspace</strong>.</p>
-<hr />
-<h3 id="3-core-idea">3. Core Idea<a class="headerlink" href="#3-core-idea" title="Permanent link">&para;</a></h3>
-<p>Let <span class="arithmatex">\(W_0 \in \mathbb{R}^{d \times k}\)</span> be a pretrained weight matrix of a layer (e.g., in attention or MLP).<br />
-In full fine-tuning, the model learns a weight update <span class="arithmatex">\(\Delta W\)</span>, resulting in:</p>
+<h4 id="step-1-compute-local-scale-and-zero-point">Step 1: Compute Local Scale and Zero-Point<a class="headerlink" href="#step-1-compute-local-scale-and-zero-point" title="Permanent link">&para;</a></h4>
+<p>For each block <span class="arithmatex">\(B_i\)</span>:</p>
 <div class="arithmatex">\[
-W = W_0 + \Delta W
+s_i = \frac{\max(B_i) - \min(B_i)}{2^k - 1}
 \]</div>
-<p>LoRA assumes <span class="arithmatex">\(\Delta W\)</span> is <strong>low-rank</strong> and can be decomposed as:</p>
 <div class="arithmatex">\[
-\Delta W = B A
+z_i = \text{round}\left(-\frac{\min(B_i)}{s_i}\right)
 \]</div>
-<p>where:</p>
+<p>Where:</p>
 <ul>
-<li><span class="arithmatex">\(A \in \mathbb{R}^{r \times k}\)</span></li>
-<li><span class="arithmatex">\(B \in \mathbb{R}^{d \times r}\)</span></li>
-<li><span class="arithmatex">\(r \ll \min(d, k)\)</span> is the <strong>rank</strong> hyperparameter.</li>
+<li><span class="arithmatex">\(s_i\)</span>: scale factor for block <span class="arithmatex">\(i\)</span></li>
+<li><span class="arithmatex">\(z_i\)</span>: zero-point (offset)</li>
 </ul>
-<p>During fine-tuning:</p>
+<hr />
+<h4 id="step-2-quantization">Step 2: Quantization<a class="headerlink" href="#step-2-quantization" title="Permanent link">&para;</a></h4>
+<p>Quantized integer representation:</p>
+<div class="arithmatex">\[
+q_i = \text{clip}\left(\text{round}\left(\frac{B_i}{s_i}\right) + z_i, 0, 2^k - 1\right)
+\]</div>
+<h4 id="step-3-dequantization-reconstruction">Step 3: Dequantization (Reconstruction)<a class="headerlink" href="#step-3-dequantization-reconstruction" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+\hat{B_i} = s_i \times (q_i - z_i)
+\]</div>
+<p>The final reconstructed weight matrix:</p>
+<div class="arithmatex">\[
+\hat{W} = \bigcup_i \hat{B_i}
+\]</div>
+<hr />
+</div>
+<h3 id="4-double-quantization">4. Double Quantization<a class="headerlink" href="#4-double-quantization" title="Permanent link">&para;</a></h3>
+<p><strong>Double quantization</strong> is a secondary compression layer designed to reduce the overhead of storing multiple block-wise scales. Instead of storing each block’s scaling factor <span class="arithmatex">\( s_j \)</span> as a 16-bit or 32-bit float, <strong>these scale values themselves are quantized</strong> into a lower precision representation (e.g., 8-bit or 4-bit).</p>
+<div class="admonition example">
+<p class="admonition-title">📘 Details</p>
+<h4 id="41-concept">4.1. Concept<a class="headerlink" href="#41-concept" title="Permanent link">&para;</a></h4>
+<p>If there are <span class="arithmatex">\(N\)</span> blocks, each with a scale <span class="arithmatex">\(s_j\)</span>:</p>
+<div class="arithmatex">\[
+\tilde{s_j} = \text{quantize}(s_j, s_{\text{meta}}, q_{\min}, q_{\max})
+\]</div>
+<p>Here, <span class="arithmatex">\(s_{\text{meta}}\)</span> is a higher-level scale shared across a group of block-scales.</p>
+<p>At dequantization:</p>
+<div class="arithmatex">\[
+s_j = s_{\text{meta}} \cdot \tilde{s_j}
+\]</div>
+<div class="arithmatex">\[
+\hat{x_i} = s_j \cdot q_i
+\]</div>
+<p>This approach can yield <strong>20–30% memory savings</strong>, especially when using small block sizes where the number of stored scales is large.</p>
+<h4 id="42-example">4.2. Example<a class="headerlink" href="#42-example" title="Permanent link">&para;</a></h4>
+<p>Consider a model layer with 10,000 blocks of weights.<br />
+Each block has one scale <span class="arithmatex">\( s_i \)</span>.</p>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of blocks</td>
+<td>10,000</td>
+</tr>
+<tr>
+<td>Scale per block (FP16)</td>
+<td>2 bytes</td>
+</tr>
+<tr>
+<td>Memory (without double quantization)</td>
+<td>20 KB</td>
+</tr>
+<tr>
+<td>Quantized scale (8-bit)</td>
+<td>1 byte</td>
+</tr>
+<tr>
+<td>Memory (with double quantization)</td>
+<td>10 KB</td>
+</tr>
+</tbody>
+</table>
+<p>So double quantization reduces metadata memory by <strong>50%</strong> with negligible degradation (typically &lt; 0.1% accuracy loss).</p>
+<h4 id="43-implementation-in-bitsandbytes">4.3. Implementation in Bitsandbytes<a class="headerlink" href="#43-implementation-in-bitsandbytes" title="Permanent link">&para;</a></h4>
+<p>In <strong>bitsandbytes 0.39+</strong>, both <strong>block-wise quantization</strong> and <strong>double quantization</strong> are implemented jointly:</p>
 <ul>
-<li><span class="arithmatex">\(W_0\)</span> is <strong>frozen</strong> (no gradient updates).</li>
-<li>Only <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> are <strong>trainable</strong>.</li>
+<li>Each weight block is quantized in <strong>NF4 format</strong>.</li>
+<li>Each block’s <strong>scale value</strong> is quantized using <strong>8-bit quantization</strong>.</li>
+<li>The quantized scales are stored alongside the 4-bit codes.</li>
+<li>Dequantization happens transparently during forward passes.</li>
 </ul>
-<p>At inference, the effective weight is:</p>
-<div class="arithmatex">\[
-W_{\text{eff}} = W_0 + \frac{\alpha}{r} B A
-\]</div>
-<p>where <span class="arithmatex">\(\alpha\)</span> is a scaling factor controlling the magnitude of updates.</p>
+<p>This enables models like LLaMA-2 70B to be fine-tuned on <strong>single 48GB GPUs</strong>.</p>
 <hr />
-<h3 id="4-lora-in-attention-layers">4. LoRA in Attention Layers<a class="headerlink" href="#4-lora-in-attention-layers" title="Permanent link">&para;</a></h3>
-<p>In Transformer architectures, LoRA is typically applied to <strong>query (Q)</strong> and <strong>value (V)</strong> projection matrices within the self-attention module.</p>
-<p>For example, the modified query projection becomes:</p>
-<div class="arithmatex">\[
-h = (W_Q + \Delta W_Q) x = W_Q x + B_Q A_Q x
-\]</div>
-<p>This retains the original computation while enabling efficient adaptation with small additional matrices.</p>
+<h4 id="44-key-notes">4.4 Key Notes<a class="headerlink" href="#44-key-notes" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Double quantization is orthogonal but <strong>complementary</strong> to block-wise quantization.  </li>
+<li>It primarily targets <strong>metadata compression</strong>, not model accuracy.  </li>
+<li>Used in <strong>QLoRA</strong> to compress per-block scales efficiently.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>Aspect</strong></th>
+<th><strong>Effect</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Memory Efficiency</strong></td>
+<td>Up to 2× reduction in metadata storage</td>
+</tr>
+<tr>
+<td><strong>Accuracy Impact</strong></td>
+<td>Negligible (&lt; 0.1% degradation)</td>
+</tr>
+<tr>
+<td><strong>Computation Overhead</strong></td>
+<td>Minimal (scales dequantized once per block)</td>
+</tr>
+<tr>
+<td><strong>Compatibility</strong></td>
+<td>Fully supported in <code>bitsandbytes</code> &amp; <code>QLoRA</code> stack</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h3 id="5-objective-function">5. Objective Function<a class="headerlink" href="#5-objective-function" title="Permanent link">&para;</a></h3>
-<p>LoRA uses the <strong>same loss function</strong> as the base fine-tuning objective (e.g., cross-entropy for language modeling):</p>
-<div class="arithmatex">\[
-\mathcal{L} = - \sum_{t} \log p_\theta(y_t | y_{&lt;t}, x)
-\]</div>
-<p>The only difference is that <strong>only</strong> the parameters in <span class="arithmatex">\( A \)</span> and <span class="arithmatex">\( B \)</span> are updated:</p>
-<div class="arithmatex">\[
-\frac{\partial \mathcal{L}}{\partial W_0} = 0, \quad
-\frac{\partial \mathcal{L}}{\partial A}, \frac{\partial \mathcal{L}}{\partial B} \neq 0
-\]</div>
-<p>This selective gradient flow drastically reduces training cost and memory footprint.</p>
-<hr />
-<h3 id="6-implementation-details-pseudo-code">6. Implementation Details (Pseudo-Code)<a class="headerlink" href="#6-implementation-details-pseudo-code" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">LoRALinear</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">,</span> <span class="n">out_dim</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scaling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">in_dim</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">out_dim</span><span class="p">,</span> <span class="n">r</span><span class="p">))</span>
-
-        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-        <span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">zeros_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">requires_grad</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Freeze base weights</span>
-
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">)</span>
+</div>
+<h3 id="5-implementation-details-pseudo-code">5. Implementation Details (Pseudo-Code)<a class="headerlink" href="#5-implementation-details-pseudo-code" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">blockwise_quantize</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">num_bits</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+    <span class="n">q_blocks</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">zeros</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">block_size</span><span class="p">):</span>
+        <span class="n">block</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">block_size</span><span class="p">]</span>
+        <span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">block</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_val</span> <span class="o">-</span> <span class="n">min_val</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">num_bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">zero_point</span> <span class="o">=</span> <span class="o">-</span><span class="n">min_val</span> <span class="o">/</span> <span class="n">scale</span>
+        <span class="n">q_block</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">block</span> <span class="o">/</span> <span class="n">scale</span> <span class="o">+</span> <span class="n">zero_point</span><span class="p">)</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="n">num_bits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">q_blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q_block</span><span class="p">)</span>
+        <span class="n">scales</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
+        <span class="n">zeros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zero_point</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q_blocks</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">zeros</span>
 </code></pre></div>
-<h3 id="7-hyperparameters-heuristics">7. Hyperparameters &amp; Heuristics<a class="headerlink" href="#7-hyperparameters-heuristics" title="Permanent link">&para;</a></h3>
+<h3 id="6-example-4-bit-quantization">6. Example (4-bit Quantization)<a class="headerlink" href="#6-example-4-bit-quantization" title="Permanent link">&para;</a></h3>
+<div class="admonition example">
+<p class="admonition-title">📘 Working example</p>
+<p>Consider a block of weights:</p>
+<div class="arithmatex">\[
+B_i = [-0.9, -0.3, 0.2, 0.5, 1.0]
+\]</div>
+<p>For <span class="arithmatex">\(k = 4\)</span> bits:</p>
+<ul>
+<li><span class="arithmatex">\(\min = -0.9, \max = 1.0\)</span></li>
+<li><span class="arithmatex">\(s_i = (1.0 - (-0.9)) / 15 = 0.1267\)</span></li>
+<li><span class="arithmatex">\(z_i = -(-0.9) / 0.1267 = 7.1 \approx 7\)</span></li>
+</ul>
+<p>Quantized values:</p>
+<div class="arithmatex">\[
+q_i = \text{round}(B_i / s_i + z_i) = [0, 5, 9, 11, 15]
+\]</div>
+<p>Dequantized:</p>
+<div class="arithmatex">\[
+\hat{B_i} = s_i \times (q_i - 7) = [-0.9, -0.26, 0.32, 0.51, 1.01]
+\]</div>
+<p>The reconstruction closely approximates the original block.</p>
+<hr />
+</div>
+<h3 id="7-advantages">7. Advantages<a class="headerlink" href="#7-advantages" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th><strong>Hyperparameter</strong></th>
-<th><strong>Typical Range</strong></th>
-<th><strong>Practical Tip</strong></th>
+<th><strong>Aspect</strong></th>
+<th><strong>Benefit</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Rank (r)</strong></td>
-<td>4 – 64 (sometimes up to 256)</td>
-<td>Start small (4/8/16) and increase if underfitting</td>
+<td>Local scaling</td>
+<td>Reduces sensitivity to outliers</td>
 </tr>
 <tr>
-<td><strong>Alpha (α)</strong></td>
-<td>≈ 2 × r</td>
-<td>Scaling factor: <code>scaling = α / r</code></td>
+<td>Memory</td>
+<td>Lower storage cost (e.g., 4-bit = 8× compression)</td>
 </tr>
 <tr>
-<td><strong>Learning Rate</strong></td>
-<td>1e-4 – 5e-4</td>
-<td>Too high → drift; too low → slow adaptation</td>
+<td>Compute</td>
+<td>Enables efficient GPU matrix-multiplication with custom kernels</td>
 </tr>
 <tr>
-<td><strong>Dropout (<code>lora_dropout</code>)</strong></td>
-<td>0.0 – 0.1</td>
-<td>0.05 often helpful on small datasets</td>
-</tr>
-<tr>
-<td><strong>Epochs</strong></td>
-<td>1 – few</td>
-<td>Avoid many epochs on small instruction datasets</td>
+<td>Accuracy</td>
+<td>Closer performance to full precision</td>
 </tr>
 </tbody>
 </table>
-<h3 id="8-training-configurations-memory-optimizations">8. Training Configurations &amp; Memory Optimizations<a class="headerlink" href="#8-training-configurations-memory-optimizations" title="Permanent link">&para;</a></h3>
+<hr />
+<h3 id="8-hardware-implementation">8. Hardware Implementation<a class="headerlink" href="#8-hardware-implementation" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Mixed precision</strong>: Use <code>fp16</code> or <code>bf16</code> to reduce memory usage and speed up training.  </li>
-<li><strong>Gradient accumulation</strong>: Emulate large batch sizes using smaller per-device batches.  </li>
-<li><strong>Gradient checkpointing</strong>: Trade compute for reduced activation memory footprint.  </li>
-<li><strong>CPU offload / <code>device_map</code></strong>: Offload frozen weights using the <code>accelerate</code> or Hugging Face <code>device_map</code> feature.  </li>
-<li><strong>Optimizer</strong>: <code>AdamW</code> is the default; for very large adapter parameter sets, consider memory-efficient optimizers or even <code>SGD</code> if appropriate.  </li>
-<li><strong>QLoRA</strong>: Load the base model in <strong>4-bit</strong> precision using <code>bitsandbytes</code>, and train LoRA adapters — enables <strong>single-GPU training</strong> for very large models.  </li>
-</ul>
-<h3 id="9-common-issues-and-concrete-solutions">9. Common Issues and Concrete Solutions<a class="headerlink" href="#9-common-issues-and-concrete-solutions" title="Permanent link">&para;</a></h3>
-<h4 id="oom-cuda-out-of-memory">🧠 OOM / CUDA Out of Memory<a class="headerlink" href="#oom-cuda-out-of-memory" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Lower <code>rank (r)</code>.  </li>
-<li>Use <strong>QLoRA (4-bit)</strong> or <strong>mixed precision</strong>.  </li>
-<li>Reduce <strong>batch size</strong> and use <strong>gradient accumulation</strong>.  </li>
-<li>Enable <strong>gradient checkpointing</strong> or <strong>CPU offload</strong>.  </li>
+<li>Most modern inference frameworks (e.g., <strong>bitsandbytes</strong>, <strong>TensorRT</strong>) store the <strong>scale and zero-point per block</strong>.</li>
+<li>For 4-bit quantization, typical block sizes: <strong>32, 64, or 128</strong>.</li>
+<li>Scales are stored in FP16 to balance precision and storage.</li>
 </ul>
 <hr />
-<h4 id="training-instability-divergence">⚡ Training Instability / Divergence<a class="headerlink" href="#training-instability-divergence" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Lower <code>learning rate</code> and/or <code>α</code>.  </li>
-<li>Add a small <strong>LoRA dropout</strong>.  </li>
-<li>Use <strong>warmup</strong> and <strong>learning rate schedulers</strong> (e.g., cosine or linear).  </li>
-</ul>
+<h3 id="9-visualization">9. Visualization<a class="headerlink" href="#9-visualization" title="Permanent link">&para;</a></h3>
+<p>A conceptual diagram of block-wise quantization:</p>
+<div class="highlight"><pre><span></span><code>┌────────────────────────────┐
+│         Weight Matrix      │
+│  [w₁, w₂, …, wₙ]          │
+└────────────────────────────┘
+          ↓ Split into Blocks
+┌──────────────┬──────────────┐
+│ Block 1      │ Block 2      │ ...
+└──────────────┴──────────────┘
+     ↓                 ↓
+Compute s₁,z₁      Compute s₂,z₂
+     ↓                 ↓
+Quantize each block separately
+     ↓                 ↓
+Store q₁,s₁,z₁,...,qₙ,sₙ,zₙ
+</code></pre></div>
+<p>Each block retains its <strong>own quantization scale and offset</strong>, enabling more accurate low-bit representation.</p>
 <hr />
-<h4 id="underfitting-insufficient-capacity">🪫 Underfitting (Insufficient Capacity)<a class="headerlink" href="#underfitting-insufficient-capacity" title="Permanent link">&para;</a></h4>
+<h3 id="10-relationship-to-qlora">10. Relationship to QLoRA<a class="headerlink" href="#10-relationship-to-qlora" title="Permanent link">&para;</a></h3>
+<p>QLoRA uses <strong>4-bit NormalFloat (NF4)</strong> quantization with <strong>block-wise statistics</strong>:</p>
 <ul>
-<li>Gradually increase <strong>rank (r)</strong>.  </li>
-<li>Add adapters to more modules (e.g., <strong>MLP layers</strong>).  </li>
+<li>Each block (typically 64 elements) uses local mean and std for normalization.</li>
+<li>NF4 values are quantized into [-1, 1] with learned scales.</li>
+<li>This approach allows fine-tuning large LLMs on a <strong>single GPU</strong> without significant accuracy loss.</li>
 </ul>
-<hr />
-<h4 id="overfitting-on-small-datasets">🧩 Overfitting on Small Datasets<a class="headerlink" href="#overfitting-on-small-datasets" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Reduce <strong>epochs</strong> and <strong>learning rate</strong>.  </li>
-<li>Add <strong>dropout</strong> and <strong>data augmentation</strong>.  </li>
-<li>Use <strong>early stopping</strong> and <strong>validation checks</strong>.  </li>
-</ul>
-<hr />
-<h4 id="quantization-compatibility-issues">⚙️ Quantization Compatibility Issues<a class="headerlink" href="#quantization-compatibility-issues" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Prefer tested stacks: <code>bitsandbytes</code> + <strong>Hugging Face</strong> + <code>peft</code>.  </li>
-<li>Validate numeric stability on a small subset before full training.  </li>
-</ul>
-<hr />
-<h4 id="adapter-conflicts-when-stacking">🔗 Adapter Conflicts When Stacking<a class="headerlink" href="#adapter-conflicts-when-stacking" title="Permanent link">&para;</a></h4>
-<ul>
-<li>Avoid overlapping <strong>target modules</strong> unless intentionally merging adapters.  </li>
-<li>Use explicit <strong>adapter fusion tools</strong> when combining multiple adapters.</li>
-</ul>
-<hr />
-<h3 id="10-best-practices-checklist">10. Best Practices &amp; Checklist<a class="headerlink" href="#10-best-practices-checklist" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Start with small <strong>rank</strong> <code>r = 4–16</code> and <code>α = 2 × r</code>.  </li>
-<li><strong>Freeze base model weights</strong>; train only adapter parameters.  </li>
-<li>Use <strong>mixed precision</strong> and <strong>gradient checkpointing</strong> where appropriate.  </li>
-<li>Use <strong>PEFT / Hugging Face tooling</strong> for reliable save/load and metadata management.  </li>
-<li>Monitor <strong>validation metrics</strong> and <strong>KL-like drift metrics</strong> (compare outputs to base).  </li>
-<li>If memory constrained, use <strong>QLoRA + LoRA adapters</strong>.  </li>
-<li>Keep <strong>logs, seeds, and repeat runs</strong> for reproducibility.  </li>
-</ul>
-<hr />
-<h3 id="11-limitations-challenges">11. Limitations &amp; Challenges<a class="headerlink" href="#11-limitations-challenges" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Rank–Capacity Tradeoff</strong>: Small <code>r</code> may underfit; large <code>r</code> increases memory use and instability.  </li>
-<li><strong>Task-Specific Sensitivity</strong>: Optimal values for <code>r</code>, <code>α</code>, and learning rate vary across models and tasks.  </li>
-<li><strong>Quantization Effects</strong>: Combining LoRA with quantization (as in QLoRA) requires additional tuning.  </li>
-<li><strong>Adapter Management</strong>: Multiple adapters need clear naming and metadata to avoid conflicts.  </li>
-<li><strong>Not a Universal Replacement</strong>: For extreme distribution shifts, full fine-tuning may still be necessary.  </li>
-</ul>
-<hr />
-<h3 id="12-comparison-lora-vs-other-methods">12. Comparison: LoRA vs Other Methods<a class="headerlink" href="#12-comparison-lora-vs-other-methods" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>Method</strong></th>
-<th><strong>Parameter Efficiency</strong></th>
-<th><strong>Compute Cost</strong></th>
-<th><strong>Flexibility</strong></th>
-<th><strong>Notes</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Full fine-tuning</strong></td>
-<td>❌</td>
-<td>High</td>
-<td>Moderate</td>
-<td>Updates all parameters</td>
-</tr>
-<tr>
-<td><strong>Adapter tuning</strong></td>
-<td>✅</td>
-<td>Medium</td>
-<td>High</td>
-<td>Bottleneck MLPs per layer</td>
-</tr>
-<tr>
-<td><strong>Prefix tuning</strong></td>
-<td>✅</td>
-<td>Low</td>
-<td>Medium</td>
-<td>Learned prompt vectors</td>
-</tr>
-<tr>
-<td><strong>LoRA</strong></td>
-<td>✅</td>
-<td>Low</td>
-<td>High</td>
-<td>Mergeable, simple low-rank updates</td>
-</tr>
-<tr>
-<td><strong>QLoRA</strong></td>
-<td>✅✅</td>
-<td>Very Low</td>
-<td>High</td>
-<td>4-bit quantization + LoRA</td>
-</tr>
-</tbody>
-</table>
 <hr />
 
 

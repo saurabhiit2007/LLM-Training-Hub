@@ -1,0 +1,3202 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A technical reference for LoRA, QLoRA, and other fine-tuning techniques.">
+      
+      
+        <meta name="author" content="Saurabh Goyal">
+      
+      
+      
+        <link rel="prev" href="../gradient_checkpointing/">
+      
+      
+        <link rel="next" href="../optimizers_schedules/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Memory Efficient Optimizers - Fine-Tuning Methods Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#memory-efficient-optimizers-for-llm-training" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-header__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fine-Tuning Methods Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Memory Efficient Optimizers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-purple"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-nav__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Fine-Tuning Methods Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Phases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Training Phases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/pre_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pre-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/mid_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mid-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/post_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Post-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Distributed Training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Distributed Training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/parallelism_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Parallelism Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/data_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/tensor_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensor Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/pipeline_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipeline Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/zero_deepspeed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zero-Deepspeed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../distributed_training/fsdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FSDP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PEFT Techniques
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PEFT Techniques
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LoRA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/qlora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    QLoRA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/adaptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Adaptors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/prefix_tuning.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prefix Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/4bit_normal_float/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4-bit NormalFloat (NF4)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/blockwise_kbit_quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Block-wise k-bit Quantization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Optimization
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Optimization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mixed_precision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mixed Precision
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gradient_checkpointing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gradient Checkpointing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Memory Efficient Optimizers
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Efficient Optimizers
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-breakdown-for-a-7b-parameter-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Breakdown for a 7B Parameter Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-why-standard-adam-is-memory-hungry" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Why Standard Adam Is Memory-Hungry
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Why Standard Adam Is Memory-Hungry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-adam-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Adam Update Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-memory-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Memory Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-memory-efficient-optimizer-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Memory-Efficient Optimizer Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Memory-Efficient Optimizer Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Taxonomy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-precision-reduction-8-bit-optimizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Precision Reduction: 8-bit Optimizers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Precision Reduction: 8-bit Optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Core Idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-block-wise-quantization-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Block-wise Quantization Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation-bitsandbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Implementation (bitsandbytes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-why-8-bit-works-for-optimizer-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Why 8-bit Works for Optimizer States
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-state-offloading-paged-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. State Offloading: Paged Adam
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. State Offloading: Paged Adam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Motivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-how-paged-adam-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 How Paged Adam Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-step-by-step-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Step-by-Step Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-memory-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 Memory Benefits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-performance-tradeoffs" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 Performance Tradeoffs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-paged-adam-vs-zero-offload" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 Paged Adam vs ZeRO-Offload
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-algorithmic-changes-adafactor-and-lion" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Algorithmic Changes: Adafactor and LION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Algorithmic Changes: Adafactor and LION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-adafactor-google" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Adafactor (Google)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-lion-evolved-sign-momentum" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 LION (EvoLved Sign Momentum)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-hybrid-approaches-qlora" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Hybrid Approaches: QLoRA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Hybrid Approaches: QLoRA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-the-full-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 The Full Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-memory-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Memory Breakdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Comparison Table
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Comparison Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-memory-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Memory Efficiency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-decision-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Decision Matrix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-explain-why-optimizer-states-dominate-memory-usage-in-llm-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: Explain why optimizer states dominate memory usage in LLM training.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-how-does-8-bit-adam-maintain-training-quality-with-4-less-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: How does 8-bit Adam maintain training quality with 4× less precision?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-walk-through-the-memory-transfer-pattern-in-paged-adam-why-is-it-slower" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: Walk through the memory transfer pattern in Paged Adam. Why is it slower?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-compare-paged-adam-vs-zero-offload-for-a-13b-model-on-2-a100s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: Compare Paged Adam vs ZeRO-Offload for a 13B model on 2× A100s.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-youre-fine-tuning-llama-2-70b-on-a-single-a100-80gb-design-your-memory-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: You're fine-tuning Llama-2-70B on a single A100 (80GB). Design your memory strategy.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-why-does-adafactor-work-well-for-t5-but-not-always-for-gpt-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q6: Why does Adafactor work well for T5 but not always for GPT models?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-implement-a-simple-version-of-8-bit-quantization-for-optimizer-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q7: Implement a simple version of 8-bit quantization for optimizer states.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-recent-updates-2024-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Recent Updates (2024-2025)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Recent Updates (2024-2025)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-fp8-optimizers-nvidia-h100" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 FP8 Optimizers (NVIDIA H100)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-galore-gradient-low-rank-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 GaLore (Gradient Low-Rank Projection)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-deepspeed-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 DeepSpeed ZeRO++
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Quick Reference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Quick Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-hierarchy-for-optimizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Hierarchy for Optimizers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-for-choosing-an-optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist for Choosing an Optimizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optimizers_schedules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Optimizers-Schedules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quantization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memory_considerations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Considerations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prefix_caching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prefix Caching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Frameworks
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Frameworks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accelerate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accelerate Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Pipeline
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Training Pipeline
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_techniques/foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Foundation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_techniques/thinking_llms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM Reasoning & Thinking Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-breakdown-for-a-7b-parameter-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Breakdown for a 7B Parameter Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-why-standard-adam-is-memory-hungry" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Why Standard Adam Is Memory-Hungry
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Why Standard Adam Is Memory-Hungry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-adam-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Adam Update Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-memory-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Memory Requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-memory-efficient-optimizer-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Memory-Efficient Optimizer Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Memory-Efficient Optimizer Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Taxonomy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-precision-reduction-8-bit-optimizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Precision Reduction: 8-bit Optimizers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Precision Reduction: 8-bit Optimizers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-core-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Core Idea
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-block-wise-quantization-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Block-wise Quantization Example
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation-bitsandbytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Implementation (bitsandbytes)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-why-8-bit-works-for-optimizer-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Why 8-bit Works for Optimizer States
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-state-offloading-paged-adam" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. State Offloading: Paged Adam
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. State Offloading: Paged Adam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Motivation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-how-paged-adam-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 How Paged Adam Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-step-by-step-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 Step-by-Step Operation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-memory-benefits" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 Memory Benefits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-performance-tradeoffs" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 Performance Tradeoffs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#57-paged-adam-vs-zero-offload" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 Paged Adam vs ZeRO-Offload
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-algorithmic-changes-adafactor-and-lion" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Algorithmic Changes: Adafactor and LION
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Algorithmic Changes: Adafactor and LION">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-adafactor-google" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Adafactor (Google)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-lion-evolved-sign-momentum" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 LION (EvoLved Sign Momentum)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-hybrid-approaches-qlora" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Hybrid Approaches: QLoRA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Hybrid Approaches: QLoRA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-the-full-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 The Full Stack
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-memory-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 Memory Breakdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Comparison Table
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Comparison Table">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-memory-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Memory Efficiency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-decision-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Decision Matrix
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-explain-why-optimizer-states-dominate-memory-usage-in-llm-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: Explain why optimizer states dominate memory usage in LLM training.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-how-does-8-bit-adam-maintain-training-quality-with-4-less-precision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: How does 8-bit Adam maintain training quality with 4× less precision?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-walk-through-the-memory-transfer-pattern-in-paged-adam-why-is-it-slower" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: Walk through the memory transfer pattern in Paged Adam. Why is it slower?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-compare-paged-adam-vs-zero-offload-for-a-13b-model-on-2-a100s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: Compare Paged Adam vs ZeRO-Offload for a 13B model on 2× A100s.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-youre-fine-tuning-llama-2-70b-on-a-single-a100-80gb-design-your-memory-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: You're fine-tuning Llama-2-70B on a single A100 (80GB). Design your memory strategy.
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-why-does-adafactor-work-well-for-t5-but-not-always-for-gpt-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q6: Why does Adafactor work well for T5 but not always for GPT models?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-implement-a-simple-version-of-8-bit-quantization-for-optimizer-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q7: Implement a simple version of 8-bit quantization for optimizer states.
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-recent-updates-2024-2025" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Recent Updates (2024-2025)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Recent Updates (2024-2025)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-fp8-optimizers-nvidia-h100" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 FP8 Optimizers (NVIDIA H100)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-galore-gradient-low-rank-projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 GaLore (Gradient Low-Rank Projection)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-deepspeed-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 DeepSpeed ZeRO++
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-quick-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Quick Reference
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Quick Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-hierarchy-for-optimizers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Hierarchy for Optimizers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Hierarchy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist-for-choosing-an-optimizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist for Choosing an Optimizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="memory-efficient-optimizers-for-llm-training">💾 Memory-Efficient Optimizers for LLM Training<a class="headerlink" href="#memory-efficient-optimizers-for-llm-training" title="Permanent link">&para;</a></h1>
+<h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
+<p>Training large language models requires storing not just model parameters, but also <strong>optimizer states</strong>—the additional memory used by optimizers like Adam to track momentum and variance. For billion-parameter models, optimizer states often consume <strong>more memory than the model itself</strong>.</p>
+<h3 id="memory-breakdown-for-a-7b-parameter-model">Memory Breakdown for a 7B Parameter Model<a class="headerlink" href="#memory-breakdown-for-a-7b-parameter-model" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Size (FP32)</th>
+<th>Size (BF16/FP16)</th>
+<th>Multiplier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model parameters</td>
+<td>28 GB</td>
+<td>14 GB</td>
+<td>1×</td>
+</tr>
+<tr>
+<td>Gradients</td>
+<td>28 GB</td>
+<td>14 GB</td>
+<td>1×</td>
+</tr>
+<tr>
+<td><strong>Optimizer states (Adam)</strong></td>
+<td><strong>56 GB</strong></td>
+<td><strong>56 GB</strong></td>
+<td><strong>2×</strong></td>
+</tr>
+<tr>
+<td>Activations (batch-dependent)</td>
+<td>~40 GB</td>
+<td>~20 GB</td>
+<td>Variable</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~152 GB</strong></td>
+<td><strong>~104 GB</strong></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> Optimizer states remain in FP32 even during mixed-precision training, making them the primary memory bottleneck.</p>
+<p>Memory-efficient optimizers address this by:
+1. <strong>Reducing precision</strong> of optimizer states (8-bit optimizers)
+2. <strong>Offloading</strong> states to CPU memory (Paged Adam, ZeRO-Offload)
+3. <strong>Changing the algorithm</strong> to use less state (Adafactor, LION)
+4. <strong>Combining approaches</strong> (QLoRA = quantization + paging + LoRA)</p>
+<hr />
+<h2 id="2-why-standard-adam-is-memory-hungry">2. Why Standard Adam Is Memory-Hungry<a class="headerlink" href="#2-why-standard-adam-is-memory-hungry" title="Permanent link">&para;</a></h2>
+<h3 id="21-adam-update-rule">2.1 Adam Update Rule<a class="headerlink" href="#21-adam-update-rule" title="Permanent link">&para;</a></h3>
+<p>For each parameter <span class="arithmatex">\(\theta_t\)</span> at step <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
+\begin{align}
+m_t &amp;= \beta_1 m_{t-1} + (1 - \beta_1) g_t &amp; \text{(first moment)} \\
+v_t &amp;= \beta_2 v_{t-1} + (1 - \beta_2) g_t^2 &amp; \text{(second moment)} \\
+\hat{m}_t &amp;= \frac{m_t}{1 - \beta_1^t} &amp; \text{(bias correction)} \\
+\hat{v}_t &amp;= \frac{v_t}{1 - \beta_2^t} &amp; \text{(bias correction)} \\
+\theta_t &amp;= \theta_{t-1} - \alpha \frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\end{align}
+\]</div>
+<h3 id="22-memory-requirements">2.2 Memory Requirements<a class="headerlink" href="#22-memory-requirements" title="Permanent link">&para;</a></h3>
+<p>For <strong>N parameters</strong>, Adam stores:
+- Parameters <span class="arithmatex">\(\theta\)</span>: <strong>4N bytes</strong> (FP32) or <strong>2N bytes</strong> (BF16)
+- First moment <span class="arithmatex">\(m\)</span>: <strong>4N bytes</strong> (always FP32)
+- Second moment <span class="arithmatex">\(v\)</span>: <strong>4N bytes</strong> (always FP32)</p>
+<p><strong>Total optimizer state memory: 8N bytes</strong>, regardless of parameter precision.</p>
+<p><strong>Example:</strong>
+- 7B model in BF16: 14 GB parameters + 56 GB optimizer states = <strong>70 GB</strong> just for training setup
+- Without optimizer states: 14 GB parameters + 14 GB gradients = <strong>28 GB</strong></p>
+<p>This 2.5× memory overhead makes standard Adam prohibitive for large models.</p>
+<hr />
+<h2 id="3-memory-efficient-optimizer-strategies">3. Memory-Efficient Optimizer Strategies<a class="headerlink" href="#3-memory-efficient-optimizer-strategies" title="Permanent link">&para;</a></h2>
+<h3 id="31-taxonomy">3.1 Taxonomy<a class="headerlink" href="#31-taxonomy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Memory-Efficient Optimizers
+│
+├── Precision Reduction
+│   ├── 8-bit Adam (bitsandbytes)
+│   ├── FP8 Adam (Transformer Engine)
+│   └── 4-bit Adam (QLoRA)
+│
+├── State Offloading
+│   ├── Paged Adam (bitsandbytes)
+│   ├── ZeRO-Offload (DeepSpeed)
+│   └── CPUAdam (DeepSpeed)
+│
+├── Algorithmic Changes
+│   ├── Adafactor (Google)
+│   ├── LION (Google)
+│   └── SM3 (Google)
+│
+└── Hybrid Approaches
+    ├── QLoRA (4-bit + Paging + LoRA)
+    └── ZeRO-Infinity (offload + NVMe)
+</code></pre></div>
+<hr />
+<h2 id="4-precision-reduction-8-bit-optimizers">4. Precision Reduction: 8-bit Optimizers<a class="headerlink" href="#4-precision-reduction-8-bit-optimizers" title="Permanent link">&para;</a></h2>
+<h3 id="41-core-idea">4.1 Core Idea<a class="headerlink" href="#41-core-idea" title="Permanent link">&para;</a></h3>
+<p>Store optimizer states in <strong>8-bit integers</strong> instead of 32-bit floats, reducing memory by <strong>4×</strong>.</p>
+<p><strong>Challenge:</strong> Naive quantization destroys training dynamics.</p>
+<p><strong>Solution (Dynamic Block-wise Quantization):</strong>
+1. Divide optimizer states into blocks (e.g., 2048 elements)
+2. Compute block-specific scaling factors
+3. Quantize each block independently
+4. Dequantize during optimizer step</p>
+<h3 id="42-block-wise-quantization-example">4.2 Block-wise Quantization Example<a class="headerlink" href="#42-block-wise-quantization-example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Simplified 8-bit quantization</span>
+<span class="k">def</span> <span class="nf">quantize_blockwise</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">):</span>
+    <span class="n">blocks</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_size</span><span class="p">)</span>
+    <span class="n">absmax</span> <span class="o">=</span> <span class="n">blocks</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">absmax</span> <span class="o">/</span> <span class="mf">127.0</span>  <span class="c1"># INT8 range</span>
+
+    <span class="n">quantized</span> <span class="o">=</span> <span class="p">(</span><span class="n">blocks</span> <span class="o">/</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">127</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">quantized</span><span class="p">,</span> <span class="n">scale</span>
+
+<span class="k">def</span> <span class="nf">dequantize_blockwise</span><span class="p">(</span><span class="n">quantized</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">quantized</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="43-implementation-bitsandbytes">4.3 Implementation (bitsandbytes)<a class="headerlink" href="#43-implementation-bitsandbytes" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">bitsandbytes</span> <span class="k">as</span> <span class="nn">bnb</span>
+
+<span class="c1"># Standard Adam (56 GB for 7B model)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+
+<span class="c1"># 8-bit Adam (14 GB for 7B model = 4× reduction)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Memory savings:</strong>
+- 7B model: 56 GB → 14 GB (75% reduction)
+- No performance degradation in practice
+- Slightly slower optimizer step (10-15%)</p>
+<h3 id="44-why-8-bit-works-for-optimizer-states">4.4 Why 8-bit Works for Optimizer States<a class="headerlink" href="#44-why-8-bit-works-for-optimizer-states" title="Permanent link">&para;</a></h3>
+<p>Optimizer states are <strong>exponential moving averages</strong> that:
+- Accumulate slowly over many steps
+- Don't require high precision at each step
+- Tolerate quantization noise</p>
+<p><strong>Empirical result:</strong> 8-bit Adam matches FP32 Adam's convergence on models up to 175B parameters.</p>
+<hr />
+<h2 id="5-state-offloading-paged-adam">5. State Offloading: Paged Adam<a class="headerlink" href="#5-state-offloading-paged-adam" title="Permanent link">&para;</a></h2>
+<h3 id="51-motivation">5.1 Motivation<a class="headerlink" href="#51-motivation" title="Permanent link">&para;</a></h3>
+<p>Even with 8-bit quantization, optimizer states for 100B+ models exceed GPU memory. <strong>Paged Adam</strong> moves optimizer states to CPU RAM and streams them to GPU as needed.</p>
+<h3 id="52-how-paged-adam-works">5.2 How Paged Adam Works<a class="headerlink" href="#52-how-paged-adam-works" title="Permanent link">&para;</a></h3>
+<p><strong>Inspired by virtual memory paging in operating systems:</strong></p>
+<ol>
+<li><strong>Optimizer states live in CPU memory</strong> (host RAM)</li>
+<li><strong>Small "pages" transferred to GPU</strong> during optimizer step</li>
+<li><strong>Adam update applied</strong> for that page's parameters</li>
+<li><strong>Updated states copied back to CPU</strong></li>
+<li><strong>Next page processed</strong></li>
+</ol>
+<p>Only a small fraction of optimizer states is on GPU at any time.</p>
+<div class="highlight"><pre><span></span><code>CPU Memory (512 GB)              GPU Memory (40 GB)
+┌─────────────────────┐          ┌──────────────┐
+│ m, v for all params │  ──→     │ Active page  │
+│ (56 GB for 7B)      │  ←──     │ (~2 GB)      │
+└─────────────────────┘          └──────────────┘
+        Persistent                   Transient
+</code></pre></div>
+<h3 id="53-step-by-step-operation">5.3 Step-by-Step Operation<a class="headerlink" href="#53-step-by-step-operation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pseudocode for Paged Adam</span>
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+    <span class="c1"># 1. Forward/backward on GPU (gradients computed)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># 2. Optimizer step with paging</span>
+    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">optimizer_state_pages</span><span class="p">:</span>
+        <span class="c1"># Transfer page to GPU</span>
+        <span class="n">m_page</span><span class="p">,</span> <span class="n">v_page</span> <span class="o">=</span> <span class="n">load_page_from_cpu</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+
+        <span class="c1"># Apply Adam update</span>
+        <span class="n">params_page</span> <span class="o">=</span> <span class="n">get_params_for_page</span><span class="p">(</span><span class="n">page</span><span class="p">)</span>
+        <span class="n">apply_adam_update</span><span class="p">(</span><span class="n">params_page</span><span class="p">,</span> <span class="n">m_page</span><span class="p">,</span> <span class="n">v_page</span><span class="p">,</span> <span class="n">grads_page</span><span class="p">)</span>
+
+        <span class="c1"># Write back to CPU</span>
+        <span class="n">save_page_to_cpu</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">m_page</span><span class="p">,</span> <span class="n">v_page</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="54-memory-benefits">5.4 Memory Benefits<a class="headerlink" href="#54-memory-benefits" title="Permanent link">&para;</a></h3>
+<p><strong>GPU memory becomes nearly constant</strong> with respect to model size:</p>
+<table>
+<thead>
+<tr>
+<th>Model Size</th>
+<th>Standard Adam (GPU)</th>
+<th>Paged Adam (GPU)</th>
+<th>Paged Adam (CPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1B params</td>
+<td>8 GB</td>
+<td>~1 GB</td>
+<td>8 GB</td>
+</tr>
+<tr>
+<td>7B params</td>
+<td>56 GB</td>
+<td>~1 GB</td>
+<td>56 GB</td>
+</tr>
+<tr>
+<td>13B params</td>
+<td>104 GB</td>
+<td>~1 GB</td>
+<td>104 GB</td>
+</tr>
+<tr>
+<td>70B params</td>
+<td>560 GB</td>
+<td>~1 GB</td>
+<td>560 GB</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Enables single-GPU fine-tuning</strong> of models that wouldn't fit otherwise.</p>
+<h3 id="55-performance-tradeoffs">5.5 Performance Tradeoffs<a class="headerlink" href="#55-performance-tradeoffs" title="Permanent link">&para;</a></h3>
+<p><strong>Bottleneck:</strong> PCIe bandwidth (typically 16-32 GB/s)</p>
+<p><strong>Impact on throughput:</strong>
+- Standard Adam: ~1ms optimizer step
+- Paged Adam: ~50-100ms optimizer step (50-100× slower)</p>
+<p><strong>When overhead is acceptable:</strong>
+- Fine-tuning (fewer total steps)
+- Small batch sizes (more time in forward/backward)
+- Parameter-efficient methods (LoRA reduces parameter count)</p>
+<p><strong>Not suitable for:</strong>
+- Large-scale pretraining
+- High-throughput multi-GPU training
+- Latency-critical applications</p>
+<h3 id="56-implementation">5.6 Implementation<a class="headerlink" href="#56-implementation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">bitsandbytes</span> <span class="k">as</span> <span class="nn">bnb</span>
+
+<span class="c1"># Paged Adam (optimizer states in CPU memory)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdam</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># Can combine with 8-bit quantization</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="57-paged-adam-vs-zero-offload">5.7 Paged Adam vs ZeRO-Offload<a class="headerlink" href="#57-paged-adam-vs-zero-offload" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Paged Adam</th>
+<th>ZeRO-Offload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Optimizer states only</td>
+<td>Parameters + gradients + optimizer</td>
+</tr>
+<tr>
+<td><strong>Granularity</strong></td>
+<td>Page-level</td>
+<td>Tensor-level</td>
+</tr>
+<tr>
+<td><strong>Use case</strong></td>
+<td>Single GPU fine-tuning</td>
+<td>Multi-GPU distributed training</td>
+</tr>
+<tr>
+<td><strong>Implementation</strong></td>
+<td>bitsandbytes</td>
+<td>DeepSpeed</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Simple drop-in</td>
+<td>Requires distributed setup</td>
+</tr>
+<tr>
+<td><strong>Throughput</strong></td>
+<td>~50× slower optimizer</td>
+<td>Better pipelining</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision guide:</strong>
+- Single GPU + memory constraints → <strong>Paged Adam</strong>
+- Multi-GPU + need full model training → <strong>ZeRO-Offload</strong></p>
+<hr />
+<h2 id="6-algorithmic-changes-adafactor-and-lion">6. Algorithmic Changes: Adafactor and LION<a class="headerlink" href="#6-algorithmic-changes-adafactor-and-lion" title="Permanent link">&para;</a></h2>
+<p>Some optimizers redesign the algorithm to use less state.</p>
+<h3 id="61-adafactor-google">6.1 Adafactor (Google)<a class="headerlink" href="#61-adafactor-google" title="Permanent link">&para;</a></h3>
+<p><strong>Key idea:</strong> Don't store full second moment matrix; use <strong>factored approximation</strong>.</p>
+<p><strong>Standard Adam second moment:</strong>
+<div class="highlight"><pre><span></span><code>v ∈ R^(d_model × d_model)  # Full matrix
+Memory: O(d²)
+</code></pre></div></p>
+<p><strong>Adafactor second moment:</strong>
+<div class="highlight"><pre><span></span><code>row_var ∈ R^(d_model)      # Row variances
+col_var ∈ R^(d_model)      # Column variances
+v ≈ row_var ⊗ col_var      # Outer product approximation
+Memory: O(d)
+</code></pre></div></p>
+<p><strong>Implementation:</strong>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Adafactor</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adafactor</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">scale_parameter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>      <span class="c1"># Scale learning rate by parameter norm</span>
+    <span class="n">relative_step</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>       <span class="c1"># Use fixed learning rate</span>
+    <span class="n">warmup_init</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></p>
+<p><strong>Pros:</strong>
+- ~2× memory reduction vs Adam
+- Works well for Transformers (designed for T5)</p>
+<p><strong>Cons:</strong>
+- Slightly different convergence behavior
+- Less well-tested than Adam
+- Sensitive to hyperparameters</p>
+<h3 id="62-lion-evolved-sign-momentum">6.2 LION (EvoLved Sign Momentum)<a class="headerlink" href="#62-lion-evolved-sign-momentum" title="Permanent link">&para;</a></h3>
+<p><strong>Key idea:</strong> Store only the <strong>sign</strong> of momentum, not the full value.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># LION update (simplified)</span>
+<span class="n">m_t</span> <span class="o">=</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">m_</span><span class="p">{</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">g_t</span>
+<span class="n">theta_t</span> <span class="o">=</span> <span class="n">theta_</span><span class="p">{</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">}</span> <span class="o">-</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">sign</span><span class="p">(</span><span class="n">m_t</span><span class="p">)</span>  <span class="c1"># Only sign matters!</span>
+</code></pre></div>
+<p><strong>Memory:</strong> Same as SGD with momentum (1× state vs Adam's 2×)</p>
+<p><strong>Benchmarks:</strong> Matches or beats Adam on many tasks with proper tuning.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Using LION optimizer (google/automl)</span>
+<span class="kn">from</span> <span class="nn">lion_pytorch</span> <span class="kn">import</span> <span class="n">LION</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">LION</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">))</span>
+</code></pre></div>
+<hr />
+<h2 id="7-hybrid-approaches-qlora">7. Hybrid Approaches: QLoRA<a class="headerlink" href="#7-hybrid-approaches-qlora" title="Permanent link">&para;</a></h2>
+<h3 id="71-the-full-stack">7.1 The Full Stack<a class="headerlink" href="#71-the-full-stack" title="Permanent link">&para;</a></h3>
+<p><strong>QLoRA</strong> combines multiple techniques for extreme memory efficiency:</p>
+<ol>
+<li><strong>4-bit quantization</strong> of base model (NF4)</li>
+<li><strong>Paged Adam</strong> for optimizer states</li>
+<li><strong>LoRA</strong> adapters (only train small matrices)</li>
+<li><strong>Double quantization</strong> (quantize quantization constants)</li>
+</ol>
+<h3 id="72-memory-breakdown">7.2 Memory Breakdown<a class="headerlink" href="#72-memory-breakdown" title="Permanent link">&para;</a></h3>
+<p><strong>Fine-tuning 7B model (full vs QLoRA):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Full Fine-tuning</th>
+<th>QLoRA</th>
+<th>Reduction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base model</td>
+<td>28 GB (BF16)</td>
+<td>3.5 GB (NF4)</td>
+<td>8×</td>
+</tr>
+<tr>
+<td>LoRA adapters</td>
+<td>-</td>
+<td>0.2 GB</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Gradients</td>
+<td>28 GB</td>
+<td>0.2 GB</td>
+<td>140×</td>
+</tr>
+<tr>
+<td>Optimizer states</td>
+<td>56 GB (Adam)</td>
+<td>0.4 GB (Paged)</td>
+<td>140×</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~112 GB</strong></td>
+<td><strong>~4 GB</strong></td>
+<td><strong>28×</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Enables 7B fine-tuning on consumer GPUs (RTX 3090, 4090).</strong></p>
+<h3 id="73-implementation">7.3 Implementation<a class="headerlink" href="#73-implementation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">BitsAndBytesConfig</span>
+<span class="kn">from</span> <span class="nn">peft</span> <span class="kn">import</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">get_peft_model</span>
+<span class="kn">import</span> <span class="nn">bitsandbytes</span> <span class="k">as</span> <span class="nn">bnb</span>
+
+<span class="c1"># 4-bit quantized base model</span>
+<span class="n">bnb_config</span> <span class="o">=</span> <span class="n">BitsAndBytesConfig</span><span class="p">(</span>
+    <span class="n">load_in_4bit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">bnb_4bit_use_double_quant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>     <span class="c1"># Double quantization</span>
+    <span class="n">bnb_4bit_quant_type</span><span class="o">=</span><span class="s2">&quot;nf4&quot;</span><span class="p">,</span>          <span class="c1"># NormalFloat 4-bit</span>
+    <span class="n">bnb_4bit_compute_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="s2">&quot;meta-llama/Llama-2-7b-hf&quot;</span><span class="p">,</span>
+    <span class="n">quantization_config</span><span class="o">=</span><span class="n">bnb_config</span><span class="p">,</span>
+    <span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># LoRA adapters</span>
+<span class="n">lora_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
+    <span class="n">r</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>                    <span class="c1"># LoRA rank</span>
+    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+    <span class="n">target_modules</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;q_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;v_proj&quot;</span><span class="p">],</span>
+    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">bias</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lora_config</span><span class="p">)</span>
+
+<span class="c1"># Paged 8-bit Adam for LoRA parameters</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-4</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="8-comparison-table">8. Comparison Table<a class="headerlink" href="#8-comparison-table" title="Permanent link">&para;</a></h2>
+<h3 id="81-memory-efficiency">8.1 Memory Efficiency<a class="headerlink" href="#81-memory-efficiency" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Optimizer</th>
+<th>Memory per Parameter</th>
+<th>Speedup vs Adam</th>
+<th>Best Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adam (FP32)</td>
+<td>12 bytes</td>
+<td>1× (baseline)</td>
+<td>Standard training</td>
+</tr>
+<tr>
+<td>Adam (BF16 params)</td>
+<td>10 bytes</td>
+<td>1×</td>
+<td>Mixed-precision training</td>
+</tr>
+<tr>
+<td>8-bit Adam</td>
+<td>6 bytes</td>
+<td>0.9×</td>
+<td>Large model training</td>
+</tr>
+<tr>
+<td>Paged Adam</td>
+<td>~2 bytes (GPU)</td>
+<td>0.01-0.02×</td>
+<td>Single-GPU fine-tuning</td>
+</tr>
+<tr>
+<td>Paged 8-bit Adam</td>
+<td>~0.5 bytes (GPU)</td>
+<td>0.01-0.02×</td>
+<td>Extreme memory constraint</td>
+</tr>
+<tr>
+<td>Adafactor</td>
+<td>6 bytes</td>
+<td>1.2×</td>
+<td>T5/encoder-decoder models</td>
+</tr>
+<tr>
+<td>LION</td>
+<td>6 bytes</td>
+<td>1.1×</td>
+<td>Vision models, some LLMs</td>
+</tr>
+<tr>
+<td>SGD + Momentum</td>
+<td>6 bytes</td>
+<td>1.5×</td>
+<td>Not recommended for LLMs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-decision-matrix">8.2 Decision Matrix<a class="headerlink" href="#82-decision-matrix" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommendation</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7B model, 80GB GPU</td>
+<td>Standard Adam (BF16)</td>
+<td>Memory not a constraint</td>
+</tr>
+<tr>
+<td>7B model, 24GB GPU</td>
+<td>8-bit Adam</td>
+<td>4× memory saving, minimal slowdown</td>
+</tr>
+<tr>
+<td>7B model, 16GB GPU</td>
+<td>Paged 8-bit Adam + LoRA</td>
+<td>Extreme memory efficiency</td>
+</tr>
+<tr>
+<td>70B model, multi-GPU</td>
+<td>ZeRO-3 + 8-bit Adam</td>
+<td>Distributed memory optimization</td>
+</tr>
+<tr>
+<td>Fine-tuning only</td>
+<td>QLoRA</td>
+<td>Best memory/quality tradeoff</td>
+</tr>
+<tr>
+<td>T5/Flan models</td>
+<td>Adafactor</td>
+<td>Designed for these architectures</td>
+</tr>
+<tr>
+<td>Rapid experimentation</td>
+<td>LION</td>
+<td>Simpler, fewer hyperparameters</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-interview-questions">9. Interview Questions<a class="headerlink" href="#9-interview-questions" title="Permanent link">&para;</a></h2>
+<h3 id="q1-explain-why-optimizer-states-dominate-memory-usage-in-llm-training">Q1: Explain why optimizer states dominate memory usage in LLM training.<a class="headerlink" href="#q1-explain-why-optimizer-states-dominate-memory-usage-in-llm-training" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p>For Adam, each parameter requires:
+- Parameter <span class="arithmatex">\(\theta\)</span>: 2-4 bytes (BF16 or FP32)
+- Gradient <span class="arithmatex">\(\nabla \theta\)</span>: 2-4 bytes (same as parameter)
+- First moment <span class="arithmatex">\(m\)</span>: 4 bytes (always FP32)
+- Second moment <span class="arithmatex">\(v\)</span>: 4 bytes (always FP32)</p>
+<p><strong>Total: 12-16 bytes per parameter</strong></p>
+<p>For a 7B model:
+- Parameters: 14 GB (BF16)
+- Gradients: 14 GB
+- Optimizer states: <strong>56 GB</strong> (8 bytes × 7B)
+- <strong>Optimizer states are 67% of training memory</strong></p>
+<p>Even with mixed-precision training, optimizer states remain FP32 for numerical stability, making them the bottleneck.</p>
+<p><strong>Follow-up:</strong> Why not use FP16 for optimizer states?<br />
+Small momentum values would underflow, and variance accumulation requires high precision to avoid catastrophic cancellation.</p>
+<hr />
+<h3 id="q2-how-does-8-bit-adam-maintain-training-quality-with-4-less-precision">Q2: How does 8-bit Adam maintain training quality with 4× less precision?<a class="headerlink" href="#q2-how-does-8-bit-adam-maintain-training-quality-with-4-less-precision" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Key technique: Dynamic block-wise quantization</strong></p>
+<ol>
+<li><strong>Block-level scaling:</strong> Divide optimizer states into blocks (e.g., 2048 elements)</li>
+<li><strong>Per-block normalization:</strong> Each block has its own scale factor</li>
+<li><strong>Adaptive quantization:</strong> Scale adjusts to the range of values in each block</li>
+</ol>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># Block 1: values in [0.001, 0.01]</span>
+<span class="n">scale_1</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">/</span> <span class="mi">127</span> <span class="o">=</span> <span class="mf">7.87e-5</span>
+
+<span class="c1"># Block 2: values in [0.1, 1.0]</span>
+<span class="n">scale_2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">127</span> <span class="o">=</span> <span class="mf">7.87e-3</span>
+</code></pre></div></p>
+<p>Different blocks can represent vastly different ranges without losing resolution.</p>
+<p><strong>Why it works:</strong>
+- Optimizer states have <strong>local structure</strong> (nearby parameters have similar magnitudes)
+- Block-wise quantization exploits this locality
+- Errors average out over many optimizer steps</p>
+<p><strong>Empirical validation:</strong> Papers show 8-bit Adam matches FP32 Adam on GPT-3 scale models.</p>
+<p><strong>Follow-up:</strong> Why not use 4-bit?<br />
+4-bit works for <strong>inference</strong> (forward pass only) but causes training instability due to accumulated quantization error over thousands of optimizer steps.</p>
+<hr />
+<h3 id="q3-walk-through-the-memory-transfer-pattern-in-paged-adam-why-is-it-slower">Q3: Walk through the memory transfer pattern in Paged Adam. Why is it slower?<a class="headerlink" href="#q3-walk-through-the-memory-transfer-pattern-in-paged-adam-why-is-it-slower" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Step-by-step:</strong></p>
+<div class="highlight"><pre><span></span><code>Iteration N:
+1. Forward/backward pass (GPU) → gradients computed
+2. For each page P:
+   a. DMA transfer: CPU → GPU (m[P], v[P])     ~100-200 μs
+   b. Adam update (GPU)                         ~10-20 μs
+   c. DMA transfer: GPU → CPU (m[P], v[P])     ~100-200 μs
+3. Repeat for all pages
+</code></pre></div>
+<p><strong>Bottleneck analysis:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Bandwidth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Adam update (GPU)</td>
+<td>~1 ms</td>
+<td>-</td>
+</tr>
+<tr>
+<td>PCIe transfer (1 GB)</td>
+<td>~60 ms</td>
+<td>16 GB/s (PCIe 3.0 x16)</td>
+</tr>
+<tr>
+<td><strong>Total optimizer step</strong></td>
+<td><strong>~60-100 ms</strong></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why 50-100× slower:</strong>
+- PCIe bandwidth &lt;&lt; GPU memory bandwidth (900 GB/s for A100)
+- Repeated small transfers have overhead
+- Can't overlap all transfers with compute</p>
+<p><strong>Mitigations:</strong>
+- Use NVMe for even larger models (ZeRO-Infinity)
+- Combine with LoRA (fewer total parameters)
+- Increase batch size (amortize optimizer cost over more compute)</p>
+<hr />
+<h3 id="q4-compare-paged-adam-vs-zero-offload-for-a-13b-model-on-2-a100s">Q4: Compare Paged Adam vs ZeRO-Offload for a 13B model on 2× A100s.<a class="headerlink" href="#q4-compare-paged-adam-vs-zero-offload-for-a-13b-model-on-2-a100s" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Setup:</strong> 13B model, 2× A100 (80GB each), full fine-tuning</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Memory per GPU</th>
+<th>Throughput</th>
+<th>Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard Adam</td>
+<td>104 GB</td>
+<td><strong>OOM</strong></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Paged Adam</td>
+<td>~40 GB</td>
+<td>~50 tokens/sec</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>ZeRO-Offload (stage 2)</td>
+<td>~50 GB</td>
+<td>~200 tokens/sec</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>ZeRO-3 (no offload)</td>
+<td>~60 GB</td>
+<td>~300 tokens/sec</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommendation: ZeRO-3</strong> (fits in memory, best throughput)</p>
+<p><strong>If memory &lt; 60 GB per GPU:</strong>
+- ZeRO-Offload (stage 2 or 3)
+- Better pipelining than Paged Adam
+- Can overlap communication with computation</p>
+<p><strong>Paged Adam is better for:</strong>
+- <strong>Single GPU</strong> (no communication overhead)
+- <strong>LoRA fine-tuning</strong> (far fewer parameters)</p>
+<p><strong>Follow-up:</strong> What if using 4× A100s?<br />
+Use ZeRO-3 without offload—model+optimizer easily fit with enough parallelism.</p>
+<hr />
+<h3 id="q5-youre-fine-tuning-llama-2-70b-on-a-single-a100-80gb-design-your-memory-strategy">Q5: You're fine-tuning Llama-2-70B on a single A100 (80GB). Design your memory strategy.<a class="headerlink" href="#q5-youre-fine-tuning-llama-2-70b-on-a-single-a100-80gb-design-your-memory-strategy" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Goal:</strong> Fit 70B model in 80GB GPU memory</p>
+<p><strong>Strategy: QLoRA stack</strong></p>
+<ol>
+<li><strong>Base model quantization (4-bit NF4):</strong></li>
+<li>
+<p>70B × 0.5 bytes = <strong>35 GB</strong></p>
+</li>
+<li>
+<p><strong>LoRA adapters (rank 64):</strong></p>
+</li>
+<li>Trainable params ≈ 70B × (64/4096) × 2 ≈ 2.2B</li>
+<li>
+<p>Memory: 2.2B × 2 bytes = <strong>4.4 GB</strong></p>
+</li>
+<li>
+<p><strong>Gradients (LoRA only):</strong></p>
+</li>
+<li>
+<p><strong>4.4 GB</strong></p>
+</li>
+<li>
+<p><strong>Optimizer states (Paged 8-bit Adam):</strong></p>
+</li>
+<li>2.2B × 2 bytes = 4.4 GB</li>
+<li>
+<p>Offloaded to CPU, ~0.5 GB on GPU</p>
+</li>
+<li>
+<p><strong>Activations (gradient checkpointing):</strong></p>
+</li>
+<li>Batch size 1, seq_len 2048</li>
+<li>~10-15 GB</li>
+</ol>
+<p><strong>Total GPU memory: 35 + 4.4 + 4.4 + 0.5 + 15 ≈ 60 GB</strong> ✅</p>
+<p><strong>Configuration:</strong>
+<div class="highlight"><pre><span></span><code><span class="c1"># 4-bit base model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
+    <span class="s2">&quot;meta-llama/Llama-2-70b-hf&quot;</span><span class="p">,</span>
+    <span class="n">quantization_config</span><span class="o">=</span><span class="n">BitsAndBytesConfig</span><span class="p">(</span>
+        <span class="n">load_in_4bit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">bnb_4bit_compute_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="n">device_map</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># LoRA rank 64</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">LoraConfig</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">128</span><span class="p">))</span>
+
+<span class="c1"># Paged 8-bit optimizer</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+
+<span class="c1"># Gradient checkpointing</span>
+<span class="n">model</span><span class="o">.</span><span class="n">gradient_checkpointing_enable</span><span class="p">()</span>
+</code></pre></div></p>
+<p><strong>Trade-offs:</strong>
+- Throughput: ~10-20 tokens/sec (slow but feasible)
+- Quality: LoRA slightly underperforms full fine-tuning
+- Cost: $2-3/hr (A100) vs $20-30/hr (8× A100 for full tuning)</p>
+<hr />
+<h3 id="q6-why-does-adafactor-work-well-for-t5-but-not-always-for-gpt-models">Q6: Why does Adafactor work well for T5 but not always for GPT models?<a class="headerlink" href="#q6-why-does-adafactor-work-well-for-t5-but-not-always-for-gpt-models" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<p><strong>Adafactor's design assumptions:</strong></p>
+<ol>
+<li>
+<p><strong>Factored second moment:</strong>
+   <div class="highlight"><pre><span></span><code>v ≈ row_mean ⊗ col_mean
+</code></pre></div>
+   Works when weight matrices have <strong>low-rank structure</strong></p>
+</li>
+<li>
+<p><strong>Relative learning rates:</strong></p>
+</li>
+<li>Scales LR by RMS of parameters</li>
+<li>Assumes parameters should update proportionally to their magnitude</li>
+</ol>
+<p><strong>Why T5 fits:</strong>
+- <strong>Encoder-decoder architecture:</strong> Many rectangular weight matrices
+- <strong>Relative position embeddings:</strong> Parameters naturally have similar scales
+- <strong>Designed together:</strong> T5 was co-developed with Adafactor</p>
+<p><strong>Why GPT may not:</strong>
+- <strong>Decoder-only:</strong> Different parameter distributions
+- <strong>Absolute position embeddings:</strong> Wider range of parameter magnitudes
+- <strong>Long training:</strong> Approximation errors accumulate</p>
+<p><strong>Empirical results:</strong>
+- T5, FLAN: Adafactor matches or beats Adam
+- GPT-2/3, LLaMA: Adam (especially 8-bit) more reliable</p>
+<p><strong>Follow-up:</strong> When should you try Adafactor for GPT models?<br />
+- Memory is severely constrained
+- Willing to tune hyperparameters (learning rate, clipping)
+- Have compute budget for multiple runs</p>
+<hr />
+<h3 id="q7-implement-a-simple-version-of-8-bit-quantization-for-optimizer-states">Q7: Implement a simple version of 8-bit quantization for optimizer states.<a class="headerlink" href="#q7-implement-a-simple-version-of-8-bit-quantization-for-optimizer-states" title="Permanent link">&para;</a></h3>
+<p><strong>Answer:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="k">class</span> <span class="nc">Simple8BitState</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Quantize tensor into 8-bit representation with block-wise scaling.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tensor: FP32 tensor to quantize</span>
+<span class="sd">            block_size: Number of elements per quantization block</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">block_size</span> <span class="o">=</span> <span class="n">block_size</span>
+
+        <span class="c1"># Reshape into blocks</span>
+        <span class="n">numel</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span>
+        <span class="n">tensor_flat</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="c1"># Pad to multiple of block_size</span>
+        <span class="n">padding</span> <span class="o">=</span> <span class="p">(</span><span class="n">block_size</span> <span class="o">-</span> <span class="n">numel</span> <span class="o">%</span> <span class="n">block_size</span><span class="p">)</span> <span class="o">%</span> <span class="n">block_size</span>
+        <span class="k">if</span> <span class="n">padding</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">tensor_flat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">tensor_flat</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">padding</span><span class="p">)])</span>
+
+        <span class="n">tensor_blocks</span> <span class="o">=</span> <span class="n">tensor_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">block_size</span><span class="p">)</span>
+
+        <span class="c1"># Compute per-block scale (absmax / 127)</span>
+        <span class="n">absmax</span> <span class="o">=</span> <span class="n">tensor_blocks</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">absmax</span> <span class="o">/</span> <span class="mf">127.0</span>
+
+        <span class="c1"># Avoid division by zero</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
+
+        <span class="c1"># Quantize to INT8</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quantized</span> <span class="o">=</span> <span class="p">(</span><span class="n">tensor_blocks</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">127</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numel_original</span> <span class="o">=</span> <span class="n">numel</span>
+
+    <span class="k">def</span> <span class="nf">dequantize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reconstruct FP32 tensor.&quot;&quot;&quot;</span>
+        <span class="c1"># Dequantize blocks</span>
+        <span class="n">dequantized</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span>
+
+        <span class="c1"># Flatten and remove padding</span>
+        <span class="n">dequantized_flat</span> <span class="o">=</span> <span class="n">dequantized</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[:</span><span class="bp">self</span><span class="o">.</span><span class="n">numel_original</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">dequantized_flat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">momentum</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>  <span class="c1"># First moment for a layer</span>
+<span class="n">quantized_state</span> <span class="o">=</span> <span class="n">Simple8BitState</span><span class="p">(</span><span class="n">momentum</span><span class="p">,</span> <span class="n">block_size</span><span class="o">=</span><span class="mi">256</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original size: </span><span class="si">{</span><span class="n">momentum</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">momentum</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Quantized size: </span><span class="si">{</span><span class="n">quantized_state</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">quantized_state</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e6</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Compression ratio: </span><span class="si">{</span><span class="n">momentum</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">quantized_state</span><span class="o">.</span><span class="n">quantized</span><span class="o">.</span><span class="n">element_size</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">x&quot;</span><span class="p">)</span>
+
+<span class="c1"># Verify reconstruction</span>
+<span class="n">reconstructed</span> <span class="o">=</span> <span class="n">quantized_state</span><span class="o">.</span><span class="n">dequantize</span><span class="p">()</span>
+<span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">momentum</span> <span class="o">-</span> <span class="n">reconstructed</span><span class="p">)</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean absolute error: </span><span class="si">{</span><span class="n">error</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Key concepts demonstrated:</strong>
+1. <strong>Block-wise processing:</strong> Smaller blocks = better precision, larger blocks = better compression
+2. <strong>Scale factor:</strong> Per-block normalization to INT8 range
+3. <strong>Clamping:</strong> Prevent overflow during quantization
+4. <strong>Padding:</strong> Handle tensors not divisible by block_size</p>
+<p><strong>Production considerations:</strong>
+- bitsandbytes uses optimized CUDA kernels
+- Supports direct GPU-to-GPU quantization
+- Handles edge cases (NaN, inf, very small values)</p>
+<hr />
+<h2 id="10-recent-updates-2024-2025">10. Recent Updates (2024-2025)<a class="headerlink" href="#10-recent-updates-2024-2025" title="Permanent link">&para;</a></h2>
+<h3 id="101-fp8-optimizers-nvidia-h100">10.1 FP8 Optimizers (NVIDIA H100)<a class="headerlink" href="#101-fp8-optimizers-nvidia-h100" title="Permanent link">&para;</a></h3>
+<p>Transformer Engine now supports <strong>FP8 optimizer states</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">transformer_engine.pytorch</span> <span class="k">as</span> <span class="nn">te</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">te</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">FP8Adam</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+    <span class="n">use_fp8</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Store states in FP8</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Benefits:</strong>
+- 4× memory reduction vs FP32
+- 2× reduction vs 8-bit quantization
+- Faster than dequantizing INT8</p>
+<p><strong>Status:</strong> Experimental, works best with H100</p>
+<h3 id="102-galore-gradient-low-rank-projection">10.2 GaLore (Gradient Low-Rank Projection)<a class="headerlink" href="#102-galore-gradient-low-rank-projection" title="Permanent link">&para;</a></h3>
+<p>New technique that reduces <strong>gradient memory</strong> instead of optimizer states:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">galore_torch</span> <span class="kn">import</span> <span class="n">GaLoreAdamW</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">GaLoreAdamW</span><span class="p">(</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+    <span class="n">rank</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>  <span class="c1"># Low-rank projection dimension</span>
+<span class="p">)</span>
+</code></pre></div>
+<p><strong>Idea:</strong> Project gradients to low-rank subspace before optimizer update</p>
+<p><strong>Memory:</strong> Comparable to LoRA, but trains full model</p>
+<p><strong>Paper:</strong> "GaLore: Memory-Efficient LLM Training by Gradient Low-Rank Projection" (2024)</p>
+<h3 id="103-deepspeed-zero">10.3 DeepSpeed ZeRO++<a class="headerlink" href="#103-deepspeed-zero" title="Permanent link">&para;</a></h3>
+<p>Enhanced version of ZeRO with:
+- <strong>Quantized communication:</strong> 4-bit weight communication
+- <strong>Hierarchical partitioning:</strong> Better multi-node scaling
+- <strong>Forward-only memory optimization</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">ds_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;zero_optimization&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;stage&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;zero_quantized_weights&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># New in ZeRO++</span>
+        <span class="s2">&quot;zero_quantized_gradients&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="11-quick-reference">11. Quick Reference<a class="headerlink" href="#11-quick-reference" title="Permanent link">&para;</a></h2>
+<h3 id="memory-hierarchy-for-optimizers">Memory Hierarchy for Optimizers<a class="headerlink" href="#memory-hierarchy-for-optimizers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Least Memory ────────────────────────► Most Memory
+│                                                  │
+QLoRA          Paged     8-bit      Adam         Adam
+(4-bit +       8-bit     Adam       (BF16)      (FP32)
+LoRA +         Adam                              
+Paging)                                           
+│                                                  │
+~1 GB/7B      ~14 GB    ~28 GB     ~56 GB      ~56 GB
+</code></pre></div>
+<h3 id="performance-hierarchy">Performance Hierarchy<a class="headerlink" href="#performance-hierarchy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Fastest ────────────────────────────► Slowest
+│                                              │
+Adam          8-bit       Paged        QLoRA
+(FP32/BF16)   Adam        Adam         (complex)
+│                                              │
+1× baseline   0.9×        0.01-0.02×   0.01-0.02×
+</code></pre></div>
+<h3 id="checklist-for-choosing-an-optimizer">Checklist for Choosing an Optimizer<a class="headerlink" href="#checklist-for-choosing-an-optimizer" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> What GPU do you have? (memory capacity)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Single or multi-GPU? (offload strategies differ)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Full fine-tuning or LoRA? (LoRA reduces parameter count)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Throughput vs memory priority? (speed/memory tradeoff)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Supported hardware? (BF16 needs A100+, FP8 needs H100)</li>
+</ul>
+<hr />
+<h2 id="12-further-reading">12. Further Reading<a class="headerlink" href="#12-further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>8-bit Optimizers:</strong> <a href="https://arxiv.org/abs/2110.02861">bitsandbytes Paper (2021)</a></li>
+<li><strong>Paged Optimizers:</strong> <a href="https://github.com/TimDettmers/bitsandbytes">bitsandbytes Documentation</a></li>
+<li><strong>QLoRA:</strong> <a href="https://arxiv.org/abs/2305.14314">QLoRA Paper (2023)</a></li>
+<li><strong>Adafactor:</strong> <a href="https://arxiv.org/abs/1804.04235">Adafactor Paper (2018)</a></li>
+<li><strong>LION:</strong> <a href="https://arxiv.org/abs/2302.06675">LION Paper (2023)</a></li>
+<li><strong>ZeRO:</strong> <a href="https://arxiv.org/abs/1910.02054">ZeRO Paper (2019)</a></li>
+<li><strong>GaLore:</strong> <a href="https://arxiv.org/abs/2403.03507">GaLore Paper (2024)</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "mathjax"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A technical reference for LoRA, QLoRA, and other fine-tuning techniques.">
+      
+      
+        <meta name="author" content="Saurabh Goyal">
+      
+      
+      
+        <link rel="prev" href="../data_parallelism/">
+      
+      
+        <link rel="next" href="../pipeline_parallelism/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Tensor Parallelism - Fine-Tuning Methods Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tensor-parallelism-tp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-header__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fine-Tuning Methods Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tensor Parallelism
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="deep-purple"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="lime"  aria-hidden="true"  type="radio" name="__palette" id="__palette_1">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-nav__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Fine-Tuning Methods Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Phases
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Training Phases
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/pre_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pre-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/mid_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mid-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_phases/post_training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Post-Training
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Distributed Training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Distributed Training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parallelism_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Parallelism Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Tensor Parallelism
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tensor Parallelism
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concept
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Basic Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-parallelism-output-dimension-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Column Parallelism (Output Dimension Split)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Column Parallelism (Output Dimension Split)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#row-parallelism-input-dimension-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Row Parallelism (Input Dimension Split)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Row Parallelism (Input Dimension Split)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-pattern_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-both-exist-complementary-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Both Exist: Complementary Design
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#megatron-lm-style-tp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Megatron-LM Style TP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Megatron-LM Style TP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Attention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feed-forward-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feed-Forward Network
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Cost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Savings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-whats-the-difference-between-column-and-row-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: "What's the difference between column and row parallelism?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-why-is-tp-usually-limited-to-within-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: "Why is TP usually limited to within a node?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-how-does-tp-interact-with-batch-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: "How does TP interact with batch size?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: "What's the communication pattern for TP compared to DP?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-how-would-you-debug-slow-tp-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: "How would you debug slow TP training?"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-parallelism-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence Parallelism Extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tp-other-parallelisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + Other Parallelisms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TP + Other Parallelisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tp-dp-most-common" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + DP (Most Common)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tp-pp" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + PP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tp-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + ZeRO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-communication-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Communication Backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tensor-parallel-group-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Tensor Parallel Group Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-column-parallel-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Column Parallel Linear
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pipeline_parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pipeline Parallelism
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zero_deepspeed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zero-Deepspeed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fsdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FSDP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PEFT Techniques
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            PEFT Techniques
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/lora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LoRA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/qlora/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    QLoRA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/adaptors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Adaptors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/prefix_tuning.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prefix Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/4bit_normal_float/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4-bit NormalFloat (NF4)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../parameter_efficient_fine_tuning/blockwise_kbit_quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Block-wise k-bit Quantization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Optimization
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Optimization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/mixed_precision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mixed Precision
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/gradient_checkpointing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gradient Checkpointing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/memory_efficient_optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Efficient Optimizers
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/optimizers_schedules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Optimizers-Schedules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quantization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/memory_considerations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Considerations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/prefix_caching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prefix Caching
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Frameworks
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Frameworks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../optimization/accelerate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Accelerate Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Training Pipeline
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Training Pipeline
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_techniques/foundation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Foundation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../training_techniques/thinking_llms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LLM Reasoning & Thinking Models
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Core Concept
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Basic Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-parallelism-output-dimension-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Column Parallelism (Output Dimension Split)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Column Parallelism (Output Dimension Split)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#row-parallelism-input-dimension-split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Row Parallelism (Input Dimension Split)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Row Parallelism (Input Dimension Split)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      How It Works
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#communication-pattern_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-case_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-both-exist-complementary-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Both Exist: Complementary Design
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#megatron-lm-style-tp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Megatron-LM Style TP
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Megatron-LM Style TP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Attention
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#feed-forward-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feed-Forward Network
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      Communication Cost
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Savings
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-whats-the-difference-between-column-and-row-parallelism" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: "What's the difference between column and row parallelism?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-why-is-tp-usually-limited-to-within-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: "Why is TP usually limited to within a node?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-how-does-tp-interact-with-batch-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: "How does TP interact with batch size?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: "What's the communication pattern for TP compared to DP?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-how-would-you-debug-slow-tp-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q5: "How would you debug slow TP training?"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-parallelism-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence Parallelism Extension
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tp-other-parallelisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + Other Parallelisms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TP + Other Parallelisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tp-dp-most-common" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + DP (Most Common)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tp-pp" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + PP
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tp-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      TP + ZeRO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-communication-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Communication Backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tensor-parallel-group-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Tensor Parallel Group Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-column-parallel-linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Column Parallel Linear
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="tensor-parallelism-tp">Tensor Parallelism (TP)<a class="headerlink" href="#tensor-parallelism-tp" title="Permanent link">&para;</a></h1>
+<h2 id="core-concept">Core Concept<a class="headerlink" href="#core-concept" title="Permanent link">&para;</a></h2>
+<p>Tensor Parallelism splits <strong>individual layers</strong> across devices so that a single layer's computation is distributed.</p>
+<p><strong>When to use</strong>: When individual layers are too large to fit on a single GPU</p>
+<hr />
+<h2 id="the-basic-idea">The Basic Idea<a class="headerlink" href="#the-basic-idea" title="Permanent link">&para;</a></h2>
+<p>Consider a linear layer: <strong>Y = XW</strong></p>
+<p>Where:
+- X: <code>[batch, hidden_in]</code>
+- W: <code>[hidden_in, hidden_out]</code>
+- Y: <code>[batch, hidden_out]</code></p>
+<p><strong>Problem</strong>: If <code>hidden_out</code> is very large (e.g., 50,000), W doesn't fit on one GPU.</p>
+<p><strong>Solution</strong>: Split W across GPUs and compute partial results.</p>
+<hr />
+<h2 id="column-parallelism-output-dimension-split">Column Parallelism (Output Dimension Split)<a class="headerlink" href="#column-parallelism-output-dimension-split" title="Permanent link">&para;</a></h2>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<p>Split weight matrix <strong>by columns</strong>:</p>
+<div class="highlight"><pre><span></span><code>W = [W₁ | W₂ | ... | Wₖ]
+
+GPU 0: W₁ with shape [hidden_in, hidden_out/k]
+GPU 1: W₂ with shape [hidden_in, hidden_out/k]
+...
+</code></pre></div>
+<p>Each GPU computes:
+<div class="highlight"><pre><span></span><code>Y₁ = X · W₁  (shape: [batch, hidden_out/k])
+Y₂ = X · W₂  (shape: [batch, hidden_out/k])
+</code></pre></div></p>
+<p><strong>Result</strong>: Each Yᵢ is a <strong>partial output</strong> (different features).</p>
+<h3 id="communication-pattern">Communication Pattern<a class="headerlink" href="#communication-pattern" title="Permanent link">&para;</a></h3>
+<p><strong>Forward Pass</strong>:
+- All-Gather to concatenate [Y₁, Y₂, ...] → Y
+- Each GPU gets the full output</p>
+<p><strong>Backward Pass</strong>:
+- Gradients w.r.t. X require All-Reduce</p>
+<div class="highlight"><pre><span></span><code>Forward:  X → [Y₁, Y₂, Y₃] → All-Gather → Y
+Backward: Y_grad → [X_grad₁, X_grad₂, X_grad₃] → All-Reduce → X_grad
+</code></pre></div>
+<h3 id="use-case">Use Case<a class="headerlink" href="#use-case" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Feed-forward network (FFN) in transformers</li>
+<li>First linear projection in attention (Q, K, V)</li>
+</ul>
+<hr />
+<h2 id="row-parallelism-input-dimension-split">Row Parallelism (Input Dimension Split)<a class="headerlink" href="#row-parallelism-input-dimension-split" title="Permanent link">&para;</a></h2>
+<h3 id="how-it-works_1">How It Works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h3>
+<p>Split weight matrix <strong>by rows</strong>:</p>
+<div class="highlight"><pre><span></span><code>W = [ W₁ ]
+    [ W₂ ]
+    [ ... ]
+    [ Wₖ ]
+
+GPU 0: W₁ with shape [hidden_in/k, hidden_out]
+GPU 1: W₂ with shape [hidden_in/k, hidden_out]
+</code></pre></div>
+<p>Input X is also split:
+<div class="highlight"><pre><span></span><code>X = [X₁ | X₂ | ... | Xₖ]
+</code></pre></div></p>
+<p>Each GPU computes:
+<div class="highlight"><pre><span></span><code>Y₁ = X₁ · W₁  (shape: [batch, hidden_out])
+Y₂ = X₂ · W₂  (shape: [batch, hidden_out])
+</code></pre></div></p>
+<p><strong>Result</strong>: Each Yᵢ is a <strong>partial sum</strong> for the same output features.</p>
+<h3 id="communication-pattern_1">Communication Pattern<a class="headerlink" href="#communication-pattern_1" title="Permanent link">&para;</a></h3>
+<p><strong>Forward Pass</strong>:
+- All-Reduce to sum [Y₁, Y₂, ...] → Y
+- Each GPU gets the same final output</p>
+<p><strong>Backward Pass</strong>:
+- Gradient flow mirrors forward communication</p>
+<div class="highlight"><pre><span></span><code>Forward:  [X₁, X₂] → [Y₁, Y₂] → All-Reduce → Y
+Backward: Y_grad → All-Reduce → [X₁_grad, X₂_grad]
+</code></pre></div>
+<h3 id="use-case_1">Use Case<a class="headerlink" href="#use-case_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Output projection in attention</li>
+<li>Second FFN layer in transformers</li>
+</ul>
+<hr />
+<h2 id="why-both-exist-complementary-design">Why Both Exist: Complementary Design<a class="headerlink" href="#why-both-exist-complementary-design" title="Permanent link">&para;</a></h2>
+<p>Column and row parallelism are <strong>complementary</strong> and minimize total communication:</p>
+<div class="highlight"><pre><span></span><code>Transformer Block:
+
+Input
+  ↓
+[Column Parallel] QKV projection
+  ↓ All-Gather
+Attention
+  ↓
+[Row Parallel] Output projection
+  ↓ All-Reduce
+[Column Parallel] FFN Layer 1
+  ↓ All-Gather
+Activation
+  ↓
+[Row Parallel] FFN Layer 2
+  ↓ All-Reduce
+Output
+</code></pre></div>
+<p><strong>Key Insight</strong>: Alternating column/row avoids redundant communication and balances memory.</p>
+<hr />
+<h2 id="megatron-lm-style-tp">Megatron-LM Style TP<a class="headerlink" href="#megatron-lm-style-tp" title="Permanent link">&para;</a></h2>
+<p>Megatron-LM popularized this pattern for transformers:</p>
+<h3 id="self-attention">Self-Attention<a class="headerlink" href="#self-attention" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Column parallel (split attention heads)</span>
+<span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">column_parallel_linear</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># All-Gather output</span>
+
+<span class="c1"># Attention computation (no communication)</span>
+<span class="n">attention_output</span> <span class="o">=</span> <span class="n">self_attention</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+
+<span class="c1"># Row parallel (reduce across heads)</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">row_parallel_linear</span><span class="p">(</span><span class="n">attention_output</span><span class="p">)</span>  <span class="c1"># All-Reduce output</span>
+</code></pre></div>
+<h3 id="feed-forward-network">Feed-Forward Network<a class="headerlink" href="#feed-forward-network" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Column parallel</span>
+<span class="n">hidden</span> <span class="o">=</span> <span class="n">column_parallel_linear</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># All-Gather</span>
+<span class="n">hidden</span> <span class="o">=</span> <span class="n">gelu</span><span class="p">(</span><span class="n">hidden</span><span class="p">)</span>
+
+<span class="c1"># Row parallel</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">row_parallel_linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">)</span>  <span class="c1"># All-Reduce</span>
+</code></pre></div>
+<hr />
+<h2 id="communication-cost">Communication Cost<a class="headerlink" href="#communication-cost" title="Permanent link">&para;</a></h2>
+<p>For a single linear layer with Ψ parameters:</p>
+<p><strong>Column Parallelism</strong>:
+- Forward: All-Gather → <code>2Ψ/k</code> communicated per GPU
+- Backward: All-Reduce → <code>2Ψ/k</code> communicated per GPU</p>
+<p><strong>Row Parallelism</strong>:
+- Forward: All-Reduce → <code>2Ψ/k</code> communicated per GPU
+- Backward: Similar</p>
+<p><strong>Total per layer</strong>: ~<code>4Ψ/k</code> per GPU</p>
+<blockquote>
+<p><strong>Critical</strong>: Communication happens <strong>inside forward/backward pass</strong>, making TP very latency-sensitive.</p>
+</blockquote>
+<hr />
+<h2 id="memory-savings">Memory Savings<a class="headerlink" href="#memory-savings" title="Permanent link">&para;</a></h2>
+<p>For model with Ψ parameters across k GPUs:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Per GPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parameters</strong></td>
+<td>Ψ/k</td>
+</tr>
+<tr>
+<td><strong>Gradients</strong></td>
+<td>Ψ/k</td>
+</tr>
+<tr>
+<td><strong>Optimizer States</strong></td>
+<td>12Ψ/k</td>
+</tr>
+<tr>
+<td><strong>Activations</strong></td>
+<td>Depends (also reduced due to smaller intermediate tensors)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong>: 7B model with 8-way TP
+- Parameters: 14GB / 8 = 1.75GB per GPU
+- Optimizer: 84GB / 8 = 10.5GB per GPU</p>
+<hr />
+<h2 id="common-interview-questions">Common Interview Questions<a class="headerlink" href="#common-interview-questions" title="Permanent link">&para;</a></h2>
+<h3 id="q1-whats-the-difference-between-column-and-row-parallelism">Q1: "What's the difference between column and row parallelism?"<a class="headerlink" href="#q1-whats-the-difference-between-column-and-row-parallelism" title="Permanent link">&para;</a></h3>
+<p><strong>Strong Answer</strong>:
+- <strong>Column Parallelism</strong>: Splits output features
+  - Each GPU computes different output dimensions
+  - Needs All-Gather to reconstruct full output
+  - Used for: QKV projection, first FFN layer</p>
+<ul>
+<li><strong>Row Parallelism</strong>: Splits input features</li>
+<li>Each GPU computes partial sums</li>
+<li>Needs All-Reduce to sum results</li>
+<li>Used for: Attention output, second FFN layer</li>
+</ul>
+<p>They're <strong>complementary</strong> - alternating minimizes communication.</p>
+<hr />
+<h3 id="q2-why-is-tp-usually-limited-to-within-a-node">Q2: "Why is TP usually limited to within a node?"<a class="headerlink" href="#q2-why-is-tp-usually-limited-to-within-a-node" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:
+1. <strong>Latency sensitivity</strong>: Communication happens inside fwd/bwd pass
+2. <strong>Bandwidth requirements</strong>: NVLink (900 GB/s) &gt;&gt; Ethernet (100 Gb/s)
+3. <strong>Frequent communication</strong>: Every layer needs All-Gather or All-Reduce</p>
+<p><strong>Typical setup</strong>:
+- 8-way TP within a node (8 GPUs on NVLink)
+- Data Parallelism or Pipeline Parallelism across nodes</p>
+<hr />
+<h3 id="q3-how-does-tp-interact-with-batch-size">Q3: "How does TP interact with batch size?"<a class="headerlink" href="#q3-how-does-tp-interact-with-batch-size" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:
+- TP <strong>does NOT split the batch</strong> - that's Data Parallelism
+- All GPUs process the <strong>same batch</strong>
+- Each GPU holds different parameters/activations
+- Batch size per GPU remains the same
+- Total compute is distributed across model dimensions, not data</p>
+<hr />
+<h3 id="q4-whats-the-communication-pattern-for-tp-compared-to-dp">Q4: "What's the communication pattern for TP compared to DP?"<a class="headerlink" href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" title="Permanent link">&para;</a></h3>
+<p><strong>Answer</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Data Parallelism</th>
+<th>Tensor Parallelism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>When</strong></td>
+<td>Once per iteration (after backward)</td>
+<td>Multiple times per fwd/bwd (every layer)</td>
+</tr>
+<tr>
+<td><strong>What</strong></td>
+<td>Gradients (2Ψ)</td>
+<td>Activations and gradients (varies)</td>
+</tr>
+<tr>
+<td><strong>Latency</strong></td>
+<td>Can be hidden with async</td>
+<td>Critical bottleneck</td>
+</tr>
+<tr>
+<td><strong>Bandwidth</strong></td>
+<td>Ethernet OK</td>
+<td>Needs NVLink/InfiniBand</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="q5-how-would-you-debug-slow-tp-training">Q5: "How would you debug slow TP training?"<a class="headerlink" href="#q5-how-would-you-debug-slow-tp-training" title="Permanent link">&para;</a></h3>
+<p><strong>Checklist</strong>:
+1. <strong>Check interconnect</strong>: Are GPUs on same node? Using NVLink?
+2. <strong>Profile communication</strong>: Is All-Reduce/All-Gather taking &gt;20% of time?
+3. <strong>Check tensor sizes</strong>: Imbalanced shards cause stragglers
+4. <strong>Verify overlap</strong>: Is communication truly async?</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Profile with PyTorch profiler</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span> <span class="k">as</span> <span class="n">prof</span><span class="p">:</span>
+    <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">key_averages</span><span class="p">()</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">sort_by</span><span class="o">=</span><span class="s2">&quot;cuda_time_total&quot;</span><span class="p">))</span>
+<span class="c1"># Look for NCCL kernels</span>
+</code></pre></div>
+<hr />
+<h2 id="sequence-parallelism-extension">Sequence Parallelism Extension<a class="headerlink" href="#sequence-parallelism-extension" title="Permanent link">&para;</a></h2>
+<p><strong>Problem</strong>: Even with TP, activation memory from long sequences is huge.</p>
+<p><strong>Solution</strong>: Also split the <strong>sequence dimension</strong>.</p>
+<div class="highlight"><pre><span></span><code>Standard TP:
+Each GPU: [batch, full_sequence, hidden/k]
+
+Sequence Parallelism:
+Each GPU: [batch, sequence/k, hidden/k]
+</code></pre></div>
+<p><strong>Communication</strong>:
+- All-Gather for operations that need full sequence (attention)
+- All-Reduce for operations that can work on shards</p>
+<p><strong>Use case</strong>: Very long context models (32k+, 128k+ tokens)</p>
+<hr />
+<h2 id="tp-other-parallelisms">TP + Other Parallelisms<a class="headerlink" href="#tp-other-parallelisms" title="Permanent link">&para;</a></h2>
+<h3 id="tp-dp-most-common">TP + DP (Most Common)<a class="headerlink" href="#tp-dp-most-common" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌────────────────┐  ┌────────────────┐
+│  TP Group 0    │  │  TP Group 1    │  ← Data Parallel
+│  [GPU 0-7]     │  │  [GPU 8-15]    │     dimension
+└────────────────┘  └────────────────┘
+     ↑ 8-way TP         ↑ 8-way TP
+</code></pre></div>
+<h3 id="tp-pp">TP + PP<a class="headerlink" href="#tp-pp" title="Permanent link">&para;</a></h3>
+<ul>
+<li>TP within each pipeline stage</li>
+<li>Reduces per-stage memory further</li>
+</ul>
+<h3 id="tp-zero">TP + ZeRO<a class="headerlink" href="#tp-zero" title="Permanent link">&para;</a></h3>
+<ul>
+<li>TP for model parallelism</li>
+<li>ZeRO for optimizer state sharding</li>
+<li>Best of both worlds</li>
+</ul>
+<hr />
+<h2 id="implementation-tips">Implementation Tips<a class="headerlink" href="#implementation-tips" title="Permanent link">&para;</a></h2>
+<h3 id="1-communication-backend">1. Communication Backend<a class="headerlink" href="#1-communication-backend" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use NCCL for GPU communication</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">&#39;nccl&#39;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="2-tensor-parallel-group-setup">2. Tensor Parallel Group Setup<a class="headerlink" href="#2-tensor-parallel-group-setup" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create TP groups</span>
+<span class="n">world_size</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">tp_size</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># 4-way TP, 2-way DP</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">world_size</span> <span class="o">//</span> <span class="n">tp_size</span><span class="p">):</span>
+    <span class="n">ranks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">tp_size</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">tp_size</span><span class="p">))</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">new_group</span><span class="p">(</span><span class="n">ranks</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="3-column-parallel-linear">3. Column Parallel Linear<a class="headerlink" href="#3-column-parallel-linear" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ColumnParallelLinear</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="c1"># Each GPU has W[:, start:end]</span>
+        <span class="n">output_parallel</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">)</span>
+        <span class="c1"># All-Gather to get full output</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">all_gather</span><span class="p">(</span><span class="n">output_parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tp_group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+</code></pre></div>
+<hr />
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>TP splits individual layers</strong>, not batches (that's DP)</li>
+<li><strong>Column/row parallelism are complementary</strong> - alternate to minimize communication</li>
+<li><strong>Communication happens inside fwd/bwd</strong> - very latency sensitive</li>
+<li><strong>Typically 8-way TP within a node</strong> using NVLink</li>
+<li><strong>Megatron-LM pattern</strong> is the standard for transformer TP</li>
+<li><strong>Combine with DP</strong> for full cluster scaling</li>
+<li><strong>Sequence parallelism</strong> extends TP for very long contexts</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.expand", "navigation.top", "search.highlight", "search.share", "content.code.copy", "mathjax"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
