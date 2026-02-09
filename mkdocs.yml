@@ -46,15 +46,18 @@ nav:
       - QLoRA: ./parameter_efficient_fine_tuning/qlora.md
       - Adaptors: ./parameter_efficient_fine_tuning/adaptors.md
       - Prefix Tuning: ./parameter_efficient_fine_tuning/prefix_tuning.md
+      - 4-bit NormalFloat (NF4): ./parameter_efficient_fine_tuning/4bit_normal_float.md
+      - Block-wise k-bit Quantization: ./parameter_efficient_fine_tuning/blockwise_kbit_quantization.md
   - Optimization:
-      - 4-bit NormalFloat (NF4): ./optimization/4bit_normal_float.md
-      - Block-wise k-bit Quantization: ./optimization/blockwise_kbit_quantization.md
-      - Accelerate Framework: ./optimization/accelerate.md
-      - BP16: ./optimization/bp16.md
-      - Memory Consideration: ./optimization/memory_considerations.md
-      - Paged Adam Optimizer: ./optimization/paged_adam.md
-      - Training Optimization and Stability: ./optimization/training_optimization_and_stability.md
+      - Mixed Precision: ./optimization/mixed_precision.md
+      - Gradient Checkpointing: ./optimization/gradient_checkpointing.md
+      - Memory Efficient Optimizers: ./optimization/memory_efficient_optimizers.md
+      - Optimizers-Schedules: ./optimization/optimizers_schedules.md
+      - Quantization: ./optimization/quantization.md
+      - Memory Considerations: ./optimization/memory_considerations.md
       - Prefix Caching: ./optimization/prefix_caching.md
+  - Frameworks:
+      - Accelerate Framework: ./optimization/accelerate.md
   - Training Pipeline:
       - Foundation: ./training_techniques/foundation.md
       - LLM Reasoning & Thinking Models: ./training_techniques/thinking_llms.md
