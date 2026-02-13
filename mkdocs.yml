@@ -45,7 +45,6 @@ nav:
       - LoRA: ./parameter_efficient_fine_tuning/lora.md
       - QLoRA: ./parameter_efficient_fine_tuning/qlora.md
       - Adaptors: ./parameter_efficient_fine_tuning/adaptors.md
-      - Prefix Tuning: ./parameter_efficient_fine_tuning/prefix_tuning.md
       - 4-bit NormalFloat (NF4): ./parameter_efficient_fine_tuning/4bit_normal_float.md
       - Block-wise k-bit Quantization: ./parameter_efficient_fine_tuning/blockwise_kbit_quantization.md
   - Optimization:
@@ -57,7 +56,7 @@ nav:
       - Memory Considerations: ./optimization/memory_considerations.md
       - Prefix Caching: ./optimization/prefix_caching.md
   - Frameworks:
-      - Accelerate Framework: ./optimization/accelerate.md
+      - Accelerate Framework: ./frameworks/accelerate.md
   - Training Pipeline:
       - Foundation: ./training_techniques/foundation.md
       - LLM Reasoning & Thinking Models: ./training_techniques/thinking_llms.md
