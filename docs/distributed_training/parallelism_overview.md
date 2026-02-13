@@ -1,6 +1,4 @@
-# Parallelism Overview
-
-## The Memory-Compute-Communication Triangle
+## 1. The Memory-Compute-Communication Triangle
 
 Distributed training is fundamentally constrained by a three-way trade-off:
 
@@ -12,7 +10,9 @@ Distributed training is fundamentally constrained by a three-way trade-off:
 
 ---
 
-## Why We Need Parallelism
+---
+
+## 2. Why We Need Parallelism
 
 ### Memory Requirements (7B Parameter Model Example)
 
@@ -32,7 +32,9 @@ This doesn't fit on an 80GB A100 → **Need sharding strategies**
 
 ---
 
-## The Four Main Parallelism Types
+---
+
+## 3. The Four Main Parallelism Types
 
 | Type | What It Splits | When to Use | Communication |
 |------|---------------|-------------|---------------|
@@ -43,7 +45,9 @@ This doesn't fit on an 80GB A100 → **Need sharding strategies**
 
 ---
 
-## Hybrid Parallelism in Practice
+---
+
+## 4. Hybrid Parallelism in Practice
 
 Real systems combine multiple strategies:
 
@@ -68,7 +72,9 @@ Real systems combine multiple strategies:
 
 ---
 
-## Training vs Inference Optimization
+---
+
+## 5. Training vs Inference Optimization
 
 ### Training (Throughput-Oriented)
 - Goal: **Maximum tokens/second**
@@ -80,6 +86,8 @@ Real systems combine multiple strategies:
 - Data Parallelism with large global batches
 - Pipeline Parallelism with micro-batching
 - Aggressive communication-computation overlap
+
+---
 
 ### Inference (Latency-Oriented)
 - Goal: **Fast response per request**
@@ -95,7 +103,9 @@ Real systems combine multiple strategies:
 
 ---
 
-## Common Interview Questions
+---
+
+## 6. Common Interview Questions
 
 ### Q1: "How would you scale training from 1 GPU to 256 GPUs?"
 
@@ -107,6 +117,8 @@ Real systems combine multiple strategies:
    - 8-way Tensor Parallelism within nodes
    - 4-way Pipeline Parallelism if model is very deep
    - Data Parallelism across remaining dimension
+
+---
 
 ### Q2: "What's the difference between model parallelism and data parallelism?"
 
@@ -121,6 +133,8 @@ Real systems combine multiple strategies:
   - Communication: Multiple times per forward/backward pass
   - Enables training models larger than single GPU memory
 
+---
+
 ### Q3: "Why can't we just use Data Parallelism for everything?"
 
 **Answer**:
@@ -133,7 +147,9 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 
 ---
 
-## Memory Reduction Techniques
+---
+
+## 7. Memory Reduction Techniques
 
 ### Activation Checkpointing
 - **What**: Discard activations during forward, recompute in backward
@@ -152,7 +168,9 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 
 ---
 
-## Critical Communication Primitives
+---
+
+## 8. Critical Communication Primitives
 
 | Operation | Purpose | Example Use |
 |-----------|---------|-------------|
@@ -163,7 +181,9 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 
 ---
 
-## Key Takeaways for Interviews
+---
+
+## 9. Key Takeaways for Interviews
 
 1. **No single best strategy** - choice depends on model size, hardware, and constraints
 2. **Communication is often the bottleneck** at scale
@@ -171,3 +191,5 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 4. **Hybrid approaches** are standard in production (e.g., DP + TP + ZeRO)
 5. **Memory accounting** is critical - know the 16Ψ rule for Adam + FP16
 6. **Training ≠ Inference** - different optimization goals require different parallelism strategies
+
+---

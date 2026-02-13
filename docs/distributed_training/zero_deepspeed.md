@@ -1,6 +1,4 @@
-# ZeRO & DeepSpeed
-
-## The Core Problem
+## 1. The Core Problem
 
 **Standard Data Parallelism** replicates everything on each GPU:
 - Model parameters (Ψ)
@@ -16,7 +14,9 @@ For a 7B model:
 
 ---
 
-## ZeRO: Zero Redundancy Optimizer
+---
+
+## 2. ZeRO: Zero Redundancy Optimizer
 
 **Goal**: Eliminate memory redundancy while keeping the efficiency of Data Parallelism.
 
@@ -32,7 +32,9 @@ For a 7B model:
 
 ---
 
-## Stage-by-Stage Breakdown
+---
+
+## 3. Stage-by-Stage Breakdown
 
 ### ZeRO-1: Optimizer State Sharding
 
@@ -103,7 +105,9 @@ For a 7B model:
 
 ---
 
-## ZeRO-3 Communication Pattern
+---
+
+## 4. ZeRO-3 Communication Pattern
 
 ```python
 # Pseudo-code for one layer forward/backward
@@ -125,7 +129,9 @@ grad_shard = reduce_scatter(grad_params)  # Each GPU gets its shard
 
 ---
 
-## ZeRO Offload
+---
+
+## 5. ZeRO Offload
 
 **Problem**: Even ZeRO-3 may not fit very large models on GPU.
 
@@ -164,7 +170,9 @@ CPU: Store optimizer states, occasionally parameters
 
 ---
 
-## DeepSpeed: The Library
+---
+
+## 6. DeepSpeed: The Library
 
 **DeepSpeed** is Microsoft's implementation of ZeRO with many optimizations.
 
@@ -222,7 +230,9 @@ CPU: Store optimizer states, occasionally parameters
 
 ---
 
-## Common Interview Questions
+---
+
+## 7. Common Interview Questions
 
 ### Q1: "Explain the difference between ZeRO-2 and ZeRO-3."
 
@@ -341,7 +351,9 @@ CPU: Store optimizer states, occasionally parameters
 
 ---
 
-## Memory Calculation Example
+---
+
+## 8. Memory Calculation Example
 
 **7B model, 8 GPUs, FP16, Adam optimizer**
 
@@ -377,7 +389,9 @@ Per GPU:
 
 ---
 
-## Practical Tips
+---
+
+## 9. Practical Tips
 
 ### 1. Start with ZeRO-2
 ```python
@@ -415,7 +429,9 @@ see_memory_usage("After forward", force=True)
 
 ---
 
-## Integration with Hugging Face
+---
+
+## 10. Integration with Hugging Face
 
 ```python
 from transformers import Trainer, TrainingArguments
@@ -439,6 +455,8 @@ trainer.train()
 
 ---
 
+---
+
 ## Key Takeaways
 
 1. **ZeRO eliminates redundancy** in Data Parallelism by sharding model states
@@ -449,3 +467,5 @@ trainer.train()
 6. **DeepSpeed is the reference implementation** with optimized kernels
 7. **Communication-computation overlap is critical** for ZeRO-3 efficiency
 8. **Memory savings scale linearly with GPUs** (Z3: 112GB → 14GB on 8 GPUs)
+
+---

@@ -1,6 +1,4 @@
-# Data Parallelism (DP)
-
-## Core Concept
+## 1. Overview
 
 The most widely used baseline parallelism strategy:
 - **Full model replicated** across N workers
@@ -10,7 +8,9 @@ The most widely used baseline parallelism strategy:
 
 ---
 
-## How It Works
+---
+
+## 2. How It Works
 
 ```
 GPU 0: Model Copy | Batch[0:32]   → Forward → Backward → Gradients_0
@@ -27,7 +27,9 @@ GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
 
 ---
 
-## PyTorch DDP Implementation Details
+---
+
+## 3. PyTorch DDP Implementation Details
 
 ### 1. Gradient Bucketing
 
@@ -85,7 +87,9 @@ Comm:        [Bucket 1 All-Reduce─────────────]
 
 ---
 
-## Memory Requirements
+---
+
+## 4. Memory Requirements
 
 Each GPU must store:
 - **Model parameters**: 2Ψ (FP16) or 4Ψ (FP32)
@@ -97,7 +101,9 @@ Each GPU must store:
 
 ---
 
-## Communication Cost
+---
+
+## 5. Communication Cost
 
 ### All-Reduce Complexity
 
@@ -105,6 +111,8 @@ For N GPUs and Ψ parameters:
 - **Data transferred**: 2Ψ(N-1)/N per GPU (ring All-Reduce)
 - **Latency**: O(log N) for tree-based, O(N) for ring-based
 - Grows **linearly** with number of GPUs
+
+---
 
 ### Bandwidth Requirements
 
@@ -116,7 +124,9 @@ For 7B model (14GB gradients in FP16):
 
 ---
 
-## Gradient Accumulation with DDP
+---
+
+## 6. Gradient Accumulation with DDP
 
 **Purpose**: Simulate larger batch size without increasing memory
 
@@ -140,7 +150,9 @@ for i, batch in enumerate(dataloader):
 
 ---
 
-## Common Interview Questions
+---
+
+## 7. Common Interview Questions
 
 ### Q1: "What happens during DDP gradient synchronization?"
 
@@ -196,7 +208,9 @@ ZeRO-1 is a strict improvement over DDP for memory, with minimal communication o
 
 ---
 
-## Best Practices
+---
+
+## 8. Best Practices
 
 ### 1. Bucket Size Tuning
 ```python
@@ -228,7 +242,9 @@ model = DDP(model, static_graph=True)  # PyTorch 1.11+
 
 ---
 
-## Debugging Tips
+---
+
+## 9. Debugging Tips
 
 ### Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"
 
@@ -250,12 +266,3 @@ torch.distributed.barrier()
 3. Switch to ZeRO-2/FSDP to shard optimizer and gradients
 
 ---
-
-## Key Takeaways
-
-1. **DDP is the baseline** - start here before more complex strategies
-2. **Gradient bucketing + async reduction** enables communication-computation overlap
-3. **Memory limitation** is the main constraint - model must fit on single GPU
-4. **Communication grows linearly** with GPUs - becomes bottleneck at large scale
-5. **Gradient accumulation** reduces sync frequency and effective communication cost
-6. **All-Reduce is distributed** - no central parameter server

@@ -1,6 +1,4 @@
-# Tensor Parallelism (TP)
-
-## Core Concept
+## 1. Core Concept
 
 Tensor Parallelism splits **individual layers** across devices so that a single layer's computation is distributed.
 
@@ -8,7 +6,9 @@ Tensor Parallelism splits **individual layers** across devices so that a single 
 
 ---
 
-## The Basic Idea
+---
+
+## 2. The Basic Idea
 
 Consider a linear layer: **Y = XW**
 
@@ -23,7 +23,9 @@ Where:
 
 ---
 
-## Column Parallelism (Output Dimension Split)
+---
+
+## 3. Column Parallelism (Output Dimension Split)
 
 ### How It Works
 
@@ -45,6 +47,8 @@ Y₂ = X · W₂  (shape: [batch, hidden_out/k])
 
 **Result**: Each Yᵢ is a **partial output** (different features).
 
+---
+
 ### Communication Pattern
 
 **Forward Pass**:
@@ -59,13 +63,17 @@ Forward:  X → [Y₁, Y₂, Y₃] → All-Gather → Y
 Backward: Y_grad → [X_grad₁, X_grad₂, X_grad₃] → All-Reduce → X_grad
 ```
 
+---
+
 ### Use Case
 - Feed-forward network (FFN) in transformers
 - First linear projection in attention (Q, K, V)
 
 ---
 
-## Row Parallelism (Input Dimension Split)
+---
+
+## 4. Row Parallelism (Input Dimension Split)
 
 ### How It Works
 
@@ -94,6 +102,8 @@ Y₂ = X₂ · W₂  (shape: [batch, hidden_out])
 
 **Result**: Each Yᵢ is a **partial sum** for the same output features.
 
+---
+
 ### Communication Pattern
 
 **Forward Pass**:
@@ -108,13 +118,17 @@ Forward:  [X₁, X₂] → [Y₁, Y₂] → All-Reduce → Y
 Backward: Y_grad → All-Reduce → [X₁_grad, X₂_grad]
 ```
 
+---
+
 ### Use Case
 - Output projection in attention
 - Second FFN layer in transformers
 
 ---
 
-## Why Both Exist: Complementary Design
+---
+
+## 5. Why Both Exist: Complementary Design
 
 Column and row parallelism are **complementary** and minimize total communication:
 
@@ -142,7 +156,9 @@ Output
 
 ---
 
-## Megatron-LM Style TP
+---
+
+## 6. Megatron-LM Style TP
 
 Megatron-LM popularized this pattern for transformers:
 
@@ -158,6 +174,8 @@ attention_output = self_attention(Q, K, V)
 output = row_parallel_linear(attention_output)  # All-Reduce output
 ```
 
+---
+
 ### Feed-Forward Network
 ```python
 # Column parallel
@@ -170,7 +188,9 @@ output = row_parallel_linear(hidden)  # All-Reduce
 
 ---
 
-## Communication Cost
+---
+
+## 7. Communication Cost
 
 For a single linear layer with Ψ parameters:
 
@@ -188,7 +208,9 @@ For a single linear layer with Ψ parameters:
 
 ---
 
-## Memory Savings
+---
+
+## 8. Memory Savings
 
 For model with Ψ parameters across k GPUs:
 
@@ -205,7 +227,9 @@ For model with Ψ parameters across k GPUs:
 
 ---
 
-## Common Interview Questions
+---
+
+## 9. Common Interview Questions
 
 ### Q1: "What's the difference between column and row parallelism?"
 
@@ -279,7 +303,9 @@ print(prof.key_averages().table(sort_by="cuda_time_total"))
 
 ---
 
-## Sequence Parallelism Extension
+---
+
+## 10. Sequence Parallelism Extension
 
 **Problem**: Even with TP, activation memory from long sequences is huge.
 
@@ -301,7 +327,9 @@ Each GPU: [batch, sequence/k, hidden/k]
 
 ---
 
-## TP + Other Parallelisms
+---
+
+## 11. TP + Other Parallelisms
 
 ### TP + DP (Most Common)
 ```
@@ -323,7 +351,9 @@ Each GPU: [batch, sequence/k, hidden/k]
 
 ---
 
-## Implementation Tips
+---
+
+## 12. Implementation Tips
 
 ### 1. Communication Backend
 ```python
@@ -355,7 +385,9 @@ class ColumnParallelLinear(nn.Module):
 
 ---
 
-## Key Takeaways
+---
+
+## 13. Key Takeaways
 
 1. **TP splits individual layers**, not batches (that's DP)
 2. **Column/row parallelism are complementary** - alternate to minimize communication
@@ -364,3 +396,5 @@ class ColumnParallelLinear(nn.Module):
 5. **Megatron-LM pattern** is the standard for transformer TP
 6. **Combine with DP** for full cluster scaling
 7. **Sequence parallelism** extends TP for very long contexts
+
+---

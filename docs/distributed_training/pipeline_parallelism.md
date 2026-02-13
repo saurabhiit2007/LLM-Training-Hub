@@ -1,6 +1,4 @@
-# Pipeline Parallelism (PP)
-
-## Core Concept
+## 1. Core Concept
 
 Pipeline Parallelism splits the model **by layer depth** across devices.
 
@@ -17,7 +15,9 @@ GPU 3: Layers 10-12 ─┘
 
 ---
 
-## The Pipeline Bubble Problem
+---
+
+## 2. The Pipeline Bubble Problem
 
 ### Naive Pipeline (No Micro-Batching)
 
@@ -38,7 +38,9 @@ This idle time is called the **"pipeline bubble"**.
 
 ---
 
-## Micro-Batching Solution
+---
+
+## 3. Micro-Batching Solution
 
 Split the global batch into **M micro-batches** that flow through the pipeline.
 
@@ -59,7 +61,9 @@ GPU 3:          F1 F2 F3 F4 B4 B3 B2 B1
 
 ---
 
-## Pipeline Bubble Calculation
+---
+
+## 4. Pipeline Bubble Calculation
 
 **Bubble fraction** = (Number of pipeline stages - 1) / Number of micro-batches
 
@@ -76,7 +80,9 @@ For P pipeline stages and M micro-batches:
 
 ---
 
-## Pipeline Schedules
+---
+
+## 5. Pipeline Schedules
 
 ### 1. GPipe (Fill-Drain)
 
@@ -129,7 +135,9 @@ GPU 3: Stages 4, 8
 
 ---
 
-## Memory Trade-offs
+---
+
+## 6. Memory Trade-offs
 
 ### Activation Memory
 
@@ -157,7 +165,9 @@ Example: GPT-3 175B
 
 ---
 
-## Communication Pattern
+---
+
+## 7. Communication Pattern
 
 ### Forward Pass
 - Send activations from stage i to stage i+1
@@ -172,7 +182,9 @@ Example: GPT-3 175B
 
 ---
 
-## Common Interview Questions
+---
+
+## 8. Common Interview Questions
 
 ### Q1: "Explain the pipeline bubble and how to reduce it."
 
@@ -278,7 +290,9 @@ Example: GPT-3 175B
 
 ---
 
-## Practical Implementation
+---
+
+## 9. Practical Implementation
 
 ### GPipe Style (PyTorch)
 
@@ -317,7 +331,9 @@ class PipelineStage:
 
 ---
 
-## Gradient Accumulation vs Micro-batching
+---
+
+## 10. Gradient Accumulation vs Micro-batching
 
 ### Gradient Accumulation (DP)
 ```
@@ -328,6 +344,8 @@ optimizer.step()  # One update
 ```
 - All micro-batches on same GPU
 - No communication until optimizer step
+
+---
 
 ### Micro-batching (PP)
 ```
@@ -343,7 +361,9 @@ GPU 0: micro_batch_2 → ...
 
 ---
 
-## Debugging Tips
+---
+
+## 11. Debugging Tips
 
 ### Issue: Poor Utilization
 **Symptoms**: GPUs idle most of the time
@@ -371,7 +391,9 @@ GPU 0: micro_batch_2 → ...
 
 ---
 
-## Advanced: Hybrid PP + TP
+---
+
+## 12. Advanced: Hybrid PP + TP
 
 Most efficient setup for large models:
 
@@ -396,7 +418,9 @@ Most efficient setup for large models:
 
 ---
 
-## Key Takeaways
+---
+
+## 13. Key Takeaways
 
 1. **PP splits model by depth** - each GPU owns contiguous layers
 2. **Pipeline bubble is unavoidable** - use micro-batching to minimize (aim for <20%)
@@ -406,3 +430,5 @@ Most efficient setup for large models:
 6. **Not ideal for inference** due to latency overhead
 7. **Often combined with TP** - TP within stages, PP across stages
 8. **Rule: M ≥ 4P** (micro-batches ≥ 4× pipeline stages)
+
+---

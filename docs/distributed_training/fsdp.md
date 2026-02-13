@@ -1,6 +1,4 @@
-# FSDP (Fully Sharded Data Parallel)
-
-## What is FSDP?
+## 1. Overview
 
 **FSDP** is PyTorch's native implementation of the **ZeRO-3** algorithm.
 
@@ -12,7 +10,9 @@
 
 ---
 
-## Core Concept
+---
+
+## 2. Core Concept
 
 Like ZeRO-3, FSDP shards **all model states** across GPUs:
 - Parameters (Ψ/N per GPU)
@@ -23,7 +23,9 @@ Like ZeRO-3, FSDP shards **all model states** across GPUs:
 
 ---
 
-## How FSDP Works
+---
+
+## 3. How FSDP Works
 
 ### 1. Sharding Strategy
 
@@ -81,7 +83,9 @@ grad_shard = reduce_scatter(grad_params)  # Each GPU gets its shard
 
 ---
 
-## Wrapping Strategies
+---
+
+## 4. Wrapping Strategies
 
 **Critical for performance**: How you wrap your model determines memory efficiency.
 
@@ -139,7 +143,9 @@ model = FSDP(model, auto_wrap_policy=auto_wrap_policy)
 
 ---
 
-## Why Wrapping Matters
+---
+
+## 5. Why Wrapping Matters
 
 ### Bad Wrapping (No Sub-Module Wrapping)
 
@@ -168,7 +174,9 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 
 ---
 
-## FSDP vs DeepSpeed
+---
+
+## 6. FSDP vs DeepSpeed
 
 | Feature | FSDP | DeepSpeed ZeRO-3 |
 |---------|------|-----------------|
@@ -194,7 +202,9 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 
 ---
 
-## FSDP2: The Modern Version
+---
+
+## 7. FSDP2: The Modern Version
 
 **Introduced in PyTorch 2.x**, built on DTensors (Distributed Tensors).
 
@@ -222,7 +232,9 @@ fully_shard(model)  # Wrap whole model
 
 ---
 
-## Hybrid Sharding (HSDP)
+---
+
+## 8. Hybrid Sharding (HSDP)
 
 **Problem**: All-to-all communication across 1000s of GPUs is slow.
 
@@ -256,7 +268,9 @@ model = FSDP(
 
 ---
 
-## Memory Calculation Example
+---
+
+## 9. Memory Calculation Example
 
 **7B model, 8 GPUs, FP16, Adam**
 
@@ -276,7 +290,9 @@ model = FSDP(
 
 ---
 
-## Common Interview Questions
+---
+
+## 10. Common Interview Questions
 
 ### Q1: "What's the difference between FSDP and DDP?"
 
@@ -403,7 +419,9 @@ model = torch.compile(fully_shard(model))
 
 ---
 
-## Practical Implementation
+---
+
+## 11. Practical Implementation
 
 ### Basic FSDP Setup
 
@@ -480,7 +498,9 @@ model = FSDP(model)
 
 ---
 
-## Debugging Tips
+---
+
+## 12. Debugging Tips
 
 ### Issue: OOM During Training
 
@@ -530,7 +550,9 @@ model = FSDP(model)
 
 ---
 
-## Integration with Hugging Face
+---
+
+## 14. Integration with Hugging Face
 
 ```python
 from transformers import Trainer, TrainingArguments
@@ -557,7 +579,8 @@ trainer.train()
 
 ---
 
-## Key Takeaways
+---
+## 15. Key Takeaways
 
 1. **FSDP is PyTorch's native ZeRO-3** - shards all model states
 2. **Wrapping policy is critical** - determines memory efficiency
@@ -567,3 +590,5 @@ trainer.train()
 6. **Use for models that don't fit on single GPU** (7B+ typically)
 7. **Communication overhead** - 2× All-Gather per layer (vs DDP's 1× All-Reduce per step)
 8. **Trade-off**: More memory savings than ZeRO-2, more communication than ZeRO-2
+
+---
