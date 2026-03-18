@@ -21,6 +21,7 @@ For mixed precision training with Adam optimizer:
 - **Parameters (FP16)**: 7B × 2 bytes = 14 GB
 - **Gradients (FP16)**: 7B × 2 bytes = 14 GB
 - **Optimizer States (FP32)**:
+
   - Master weights: 7B × 4 = 28 GB
   - Momentum: 7B × 4 = 28 GB
   - Variance: 7B × 4 = 28 GB
@@ -64,6 +65,7 @@ Real systems combine multiple strategies:
 ```
 
 **Example scaling strategy (1 GPU → 1024 GPUs)**:
+
 1. Start with Data Parallelism
 2. Add ZeRO-2 when optimizer states don't fit
 3. Add Tensor Parallelism (8-way) within nodes for very large layers
@@ -83,6 +85,7 @@ Real systems combine multiple strategies:
 - Higher per-batch latency acceptable
 
 **Common choices**:
+
 - Data Parallelism with large global batches
 - Pipeline Parallelism with micro-batching
 - Aggressive communication-computation overlap
@@ -95,6 +98,7 @@ Real systems combine multiple strategies:
 - Minimize synchronization
 
 **Common choices**:
+
 - Model replication over sharding (for small models)
 - Limited/no Pipeline Parallelism (bubble overhead)
 - Kernel fusion and caching
@@ -105,51 +109,7 @@ Real systems combine multiple strategies:
 
 ---
 
-## 6. Common Interview Questions
-
-### Q1: "How would you scale training from 1 GPU to 256 GPUs?"
-
-**Strong Answer**:
-1. **1-8 GPUs**: Start with Data Parallelism (DDP)
-2. **8-64 GPUs**: Add ZeRO-2 to shard optimizer states and gradients
-3. **64-256 GPUs**: Consider:
-   - ZeRO-3/FSDP for full parameter sharding
-   - 8-way Tensor Parallelism within nodes
-   - 4-way Pipeline Parallelism if model is very deep
-   - Data Parallelism across remaining dimension
-
----
-
-### Q2: "What's the difference between model parallelism and data parallelism?"
-
-**Answer**:
-- **Data Parallelism**: Replicate entire model on each GPU, split batch
-  - Communication: Once per iteration (gradient sync)
-  - Limitation: Model must fit on single GPU
-  
-- **Model Parallelism**: Split model itself across GPUs
-  - **Tensor Parallelism**: Split individual layers
-  - **Pipeline Parallelism**: Split by depth
-  - Communication: Multiple times per forward/backward pass
-  - Enables training models larger than single GPU memory
-
----
-
-### Q3: "Why can't we just use Data Parallelism for everything?"
-
-**Answer**:
-Memory constraints. Standard DP requires:
-- Full model parameters on each GPU
-- Full gradients on each GPU
-- Full optimizer states on each GPU
-
-For large models (>10B parameters), this exceeds single GPU memory even before considering activations.
-
----
-
----
-
-## 7. Memory Reduction Techniques
+## 6. Memory Reduction Techniques
 
 ### Activation Checkpointing
 - **What**: Discard activations during forward, recompute in backward
@@ -170,7 +130,7 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 
 ---
 
-## 8. Critical Communication Primitives
+## 7. Critical Communication Primitives
 
 | Operation | Purpose | Example Use |
 |-----------|---------|-------------|
@@ -178,6 +138,57 @@ For large models (>10B parameters), this exceeds single GPU memory even before c
 | **All-Gather** | Collect shards to all GPUs | Gather parameter shards in ZeRO-3 |
 | **Reduce-Scatter** | Sum then split result | Distribute gradient shards |
 | **Broadcast** | Send from one to all | Parameter initialization |
+
+---
+
+---
+
+## 8. Common Interview Questions
+
+**Q1: "How would you scale training from 1 GPU to 256 GPUs?"**
+
+**Answer**:
+
+1. **1-8 GPUs**: Start with Data Parallelism (DDP)
+2. **8-64 GPUs**: Add ZeRO-2 to shard optimizer states and gradients
+3. **64-256 GPUs**: Consider:
+
+   - ZeRO-3/FSDP for full parameter sharding
+   - 8-way Tensor Parallelism within nodes
+   - 4-way Pipeline Parallelism if model is very deep
+   - Data Parallelism across remaining dimension
+
+---
+
+**Q2: "What's the difference between model parallelism and data parallelism?"**
+
+**Answer**:
+
+- **Data Parallelism**: Replicate entire model on each GPU, split batch
+  
+  - Communication: Once per iteration (gradient sync)
+  - Limitation: Model must fit on single GPU
+  
+- **Model Parallelism**: Split model itself across GPUs
+
+  - **Tensor Parallelism**: Split individual layers
+  - **Pipeline Parallelism**: Split by depth
+  - Communication: Multiple times per forward/backward pass
+  - Enables training models larger than single GPU memory
+
+---
+
+**Q3: "Why can't we just use Data Parallelism for everything?"**
+
+**Answer**:
+
+Memory constraints. Standard DP requires:
+
+- Full model parameters on each GPU
+- Full gradients on each GPU
+- Full optimizer states on each GPU
+
+For large models (>10B parameters), this exceeds single GPU memory even before considering activations.
 
 ---
 
