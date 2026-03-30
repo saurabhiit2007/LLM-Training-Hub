@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A technical reference for LoRA, QLoRA, and other fine-tuning techniques.">
+        <meta name="description" content="A technical reference for training techniques for LLMs.">
       
       
         <meta name="author" content="Saurabh Goyal">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Zero-Deepspeed - Fine-Tuning Methods Documentation</title>
+        <title>Zero-Deepspeed - LLM Training Hub Documentation</title>
       
     
     
@@ -92,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-header__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-header__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Fine-Tuning Methods Documentation
+            LLM Training Hub Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -189,7 +189,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -225,17 +225,17 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-nav__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-nav__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Fine-Tuning Methods Documentation
+    LLM Training Hub Documentation
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -1870,13 +1870,17 @@
   <h1>Zero-Deepspeed</h1>
 
 <h2 id="1-the-core-problem">1. The Core Problem<a class="headerlink" href="#1-the-core-problem" title="Permanent link">&para;</a></h2>
-<p><strong>Standard Data Parallelism</strong> replicates everything on each GPU:
-- Model parameters (Ψ)
-- Gradients (Ψ)
-- Optimizer states (12Ψ for Adam)</p>
+<p><strong>Standard Data Parallelism</strong> replicates everything on each GPU:</p>
+<ul>
+<li>Model parameters (Ψ)</li>
+<li>Gradients (Ψ)</li>
+<li>Optimizer states (12Ψ for Adam)</li>
+</ul>
 <p><strong>Total per GPU</strong>: ~16Ψ bytes</p>
-<p>For a 7B model:
-- 7B × 16 bytes = <strong>112 GB</strong> (doesn't fit on 80GB GPU!)</p>
+<p>For a 7B model:</p>
+<ul>
+<li>7B × 16 bytes = <strong>112 GB</strong> (doesn't fit on 80GB GPU!)</li>
+</ul>
 <p><strong>ZeRO's insight</strong>: This redundancy is unnecessary. Share the memory burden.</p>
 <hr />
 <hr />
@@ -1925,45 +1929,59 @@
 <h2 id="3-stage-by-stage-breakdown">3. Stage-by-Stage Breakdown<a class="headerlink" href="#3-stage-by-stage-breakdown" title="Permanent link">&para;</a></h2>
 <h3 id="zero-1-optimizer-state-sharding">ZeRO-1: Optimizer State Sharding<a class="headerlink" href="#zero-1-optimizer-state-sharding" title="Permanent link">&para;</a></h3>
 <p><strong>What's sharded</strong>: Only optimizer states (momentum, variance)</p>
-<p><strong>Each GPU stores</strong>:
-- Full parameters (2Ψ)
-- Full gradients (2Ψ)
-- 1/N of optimizer states (12Ψ / N)</p>
-<p><strong>Communication</strong>:
-- Standard All-Reduce for gradients
-- Gather optimizer state shards when needed for update</p>
+<p><strong>Each GPU stores</strong>:</p>
+<ul>
+<li>Full parameters (2Ψ)</li>
+<li>Full gradients (2Ψ)</li>
+<li>1/N of optimizer states (12Ψ / N)</li>
+</ul>
+<p><strong>Communication</strong>:</p>
+<ul>
+<li>Standard All-Reduce for gradients</li>
+<li>Gather optimizer state shards when needed for update</li>
+</ul>
 <p><strong>Memory savings</strong>: 4× (from 16Ψ to 12Ψ)</p>
 <p><strong>Use case</strong>: Drop-in improvement over DDP with minimal overhead</p>
 <hr />
 <h3 id="zero-2-gradient-sharding">ZeRO-2: + Gradient Sharding<a class="headerlink" href="#zero-2-gradient-sharding" title="Permanent link">&para;</a></h3>
 <p><strong>What's sharded</strong>: Optimizer states + gradients</p>
-<p><strong>Each GPU stores</strong>:
-- Full parameters (2Ψ)
-- 1/N of gradients (2Ψ / N)
-- 1/N of optimizer states (12Ψ / N)</p>
-<p><strong>Communication</strong>:
-- <strong>Reduce-Scatter</strong> instead of All-Reduce during backward
-  - Each GPU receives only its gradient shard
-- Gather optimizer shards for update (same as ZeRO-1)</p>
+<p><strong>Each GPU stores</strong>:</p>
+<ul>
+<li>Full parameters (2Ψ)</li>
+<li>1/N of gradients (2Ψ / N)</li>
+<li>1/N of optimizer states (12Ψ / N)</li>
+</ul>
+<p><strong>Communication</strong>:</p>
+<ul>
+<li><strong>Reduce-Scatter</strong> instead of All-Reduce during backward</li>
+<li>Each GPU receives only its gradient shard</li>
+<li>Gather optimizer shards for update (same as ZeRO-1)</li>
+</ul>
 <p><strong>Memory savings</strong>: 8× (from 16Ψ to ~8Ψ)</p>
 <p><strong>Use case</strong>: Models up to ~13B on 8×A100 (40GB)</p>
 <hr />
 <h3 id="zero-3-parameter-sharding">ZeRO-3: + Parameter Sharding<a class="headerlink" href="#zero-3-parameter-sharding" title="Permanent link">&para;</a></h3>
 <p><strong>What's sharded</strong>: Everything (optimizer states + gradients + parameters)</p>
-<p><strong>Each GPU stores</strong>:
-- 1/N of parameters (2Ψ / N)
-- 1/N of gradients (2Ψ / N)
-- 1/N of optimizer states (12Ψ / N)</p>
+<p><strong>Each GPU stores</strong>:</p>
+<ul>
+<li>1/N of parameters (2Ψ / N)</li>
+<li>1/N of gradients (2Ψ / N)</li>
+<li>1/N of optimizer states (12Ψ / N)</li>
+</ul>
 <p><strong>Communication</strong>:</p>
-<p><strong>Forward pass</strong>:
-1. All-Gather to reconstruct layer parameters
-2. Compute forward
-3. Discard parameters</p>
-<p><strong>Backward pass</strong>:
-1. All-Gather to reconstruct layer parameters (again)
-2. Compute backward
-3. Reduce-Scatter gradients to owning GPU
-4. Discard parameters</p>
+<p><strong>Forward pass</strong>:</p>
+<ol>
+<li>All-Gather to reconstruct layer parameters</li>
+<li>Compute forward</li>
+<li>Discard parameters</li>
+</ol>
+<p><strong>Backward pass</strong>:</p>
+<ol>
+<li>All-Gather to reconstruct layer parameters (again)</li>
+<li>Compute backward</li>
+<li>Reduce-Scatter gradients to owning GPU</li>
+<li>Discard parameters</li>
+</ol>
 <p><strong>Memory savings</strong>: N× (linear scaling with GPUs)</p>
 <p><strong>Trade-off</strong>: Significantly more communication (2× All-Gather per layer)</p>
 <p><strong>Use case</strong>: Very large models (70B+ parameters)</p>
@@ -1991,19 +2009,23 @@
 <p><strong>Problem</strong>: Even ZeRO-3 may not fit very large models on GPU.</p>
 <p><strong>Solution</strong>: Offload to CPU RAM (or even NVMe).</p>
 <h3 id="cpu-offload">CPU Offload<a class="headerlink" href="#cpu-offload" title="Permanent link">&para;</a></h3>
-<p><strong>What's offloaded</strong>:
-- Optimizer states (always)
-- Parameters (optional)
-- Gradients (optional)</p>
+<p><strong>What's offloaded</strong>:</p>
+<ul>
+<li>Optimizer states (always)</li>
+<li>Parameters (optional)</li>
+<li>Gradients (optional)</li>
+</ul>
 <p><strong>Workflow</strong>:
 <div class="highlight"><pre><span></span><code>GPU: Compute-heavy operations (forward, backward)
   ↕ PCIe transfer
 CPU: Store optimizer states, occasionally parameters
 </code></pre></div></p>
-<p><strong>When to use</strong>:
-- Training 10B+ models on consumer GPUs (e.g., RTX 3090)
-- Limited GPU memory
-- Have sufficient CPU RAM</p>
+<p><strong>When to use</strong>:</p>
+<ul>
+<li>Training 10B+ models on consumer GPUs (e.g., RTX 3090)</li>
+<li>Limited GPU memory</li>
+<li>Have sufficient CPU RAM</li>
+</ul>
 <p><strong>Trade-off</strong>: GPU memory ↓↓, Training speed ↓ (PCIe bandwidth: ~25 GB/s vs GPU memory: ~2000 GB/s)</p>
 <hr />
 <h3 id="nvme-offload-zero-infinity">NVMe Offload (ZeRO-Infinity)<a class="headerlink" href="#nvme-offload-zero-infinity" title="Permanent link">&para;</a></h3>
@@ -2025,7 +2047,9 @@ CPU: Store optimizer states, occasionally parameters
 <li>
 <p><strong>Optimized Kernels</strong>: Custom CUDA kernels for:</p>
 </li>
-<li>Fused Adam optimizer</li>
+<li>
+<p>Fused Adam optimizer</p>
+</li>
 <li>Fused layer norm</li>
 <li>
 <p>Communication-computation overlap</p>
@@ -2076,49 +2100,65 @@ CPU: Store optimizer states, occasionally parameters
 <h2 id="7-common-interview-questions">7. Common Interview Questions<a class="headerlink" href="#7-common-interview-questions" title="Permanent link">&para;</a></h2>
 <h3 id="q1-explain-the-difference-between-zero-2-and-zero-3">Q1: "Explain the difference between ZeRO-2 and ZeRO-3."<a class="headerlink" href="#q1-explain-the-difference-between-zero-2-and-zero-3" title="Permanent link">&para;</a></h3>
 <p><strong>Strong Answer</strong>:</p>
-<p><strong>ZeRO-2</strong>:
-- Shards: Optimizer states + gradients
-- Parameters: <strong>Fully replicated</strong> on each GPU
-- Memory: ~8Ψ per GPU
-- Communication: Reduce-Scatter for gradients
-- Use case: Models up to ~13B on 8×A100</p>
-<p><strong>ZeRO-3</strong>:
-- Shards: Optimizer states + gradients + <strong>parameters</strong>
-- Parameters: Only 1/N on each GPU
-- Memory: ~2Ψ per GPU (scales linearly with N)
-- Communication: All-Gather params in fwd/bwd (2× per layer)
-- Use case: Very large models (70B+)</p>
+<p><strong>ZeRO-2</strong>:</p>
+<ul>
+<li>Shards: Optimizer states + gradients</li>
+<li>Parameters: <strong>Fully replicated</strong> on each GPU</li>
+<li>Memory: ~8Ψ per GPU</li>
+<li>Communication: Reduce-Scatter for gradients</li>
+<li>Use case: Models up to ~13B on 8×A100</li>
+</ul>
+<p><strong>ZeRO-3</strong>:</p>
+<ul>
+<li>Shards: Optimizer states + gradients + <strong>parameters</strong></li>
+<li>Parameters: Only 1/N on each GPU</li>
+<li>Memory: ~2Ψ per GPU (scales linearly with N)</li>
+<li>Communication: All-Gather params in fwd/bwd (2× per layer)</li>
+<li>Use case: Very large models (70B+)</li>
+</ul>
 <p><strong>Trade-off</strong>: ZeRO-3 saves more memory but adds significant communication overhead.</p>
 <hr />
 <h3 id="q2-when-should-you-use-zero-offload">Q2: "When should you use ZeRO-Offload?"<a class="headerlink" href="#q2-when-should-you-use-zero-offload" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong>:</p>
-<p><strong>Use when</strong>:
-1. Model doesn't fit in GPU memory even with ZeRO-3
-2. You have sufficient CPU RAM (≥2× GPU memory)
-3. Training speed is not critical (e.g., research, fine-tuning)
-4. Limited GPU resources (consumer GPUs)</p>
-<p><strong>Don't use when</strong>:
-1. Model fits with ZeRO-2 or ZeRO-3
-2. Training throughput is critical
-3. Limited CPU RAM</p>
-<p><strong>Example</strong>: Training 13B model on single RTX 3090 (24GB)
-- Without offload: OOM
-- With offload: ~100 tokens/sec (vs ~500 tokens/sec on A100 without offload)</p>
+<p><strong>Use when</strong>:</p>
+<ol>
+<li>Model doesn't fit in GPU memory even with ZeRO-3</li>
+<li>You have sufficient CPU RAM (≥2× GPU memory)</li>
+<li>Training speed is not critical (e.g., research, fine-tuning)</li>
+<li>Limited GPU resources (consumer GPUs)</li>
+</ol>
+<p><strong>Don't use when</strong>:</p>
+<ol>
+<li>Model fits with ZeRO-2 or ZeRO-3</li>
+<li>Training throughput is critical</li>
+<li>Limited CPU RAM</li>
+</ol>
+<p><strong>Example</strong>: Training 13B model on single RTX 3090 (24GB)</p>
+<ul>
+<li>Without offload: OOM</li>
+<li>With offload: ~100 tokens/sec (vs ~500 tokens/sec on A100 without offload)</li>
+</ul>
 <hr />
 <h3 id="q3-whats-the-communication-overhead-of-zero-3">Q3: "What's the communication overhead of ZeRO-3?"<a class="headerlink" href="#q3-whats-the-communication-overhead-of-zero-3" title="Permanent link">&para;</a></h3>
 <p><strong>Answer</strong>:</p>
-<p><strong>Per layer</strong>:
-- 2× All-Gather in forward and backward (to reconstruct parameters)
-- 1× Reduce-Scatter for gradients</p>
+<p><strong>Per layer</strong>:</p>
+<ul>
+<li>2× All-Gather in forward and backward (to reconstruct parameters)</li>
+<li>1× Reduce-Scatter for gradients</li>
+</ul>
 <p><strong>Total</strong>: 3× communication per layer vs 1× for standard DP</p>
-<p><strong>Mitigation strategies</strong>:
-1. <strong>Communication-computation overlap</strong>: Start All-Gather before it's needed
-2. <strong>Prefetching</strong>: Fetch next layer's parameters while computing current
-3. <strong>Contiguous memory</strong>: Reduce fragmentation overhead</p>
-<p><strong>When it's worth it</strong>:
-- Model is so large that ZeRO-2 won't fit
-- High-bandwidth interconnect (NVLink, InfiniBand)
-- Memory is the bottleneck, not compute</p>
+<p><strong>Mitigation strategies</strong>:</p>
+<ol>
+<li><strong>Communication-computation overlap</strong>: Start All-Gather before it's needed</li>
+<li><strong>Prefetching</strong>: Fetch next layer's parameters while computing current</li>
+<li><strong>Contiguous memory</strong>: Reduce fragmentation overhead</li>
+</ol>
+<p><strong>When it's worth it</strong>:</p>
+<ul>
+<li>Model is so large that ZeRO-2 won't fit</li>
+<li>High-bandwidth interconnect (NVLink, InfiniBand)</li>
+<li>Memory is the bottleneck, not compute</li>
+</ul>
 <hr />
 <h3 id="q4-how-do-you-debug-oom-with-zero-3">Q4: "How do you debug OOM with ZeRO-3?"<a class="headerlink" href="#q4-how-do-you-debug-oom-with-zero-3" title="Permanent link">&para;</a></h3>
 <p><strong>Checklist</strong>:</p>

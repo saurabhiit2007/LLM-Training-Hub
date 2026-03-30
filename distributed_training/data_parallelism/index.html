@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A technical reference for LoRA, QLoRA, and other fine-tuning techniques.">
+        <meta name="description" content="A technical reference for training techniques for LLMs.">
       
       
         <meta name="author" content="Saurabh Goyal">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Data Parallelism - Fine-Tuning Methods Documentation</title>
+        <title>Data Parallelism - LLM Training Hub Documentation</title>
       
     
     
@@ -92,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-header__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-header__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Fine-Tuning Methods Documentation
+            LLM Training Hub Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -189,7 +189,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -225,17 +225,17 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-nav__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-nav__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Fine-Tuning Methods Documentation
+    LLM Training Hub Documentation
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -613,64 +613,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-common-interview-questions" class="md-nav__link">
+  <a href="#7-best-practices" class="md-nav__link">
     <span class="md-ellipsis">
-      7. Common Interview Questions
+      7. Best Practices
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="7. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-what-happens-during-ddp-gradient-synchronization" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "What happens during DDP gradient synchronization?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-why-does-ddp-use-all-reduce-instead-of-parameter-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "Why does DDP use All-Reduce instead of Parameter Server?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-what-are-ddps-limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "What are DDP's limitations?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-how-does-ddp-differ-from-zero-1" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "How does DDP differ from ZeRO-1?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Best Practices">
+    <nav class="md-nav" aria-label="7. Best Practices">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -715,13 +664,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-debugging-tips" class="md-nav__link">
+  <a href="#8-debugging-tips" class="md-nav__link">
     <span class="md-ellipsis">
-      9. Debugging Tips
+      8. Debugging Tips
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="9. Debugging Tips">
+    <nav class="md-nav" aria-label="8. Debugging Tips">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -737,6 +686,57 @@
   <a href="#issue-out-of-memory-with-ddp" class="md-nav__link">
     <span class="md-ellipsis">
       Issue: "Out of Memory with DDP"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Common Interview Questions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Common Interview Questions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-what-happens-during-ddp-gradient-synchronization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q1: "What happens during DDP gradient synchronization?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-why-does-ddp-use-all-reduce-instead-of-parameter-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q2: "Why does DDP use All-Reduce instead of Parameter Server?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-what-are-ddps-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q3: "What are DDP's limitations?"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-how-does-ddp-differ-from-zero-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Q4: "How does DDP differ from ZeRO-1?"
     </span>
   </a>
   
@@ -1546,6 +1546,90 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#7-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bucket-size-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Bucket Size Tuning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-gradient-clipping" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Gradient Clipping
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-find-unused-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Find Unused Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-static-graph-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Static Graph Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-debugging-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Debugging Tips
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Debugging Tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-out-of-memory-with-ddp" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue: "Out of Memory with DDP"
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#7-common-interview-questions" class="md-nav__link">
     <span class="md-ellipsis">
       7. Common Interview Questions
@@ -1596,90 +1680,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#8-best-practices" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Best Practices
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Best Practices">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-bucket-size-tuning" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Bucket Size Tuning
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-gradient-clipping" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Gradient Clipping
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-find-unused-parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Find Unused Parameters
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-static-graph-optimization" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Static Graph Optimization
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-debugging-tips" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Debugging Tips
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Debugging Tips">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#issue-out-of-memory-with-ddp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Issue: "Out of Memory with DDP"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1702,11 +1702,13 @@
   <h1>Data Parallelism</h1>
 
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
-<p>The most widely used baseline parallelism strategy:
-- <strong>Full model replicated</strong> across N workers
-- Each worker processes a <strong>different shard</strong> of the input batch
-- Gradients are <strong>synchronized</strong> after backward pass
-- All replicas apply <strong>identical optimizer updates</strong></p>
+<p>The most widely used baseline parallelism strategy:</p>
+<ul>
+<li><strong>Full model replicated</strong> across N workers</li>
+<li>Each worker processes a <strong>different shard</strong> of the input batch</li>
+<li>Gradients are <strong>synchronized</strong> after backward pass</li>
+<li>All replicas apply <strong>identical optimizer updates</strong></li>
+</ul>
 <hr />
 <hr />
 <h2 id="2-how-it-works">2. How It Works<a class="headerlink" href="#2-how-it-works" title="Permanent link">&para;</a></h2>
@@ -1725,9 +1727,11 @@ GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
 <h2 id="3-pytorch-ddp-implementation-details">3. PyTorch DDP Implementation Details<a class="headerlink" href="#3-pytorch-ddp-implementation-details" title="Permanent link">&para;</a></h2>
 <h3 id="1-gradient-bucketing">1. Gradient Bucketing<a class="headerlink" href="#1-gradient-bucketing" title="Permanent link">&para;</a></h3>
 <p><strong>Problem</strong>: Waiting for all gradients before communication wastes time.</p>
-<p><strong>Solution</strong>: Group parameters into ~25MB buckets
-- Communication starts as soon as a bucket is ready
-- Reduces idle time by avoiding one large sync at the end</p>
+<p><strong>Solution</strong>: Group parameters into ~25MB buckets</p>
+<ul>
+<li>Communication starts as soon as a bucket is ready</li>
+<li>Reduces idle time by avoiding one large sync at the end</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="c1"># Conceptual example</span>
 <span class="c1"># Parameters grouped by size:</span>
 <span class="c1"># Bucket 1: [layer1.weight, layer1.bias] → 23MB</span>
@@ -1740,11 +1744,13 @@ GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
 <hr />
 <h3 id="2-asynchronous-gradient-reduction">2. Asynchronous Gradient Reduction<a class="headerlink" href="#2-asynchronous-gradient-reduction" title="Permanent link">&para;</a></h3>
 <p><strong>Key Optimization</strong>: Overlap communication with computation</p>
-<p><strong>How it works</strong>:
-1. Backward pass computes gradients layer-by-layer (last → first)
-2. When a bucket's gradients are ready, DDP launches <strong>async All-Reduce</strong>
-3. While communication runs in background, backward continues on earlier layers
-4. Ideally, by the time backward finishes, most communication is done</p>
+<p><strong>How it works</strong>:</p>
+<ol>
+<li>Backward pass computes gradients layer-by-layer (last → first)</li>
+<li>When a bucket's gradients are ready, DDP launches <strong>async All-Reduce</strong></li>
+<li>While communication runs in background, backward continues on earlier layers</li>
+<li>Ideally, by the time backward finishes, most communication is done</li>
+</ol>
 <div class="highlight"><pre><span></span><code>Timeline:
 ────────────────────────────────────────────────
 Computation: [Layer N] [Layer N-1] ... [Layer 1]
@@ -1767,25 +1773,31 @@ Comm:        [Bucket 1 All-Reduce─────────────]
 <hr />
 <hr />
 <h2 id="4-memory-requirements">4. Memory Requirements<a class="headerlink" href="#4-memory-requirements" title="Permanent link">&para;</a></h2>
-<p>Each GPU must store:
-- <strong>Model parameters</strong>: 2Ψ (FP16) or 4Ψ (FP32)
-- <strong>Gradients</strong>: 2Ψ (FP16) or 4Ψ (FP32)
-- <strong>Optimizer states (Adam)</strong>: 12Ψ (FP32 master + momentum + variance)
-- <strong>Activations</strong>: Depends on batch size and sequence length</p>
+<p>Each GPU must store:</p>
+<ul>
+<li><strong>Model parameters</strong>: 2Ψ (FP16) or 4Ψ (FP32)</li>
+<li><strong>Gradients</strong>: 2Ψ (FP16) or 4Ψ (FP32)</li>
+<li><strong>Optimizer states (Adam)</strong>: 12Ψ (FP32 master + momentum + variance)</li>
+<li><strong>Activations</strong>: Depends on batch size and sequence length</li>
+</ul>
 <p><strong>Total</strong>: ~16Ψ bytes per GPU (excluding activations)</p>
 <hr />
 <hr />
 <h2 id="5-communication-cost">5. Communication Cost<a class="headerlink" href="#5-communication-cost" title="Permanent link">&para;</a></h2>
 <h3 id="all-reduce-complexity">All-Reduce Complexity<a class="headerlink" href="#all-reduce-complexity" title="Permanent link">&para;</a></h3>
-<p>For N GPUs and Ψ parameters:
-- <strong>Data transferred</strong>: 2Ψ(N-1)/N per GPU (ring All-Reduce)
-- <strong>Latency</strong>: O(log N) for tree-based, O(N) for ring-based
-- Grows <strong>linearly</strong> with number of GPUs</p>
+<p>For N GPUs and Ψ parameters:</p>
+<ul>
+<li><strong>Data transferred</strong>: 2Ψ(N-1)/N per GPU (ring All-Reduce)</li>
+<li><strong>Latency</strong>: O(log N) for tree-based, O(N) for ring-based</li>
+<li>Grows <strong>linearly</strong> with number of GPUs</li>
+</ul>
 <hr />
 <h3 id="bandwidth-requirements">Bandwidth Requirements<a class="headerlink" href="#bandwidth-requirements" title="Permanent link">&para;</a></h3>
-<p>For 7B model (14GB gradients in FP16):
-- 100Gbps network: ~1.1 seconds just for communication
-- 400Gbps network: ~0.28 seconds</p>
+<p>For 7B model (14GB gradients in FP16):</p>
+<ul>
+<li>100Gbps network: ~1.1 seconds just for communication</li>
+<li>400Gbps network: ~0.28 seconds</li>
+</ul>
 <blockquote>
 <p>Communication overhead becomes significant beyond 64-128 GPUs</p>
 </blockquote>
@@ -1802,12 +1814,54 @@ Comm:        [Bucket 1 All-Reduce─────────────]
         <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># Only sync here</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
 </code></pre></div>
-<p><strong>Benefits</strong>:
-- Effective batch = <code>accumulation_steps × local_batch × num_gpus</code>
-- <strong>Reduces sync frequency</strong> from every step to every K steps
-- Saves communication bandwidth</p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Effective batch = <code>accumulation_steps × local_batch × num_gpus</code></li>
+<li><strong>Reduces sync frequency</strong> from every step to every K steps</li>
+<li>Saves communication bandwidth</li>
+</ul>
 <p><strong>Trade-off</strong>: Slower convergence per step (but same per sample)</p>
 <hr />
+<hr />
+<h2 id="7-best-practices">7. Best Practices<a class="headerlink" href="#7-best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="1-bucket-size-tuning">1. Bucket Size Tuning<a class="headerlink" href="#1-bucket-size-tuning" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Smaller buckets: More overlap, but more overhead</span>
+<span class="c1"># Larger buckets: Less overhead, but less overlap</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">bucket_cap_mb</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>  <span class="c1"># Default is usually good</span>
+</code></pre></div>
+<h3 id="2-gradient-clipping">2. Gradient Clipping<a class="headerlink" href="#2-gradient-clipping" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Must happen BEFORE optimizer step</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="3-find-unused-parameters">3. Find Unused Parameters<a class="headerlink" href="#3-find-unused-parameters" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># If model has conditional branches</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">find_unused_parameters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Warning: Adds overhead, only use when necessary</span>
+</code></pre></div>
+<h3 id="4-static-graph-optimization">4. Static Graph Optimization<a class="headerlink" href="#4-static-graph-optimization" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># If model structure doesn&#39;t change</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">static_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># PyTorch 1.11+</span>
+<span class="c1"># Reduces overhead by ~10%</span>
+</code></pre></div>
+<hr />
+<hr />
+<h2 id="8-debugging-tips">8. Debugging Tips<a class="headerlink" href="#8-debugging-tips" title="Permanent link">&para;</a></h2>
+<h3 id="issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration">Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"<a class="headerlink" href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" title="Permanent link">&para;</a></h3>
+<p><strong>Cause</strong>: Uneven workload across GPUs (e.g., variable sequence lengths)</p>
+<p><strong>Fix</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Pad to same length</span>
+<span class="c1"># Option 2: Use find_unused_parameters=True</span>
+<span class="c1"># Option 3: Manual synchronization</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="issue-out-of-memory-with-ddp">Issue: "Out of Memory with DDP"<a class="headerlink" href="#issue-out-of-memory-with-ddp" title="Permanent link">&para;</a></h3>
+<p><strong>Checklist</strong>:</p>
+<ol>
+<li>Check if activation memory is the issue (use activation checkpointing)</li>
+<li>Reduce local batch size</li>
+<li>Switch to ZeRO-2/FSDP to shard optimizer and gradients</li>
+</ol>
 <hr />
 <h2 id="7-common-interview-questions">7. Common Interview Questions<a class="headerlink" href="#7-common-interview-questions" title="Permanent link">&para;</a></h2>
 <h3 id="q1-what-happens-during-ddp-gradient-synchronization">Q1: "What happens during DDP gradient synchronization?"<a class="headerlink" href="#q1-what-happens-during-ddp-gradient-synchronization" title="Permanent link">&para;</a></h3>
@@ -1877,44 +1931,6 @@ Comm:        [Bucket 1 All-Reduce─────────────]
 </table>
 <p>ZeRO-1 is a strict improvement over DDP for memory, with minimal communication overhead.</p>
 <hr />
-<hr />
-<h2 id="8-best-practices">8. Best Practices<a class="headerlink" href="#8-best-practices" title="Permanent link">&para;</a></h2>
-<h3 id="1-bucket-size-tuning">1. Bucket Size Tuning<a class="headerlink" href="#1-bucket-size-tuning" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Smaller buckets: More overlap, but more overhead</span>
-<span class="c1"># Larger buckets: Less overhead, but less overlap</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">bucket_cap_mb</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>  <span class="c1"># Default is usually good</span>
-</code></pre></div>
-<h3 id="2-gradient-clipping">2. Gradient Clipping<a class="headerlink" href="#2-gradient-clipping" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Must happen BEFORE optimizer step</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
-</code></pre></div>
-<h3 id="3-find-unused-parameters">3. Find Unused Parameters<a class="headerlink" href="#3-find-unused-parameters" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># If model has conditional branches</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">find_unused_parameters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># Warning: Adds overhead, only use when necessary</span>
-</code></pre></div>
-<h3 id="4-static-graph-optimization">4. Static Graph Optimization<a class="headerlink" href="#4-static-graph-optimization" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># If model structure doesn&#39;t change</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">DDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">static_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># PyTorch 1.11+</span>
-<span class="c1"># Reduces overhead by ~10%</span>
-</code></pre></div>
-<hr />
-<hr />
-<h2 id="9-debugging-tips">9. Debugging Tips<a class="headerlink" href="#9-debugging-tips" title="Permanent link">&para;</a></h2>
-<h3 id="issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration">Issue: "RuntimeError: Expected to have finished reduction in the prior iteration"<a class="headerlink" href="#issue-runtimeerror-expected-to-have-finished-reduction-in-the-prior-iteration" title="Permanent link">&para;</a></h3>
-<p><strong>Cause</strong>: Uneven workload across GPUs (e.g., variable sequence lengths)</p>
-<p><strong>Fix</strong>:
-<div class="highlight"><pre><span></span><code><span class="c1"># Option 1: Pad to same length</span>
-<span class="c1"># Option 2: Use find_unused_parameters=True</span>
-<span class="c1"># Option 3: Manual synchronization</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">distributed</span><span class="o">.</span><span class="n">barrier</span><span class="p">()</span>
-</code></pre></div></p>
-<h3 id="issue-out-of-memory-with-ddp">Issue: "Out of Memory with DDP"<a class="headerlink" href="#issue-out-of-memory-with-ddp" title="Permanent link">&para;</a></h3>
-<p><strong>Checklist</strong>:
-1. Check if activation memory is the issue (use activation checkpointing)
-2. Reduce local batch size
-3. Switch to ZeRO-2/FSDP to shard optimizer and gradients</p>
 <hr />
 
 

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A technical reference for LoRA, QLoRA, and other fine-tuning techniques.">
+        <meta name="description" content="A technical reference for training techniques for LLMs.">
       
       
         <meta name="author" content="Saurabh Goyal">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Parallelism Overview - Fine-Tuning Methods Documentation</title>
+        <title>Parallelism Overview - LLM Training Hub Documentation</title>
       
     
     
@@ -92,7 +92,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-header__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-header__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -106,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Fine-Tuning Methods Documentation
+            LLM Training Hub Documentation
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -189,7 +189,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -225,17 +225,17 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Fine-Tuning Methods Documentation" class="md-nav__button md-logo" aria-label="Fine-Tuning Methods Documentation" data-md-component="logo">
+    <a href="../.." title="LLM Training Hub Documentation" class="md-nav__button md-logo" aria-label="LLM Training Hub Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Fine-Tuning Methods Documentation
+    LLM Training Hub Documentation
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/saurabhiit2007/LLM-Finetuning" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/saurabhiit2007/LLM-Training-Hub" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -563,55 +563,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-common-interview-questions" class="md-nav__link">
+  <a href="#6-memory-reduction-techniques" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Common Interview Questions
+      6. Memory Reduction Techniques
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-how-would-you-scale-training-from-1-gpu-to-256-gpus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "How would you scale training from 1 GPU to 256 GPUs?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-whats-the-difference-between-model-parallelism-and-data-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "What's the difference between model parallelism and data parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-why-cant-we-just-use-data-parallelism-for-everything" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "Why can't we just use Data Parallelism for everything?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-memory-reduction-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Memory Reduction Techniques
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Memory Reduction Techniques">
+    <nav class="md-nav" aria-label="6. Memory Reduction Techniques">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -647,9 +605,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-critical-communication-primitives" class="md-nav__link">
+  <a href="#7-critical-communication-primitives" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Critical Communication Primitives
+      7. Critical Communication Primitives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Common Interview Questions
     </span>
   </a>
   
@@ -1459,55 +1426,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-common-interview-questions" class="md-nav__link">
+  <a href="#6-memory-reduction-techniques" class="md-nav__link">
     <span class="md-ellipsis">
-      6. Common Interview Questions
+      6. Memory Reduction Techniques
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-how-would-you-scale-training-from-1-gpu-to-256-gpus" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "How would you scale training from 1 GPU to 256 GPUs?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-whats-the-difference-between-model-parallelism-and-data-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "What's the difference between model parallelism and data parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-why-cant-we-just-use-data-parallelism-for-everything" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "Why can't we just use Data Parallelism for everything?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-memory-reduction-techniques" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Memory Reduction Techniques
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Memory Reduction Techniques">
+    <nav class="md-nav" aria-label="6. Memory Reduction Techniques">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1543,9 +1468,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-critical-communication-primitives" class="md-nav__link">
+  <a href="#7-critical-communication-primitives" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Critical Communication Primitives
+      7. Critical Communication Primitives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-common-interview-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Common Interview Questions
     </span>
   </a>
   
@@ -1599,8 +1533,12 @@
 <ul>
 <li><strong>Parameters (FP16)</strong>: 7B × 2 bytes = 14 GB</li>
 <li><strong>Gradients (FP16)</strong>: 7B × 2 bytes = 14 GB</li>
-<li><strong>Optimizer States (FP32)</strong>:</li>
-<li>Master weights: 7B × 4 = 28 GB</li>
+<li>
+<p><strong>Optimizer States (FP32)</strong>:</p>
+</li>
+<li>
+<p>Master weights: 7B × 4 = 28 GB</p>
+</li>
 <li>Momentum: 7B × 4 = 28 GB</li>
 <li>Variance: 7B × 4 = 28 GB</li>
 <li>Subtotal: 84 GB</li>
@@ -1660,12 +1598,14 @@
 │  └───────────────────────────────┘ │
 └─────────────────────────────────────┘
 </code></pre></div>
-<p><strong>Example scaling strategy (1 GPU → 1024 GPUs)</strong>:
-1. Start with Data Parallelism
-2. Add ZeRO-2 when optimizer states don't fit
-3. Add Tensor Parallelism (8-way) within nodes for very large layers
-4. Add Pipeline Parallelism for extreme depth
-5. Scale Data Parallelism across nodes</p>
+<p><strong>Example scaling strategy (1 GPU → 1024 GPUs)</strong>:</p>
+<ol>
+<li>Start with Data Parallelism</li>
+<li>Add ZeRO-2 when optimizer states don't fit</li>
+<li>Add Tensor Parallelism (8-way) within nodes for very large layers</li>
+<li>Add Pipeline Parallelism for extreme depth</li>
+<li>Scale Data Parallelism across nodes</li>
+</ol>
 <hr />
 <hr />
 <h2 id="5-training-vs-inference-optimization">5. Training vs Inference Optimization<a class="headerlink" href="#5-training-vs-inference-optimization" title="Permanent link">&para;</a></h2>
@@ -1676,10 +1616,12 @@
 <li>Heavy parallelism with communication overlap</li>
 <li>Higher per-batch latency acceptable</li>
 </ul>
-<p><strong>Common choices</strong>:
-- Data Parallelism with large global batches
-- Pipeline Parallelism with micro-batching
-- Aggressive communication-computation overlap</p>
+<p><strong>Common choices</strong>:</p>
+<ul>
+<li>Data Parallelism with large global batches</li>
+<li>Pipeline Parallelism with micro-batching</li>
+<li>Aggressive communication-computation overlap</li>
+</ul>
 <hr />
 <h3 id="inference-latency-oriented">Inference (Latency-Oriented)<a class="headerlink" href="#inference-latency-oriented" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1687,49 +1629,18 @@
 <li>Small/dynamic batch sizes</li>
 <li>Minimize synchronization</li>
 </ul>
-<p><strong>Common choices</strong>:
-- Model replication over sharding (for small models)
-- Limited/no Pipeline Parallelism (bubble overhead)
-- Kernel fusion and caching</p>
+<p><strong>Common choices</strong>:</p>
+<ul>
+<li>Model replication over sharding (for small models)</li>
+<li>Limited/no Pipeline Parallelism (bubble overhead)</li>
+<li>Kernel fusion and caching</li>
+</ul>
 <blockquote>
 <p><strong>Key Insight</strong>: Training amortizes communication over large batches; inference cannot hide communication latency easily.</p>
 </blockquote>
 <hr />
 <hr />
-<h2 id="6-common-interview-questions">6. Common Interview Questions<a class="headerlink" href="#6-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-how-would-you-scale-training-from-1-gpu-to-256-gpus">Q1: "How would you scale training from 1 GPU to 256 GPUs?"<a class="headerlink" href="#q1-how-would-you-scale-training-from-1-gpu-to-256-gpus" title="Permanent link">&para;</a></h3>
-<p><strong>Strong Answer</strong>:
-1. <strong>1-8 GPUs</strong>: Start with Data Parallelism (DDP)
-2. <strong>8-64 GPUs</strong>: Add ZeRO-2 to shard optimizer states and gradients
-3. <strong>64-256 GPUs</strong>: Consider:
-   - ZeRO-3/FSDP for full parameter sharding
-   - 8-way Tensor Parallelism within nodes
-   - 4-way Pipeline Parallelism if model is very deep
-   - Data Parallelism across remaining dimension</p>
-<hr />
-<h3 id="q2-whats-the-difference-between-model-parallelism-and-data-parallelism">Q2: "What's the difference between model parallelism and data parallelism?"<a class="headerlink" href="#q2-whats-the-difference-between-model-parallelism-and-data-parallelism" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:
-- <strong>Data Parallelism</strong>: Replicate entire model on each GPU, split batch
-  - Communication: Once per iteration (gradient sync)
-  - Limitation: Model must fit on single GPU</p>
-<ul>
-<li><strong>Model Parallelism</strong>: Split model itself across GPUs</li>
-<li><strong>Tensor Parallelism</strong>: Split individual layers</li>
-<li><strong>Pipeline Parallelism</strong>: Split by depth</li>
-<li>Communication: Multiple times per forward/backward pass</li>
-<li>Enables training models larger than single GPU memory</li>
-</ul>
-<hr />
-<h3 id="q3-why-cant-we-just-use-data-parallelism-for-everything">Q3: "Why can't we just use Data Parallelism for everything?"<a class="headerlink" href="#q3-why-cant-we-just-use-data-parallelism-for-everything" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:
-Memory constraints. Standard DP requires:
-- Full model parameters on each GPU
-- Full gradients on each GPU
-- Full optimizer states on each GPU</p>
-<p>For large models (&gt;10B parameters), this exceeds single GPU memory even before considering activations.</p>
-<hr />
-<hr />
-<h2 id="7-memory-reduction-techniques">7. Memory Reduction Techniques<a class="headerlink" href="#7-memory-reduction-techniques" title="Permanent link">&para;</a></h2>
+<h2 id="6-memory-reduction-techniques">6. Memory Reduction Techniques<a class="headerlink" href="#6-memory-reduction-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="activation-checkpointing">Activation Checkpointing<a class="headerlink" href="#activation-checkpointing" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>What</strong>: Discard activations during forward, recompute in backward</li>
@@ -1750,7 +1661,7 @@ Memory constraints. Standard DP requires:
 </ul>
 <hr />
 <hr />
-<h2 id="8-critical-communication-primitives">8. Critical Communication Primitives<a class="headerlink" href="#8-critical-communication-primitives" title="Permanent link">&para;</a></h2>
+<h2 id="7-critical-communication-primitives">7. Critical Communication Primitives<a class="headerlink" href="#7-critical-communication-primitives" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1782,6 +1693,57 @@ Memory constraints. Standard DP requires:
 </tr>
 </tbody>
 </table>
+<hr />
+<hr />
+<h2 id="8-common-interview-questions">8. Common Interview Questions<a class="headerlink" href="#8-common-interview-questions" title="Permanent link">&para;</a></h2>
+<p><strong>Q1: "How would you scale training from 1 GPU to 256 GPUs?"</strong></p>
+<p><strong>Answer</strong>:</p>
+<ol>
+<li><strong>1-8 GPUs</strong>: Start with Data Parallelism (DDP)</li>
+<li><strong>8-64 GPUs</strong>: Add ZeRO-2 to shard optimizer states and gradients</li>
+<li>
+<p><strong>64-256 GPUs</strong>: Consider:</p>
+</li>
+<li>
+<p>ZeRO-3/FSDP for full parameter sharding</p>
+</li>
+<li>8-way Tensor Parallelism within nodes</li>
+<li>4-way Pipeline Parallelism if model is very deep</li>
+<li>Data Parallelism across remaining dimension</li>
+</ol>
+<hr />
+<p><strong>Q2: "What's the difference between model parallelism and data parallelism?"</strong></p>
+<p><strong>Answer</strong>:</p>
+<ul>
+<li>
+<p><strong>Data Parallelism</strong>: Replicate entire model on each GPU, split batch</p>
+</li>
+<li>
+<p>Communication: Once per iteration (gradient sync)</p>
+</li>
+<li>
+<p>Limitation: Model must fit on single GPU</p>
+</li>
+<li>
+<p><strong>Model Parallelism</strong>: Split model itself across GPUs</p>
+</li>
+<li>
+<p><strong>Tensor Parallelism</strong>: Split individual layers</p>
+</li>
+<li><strong>Pipeline Parallelism</strong>: Split by depth</li>
+<li>Communication: Multiple times per forward/backward pass</li>
+<li>Enables training models larger than single GPU memory</li>
+</ul>
+<hr />
+<p><strong>Q3: "Why can't we just use Data Parallelism for everything?"</strong></p>
+<p><strong>Answer</strong>:</p>
+<p>Memory constraints. Standard DP requires:</p>
+<ul>
+<li>Full model parameters on each GPU</li>
+<li>Full gradients on each GPU</li>
+<li>Full optimizer states on each GPU</li>
+</ul>
+<p>For large models (&gt;10B parameters), this exceeds single GPU memory even before considering activations.</p>
 <hr />
 <hr />
 <h2 id="9-key-takeaways-for-interviews">9. Key Takeaways for Interviews<a class="headerlink" href="#9-key-takeaways-for-interviews" title="Permanent link">&para;</a></h2>
