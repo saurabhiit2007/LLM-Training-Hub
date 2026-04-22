@@ -1,7 +1,7 @@
-site_name: Fine-Tuning Methods Documentation
-site_description: A technical reference for LoRA, QLoRA, and other fine-tuning techniques.
+site_name: LLM Training Hub Documentation
+site_description: A technical reference for training techniques for LLMs.
 site_author: Saurabh Goyal
-repo_url: https://github.com/saurabhiit2007/LLM-Finetuning
+repo_url: https://github.com/saurabhiit2007/LLM-Training-Hub
 theme:
   name: material
   features:
@@ -54,7 +54,6 @@ nav:
       - Optimizers-Schedules: ./optimization/optimizers_schedules.md
       - Quantization: ./optimization/quantization.md
       - Memory Considerations: ./optimization/memory_considerations.md
-      - Prefix Caching: ./optimization/prefix_caching.md
   - Frameworks:
       - Accelerate Framework: ./frameworks/accelerate.md
   - Training Pipeline:
