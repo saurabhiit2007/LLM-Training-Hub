@@ -69,6 +69,8 @@ This reframes inference as a planning problem rather than a single forward pass.
 
 ## 5. Reinforcement Learning for Reasoning
 
+> RL alignment techniques (RLHF, PPO, DPO, GRPO) are covered in depth in the [LLM Alignment & Reasoning](https://github.com/saurabhiit2007/LLM-Alignment-Reasoning) repo. This section covers only the aspects specific to training thinking/reasoning models.
+
 ### 5.1 Outcome Reward Models vs Process Reward Models
 
  | Reward Type | What It Rewards | Limitation |

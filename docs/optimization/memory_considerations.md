@@ -219,6 +219,8 @@ $$
 
 ## 5. KV Cache Memory Usage
 
+> KV cache is an inference-time concern. For KV cache optimizations (PagedAttention, Prefix Caching, GQA/MQA), see the [LLM Inference Speed](https://github.com/saurabhiit2007/LLM-Inference-Speed) repo. This section covers only the memory accounting relevant for hardware planning.
+
 ### 5.1 What Is the KV Cache
 
 The KV cache stores key and value tensors from attention for previously processed tokens during **autoregressive decoding**.
