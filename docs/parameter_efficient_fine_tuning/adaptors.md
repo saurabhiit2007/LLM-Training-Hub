@@ -1,3 +1,5 @@
+# Adapters and PEFT Methods
+
 ## 1. Overview
 
 **Parameter-Efficient Fine-Tuning (PEFT)** is a family of techniques that adapt a pre-trained model to new tasks by training only a **small subset of parameters** rather than the full model.
@@ -21,8 +23,6 @@ Small trainable adapter modules
          =
 Task-specific model
 ```
-
----
 
 ---
 
@@ -51,8 +51,6 @@ PEFT Methods
     ├── BitFit
     └── (IA)³
 ```
-
----
 
 ---
 
@@ -156,8 +154,6 @@ Input
 
 ---
 
----
-
 ## 4. LoRA vs Adapters
 
 | Aspect | Adapters | LoRA |
@@ -177,8 +173,6 @@ W_{\text{merged}} = W_0 + \frac{\alpha}{r} B A
 $$
 
 The merged model has the **same architecture and speed** as the original.
-
----
 
 ---
 
@@ -237,8 +231,6 @@ Prompted input: [soft₁, ..., softₖ, token₁, ..., tokenₙ]
 
 ---
 
----
-
 ## 6. (IA)³
 
 **Concept:** Learn to **rescale** activations with learned vectors.
@@ -255,8 +247,6 @@ Where $l_k, l_q, l_v$ are **learned scaling vectors**.
 - Good for few-shot and continual learning scenarios
 - Less capacity than LoRA for complex tasks
 - Fast training (very few parameters)
-
----
 
 ---
 
@@ -309,8 +299,6 @@ Instruction following (general)      r = 16-32
 Complex reasoning, coding            r = 32-64
 Full model behavior change           r = 64-128
 ```
-
----
 
 ---
 
@@ -395,259 +383,3 @@ model.load_adapter("./qa_adapter", config="pfeiffer")
 fusion_config = AdapterFusionConfig.load("dynamic")
 model.add_adapter_fusion(["ner", "qa"], fusion_config)
 ```
-
----
-
----
-
-## 9. Interview Questions
-
-### Q1: What is the fundamental difference between LoRA and traditional adapters?
-
-**Answer:**
-
-Both train small modules while freezing the base model, but differ in key ways:
-
-**Traditional Adapters:**
-- Inserted **sequentially** between layers
-- Add new computational path in the forward pass
-- **Inference latency:** Always increased (new layers in path)
-- Architecture: `Input → Attention → Adapter → FFN → Adapter → Output`
-
-**LoRA:**
-- Applied **parallel** to existing weight matrices
-- Modifies the weight update, not the architecture
-- **Inference latency:** Zero (weights can be merged post-training)
-- Architecture: Same as original model after merging
-
-**Memory comparison (7B model):**
-- Adapters: ~67M params (2 per layer, $r=64$)
-- LoRA: ~4M params (q, v projections, $r=16$)
-
-**When to prefer adapters:**
-- Multi-task serving (swap without merging)
-- When inference latency is tolerable
-- AdapterFusion scenarios
-
-**When to prefer LoRA:**
-- Production deployment (merge = no overhead)
-- Lower parameter count needed
-- Most LLM fine-tuning scenarios today
-
----
-
-### Q2: Explain the math behind why LoRA works. Why does low rank make sense?
-
-**Answer:**
-
-**Empirical observation:** The weight update matrix $\Delta W$ during fine-tuning has **low intrinsic rank**.
-
-**What this means:**
-
-$\Delta W \in \mathbb{R}^{d \times k}$ has rank $r^* \ll \min(d, k)$.
-
-This means the information gain from fine-tuning lives in a low-dimensional subspace.
-
-**Evidence from the original LoRA paper:**
-
-- GPT-3 fine-tuned on NLU tasks
-- The "intrinsic dimension" of adaptation is very low
-- $r = 1$ or $r = 2$ captures most of the update for some tasks
-- $r = 4$ or $r = 8$ works well for most tasks
-- Increasing $r$ beyond 64 rarely helps
-
-**Mathematical justification:**
-
-If the true update $\Delta W = UV^T$ where $U \in \mathbb{R}^{d \times r}$, $V \in \mathbb{R}^{k \times r}$:
-
-- Standard fine-tuning: store $d \times k$ values
-- LoRA: store $d \times r + k \times r = (d+k) \times r$ values
-
-**Compression ratio:**
-$$
-\frac{(d+k) \times r}{d \times k} = r \left(\frac{1}{k} + \frac{1}{d}\right) \approx \frac{2r}{d} \text{ (when } d = k\text{)}
-$$
-
-For $d = 4096$, $r = 16$: ratio = $\frac{32}{4096} = 0.78\%$
-
-**Why randomly initialized $A$ + zero $B$ works:**
-
-- $A$ initialized with Gaussian noise: creates a random low-rank projection
-- $B$ initialized to zero: $\Delta W = BA = 0$ at start (no perturbation)
-- As training proceeds, $B$ learns the structure of the update
-- $\frac{\alpha}{r}$ scaling controls the effective learning rate of the LoRA path
-
-**Follow-up:** How does rank affect the expressiveness?  
-**Answer:** Higher rank → more expressiveness (can represent more complex updates) but more parameters. It's a hyperparameter controlling the capacity of the adaptation.
-
----
-
-### Q3: You need to fine-tune a 13B model on a single 24GB GPU. What PEFT strategy would you use?
-
-**Answer:**
-
-**Memory budget:** 24 GB
-
-**Option 1: LoRA on FP16 model**
-
-| Component | Memory |
-|-----------|--------|
-| Base model (FP16) | 26 GB ❌ |
-
-Doesn't fit.
-
-**Option 2: QLoRA (4-bit base + LoRA)**
-
-| Component | Memory |
-|-----------|--------|
-| Base model (4-bit NF4) | 6.5 GB |
-| LoRA adapters (r=32, BF16) | 0.5 GB |
-| Gradients (LoRA only) | 0.5 GB |
-| Optimizer (8-bit Adam) | 1.0 GB |
-| Activations (checkpointed) | 2.0 GB |
-| **Total** | **~10.5 GB** ✅ |
-
-**Configuration:**
-
-```python
-from transformers import AutoModelForCausalLM, BitsAndBytesConfig
-from peft import LoraConfig, get_peft_model
-
-# 4-bit quantization
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16,
-)
-
-model = AutoModelForCausalLM.from_pretrained(
-    "meta-llama/Llama-2-13b-hf",
-    quantization_config=bnb_config,
-)
-
-# LoRA config
-lora_config = LoraConfig(
-    r=32,
-    lora_alpha=64,
-    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
-    lora_dropout=0.05,
-    use_dora=True,  # DoRA for better quality (2024)
-)
-
-model = get_peft_model(model, lora_config)
-
-# Optimizer
-import bitsandbytes as bnb
-optimizer = bnb.optim.PagedAdamW8bit(
-    model.parameters(), lr=2e-4
-)
-```
-
-**Why this works:**
-
-- 4-bit base model: 8× memory reduction for weights
-- LoRA: only ~1% of params are trained → tiny gradients/optimizer states
-- Gradient checkpointing: reduces activation memory
-- 8-bit optimizer: further reduces optimizer state memory
-
-**Follow-up:** What quality loss to expect?  
-**Answer:** QLoRA on 13B model typically achieves 95-98% of full fine-tuning quality, depending on task complexity and LoRA rank. For most instruction-following tasks, the difference is not noticeable.
-
----
-
-### Q4: Why doesn't LoRA add inference overhead, but adapters do?
-
-**Answer:**
-
-**Adapters add sequential computation:**
-
-```
-Forward pass with adapter:
-h → Attention → h' → W_down → r → σ → W_up → Δh → h' + Δh → ...
-                     (bottleneck)
-```
-
-The adapter is **in the computation path** — you can't skip it. Every token goes through the extra layers. Latency increases proportionally to adapter size.
-
-**LoRA can be merged:**
-
-During training:
-$$
-h = W_0 x + \underbrace{\frac{\alpha}{r} B A x}_{\text{LoRA path}}
-$$
-
-After training, merge:
-$$
-W_{\text{merged}} = W_0 + \frac{\alpha}{r} B A
-$$
-
-This is just **one matrix multiply** — same as the original operation. LoRA effectively modifies the weights offline, leaving no extra computation at inference time.
-
-**The merge is mathematically exact:**
-
-```python
-# Before merge (two matrix multiplies):
-h = x @ W0.T + x @ (A.T @ B.T) * (alpha / r)
-
-# After merge (one matrix multiply, same result):
-W_merged = W0 + (B @ A) * (alpha / r)
-h = x @ W_merged.T
-```
-
-**When you can't merge:**
-- Multi-adapter serving (need to hot-swap)
-- Continual learning (adapters change over time)
-- In these cases, adapters may be preferable
-
-
-### Q5: How does AdapterFusion combine knowledge from multiple tasks?
-
-**Answer:**
-
-**Problem:** Train adapters for Task A, Task B, Task C separately. Now fine-tune on Task D that could benefit from all three.
-
-**Naive approach:** Fine-tune new adapter. Loses Task A, B, C knowledge.
-
-**AdapterFusion:** Learn to combine trained adapters dynamically.
-
----
-
-**Architecture:**
-
-At each Transformer layer:
-
-```
-Input h
-  │
-  ├──→ Adapter_A(h) = a_A
-  ├──→ Adapter_B(h) = a_B
-  └──→ Adapter_C(h) = a_C
-
-Fusion layer:
-  scores = softmax(Q(h) · K([a_A, a_B, a_C])^T)
-  output = scores · V([a_A, a_B, a_C])
-```
-
-Trained: Fusion attention weights (Q, K, V)  
-Frozen: Adapter_A, Adapter_B, Adapter_C, Base model
-
-**Training stages:**
-
-1. **Stage 1:** Train task-specific adapters independently
-2. **Stage 2:** Freeze all adapters, train only fusion attention weights on target task
-
-**Memory at serving:**
-
-```
-Base model: 14 GB (frozen)
-Adapter_A: 50 MB (frozen)
-Adapter_B: 50 MB (frozen)
-Adapter_C: 50 MB (frozen)
-Fusion weights: 10 MB (trained)
-Total: ~14.16 GB vs 4 × 14 = 56 GB for separate full models
-```
-
-**Limitation:** Only works with same base model. Can't fuse adapters from different base models.
-
----

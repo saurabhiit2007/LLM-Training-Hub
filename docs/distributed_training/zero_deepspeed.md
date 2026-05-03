@@ -1,3 +1,5 @@
+# ZeRO and DeepSpeed
+
 ## 1. The Core Problem
 
 **Standard Data Parallelism** replicates everything on each GPU:
@@ -14,8 +16,6 @@ For a 7B model:
 
 ---
 
----
-
 ## 2. ZeRO: Zero Redundancy Optimizer
 
 **Goal**: Eliminate memory redundancy while keeping the efficiency of Data Parallelism.
@@ -29,8 +29,6 @@ For a 7B model:
 | **ZeRO-3** | Optimizer + Gradients + Parameters | ~2Ψ | Gather params on-the-fly | 14/8 + 14/8 + 84/8 = **14 GB** |
 
 > **Note**: These numbers exclude activations, which can be substantial.
-
----
 
 ---
 
@@ -105,8 +103,6 @@ For a 7B model:
 
 ---
 
----
-
 ## 4. ZeRO-3 Communication Pattern
 
 ```python
@@ -126,8 +122,6 @@ grad_shard = reduce_scatter(grad_params)  # Each GPU gets its shard
 ```
 
 **Key insight**: Parameters are materialized **only when needed**, then immediately freed.
-
----
 
 ---
 
@@ -167,8 +161,6 @@ CPU: Store optimizer states, occasionally parameters
 **Use case**: Trillion-parameter models (research, not production)
 
 **Trade-off**: GPU memory ↓↓↓, Training speed ↓↓↓ (NVMe: ~7 GB/s)
-
----
 
 ---
 
@@ -230,129 +222,6 @@ CPU: Store optimizer states, occasionally parameters
 
 ---
 
----
-
-## 7. Common Interview Questions
-
-### Q1: "Explain the difference between ZeRO-2 and ZeRO-3."
-
-**Strong Answer**:
-
-**ZeRO-2**:
-- Shards: Optimizer states + gradients
-- Parameters: **Fully replicated** on each GPU
-- Memory: ~8Ψ per GPU
-- Communication: Reduce-Scatter for gradients
-- Use case: Models up to ~13B on 8×A100
-
-**ZeRO-3**:
-- Shards: Optimizer states + gradients + **parameters**
-- Parameters: Only 1/N on each GPU
-- Memory: ~2Ψ per GPU (scales linearly with N)
-- Communication: All-Gather params in fwd/bwd (2× per layer)
-- Use case: Very large models (70B+)
-
-**Trade-off**: ZeRO-3 saves more memory but adds significant communication overhead.
-
----
-
-### Q2: "When should you use ZeRO-Offload?"
-
-**Answer**:
-
-**Use when**:
-1. Model doesn't fit in GPU memory even with ZeRO-3
-2. You have sufficient CPU RAM (≥2× GPU memory)
-3. Training speed is not critical (e.g., research, fine-tuning)
-4. Limited GPU resources (consumer GPUs)
-
-**Don't use when**:
-1. Model fits with ZeRO-2 or ZeRO-3
-2. Training throughput is critical
-3. Limited CPU RAM
-
-**Example**: Training 13B model on single RTX 3090 (24GB)
-- Without offload: OOM
-- With offload: ~100 tokens/sec (vs ~500 tokens/sec on A100 without offload)
-
----
-
-### Q3: "What's the communication overhead of ZeRO-3?"
-
-**Answer**:
-
-**Per layer**:
-- 2× All-Gather in forward and backward (to reconstruct parameters)
-- 1× Reduce-Scatter for gradients
-
-**Total**: 3× communication per layer vs 1× for standard DP
-
-**Mitigation strategies**:
-1. **Communication-computation overlap**: Start All-Gather before it's needed
-2. **Prefetching**: Fetch next layer's parameters while computing current
-3. **Contiguous memory**: Reduce fragmentation overhead
-
-**When it's worth it**:
-- Model is so large that ZeRO-2 won't fit
-- High-bandwidth interconnect (NVLink, InfiniBand)
-- Memory is the bottleneck, not compute
-
----
-
-### Q4: "How do you debug OOM with ZeRO-3?"
-
-**Checklist**:
-
-1. **Check activation memory**:
-   ```python
-   # ZeRO only shards model states, not activations
-   # Use activation checkpointing
-   model.gradient_checkpointing_enable()
-   ```
-
-2. **Verify sharding**:
-   ```python
-   # Print memory usage per GPU
-   print(f"Allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
-   print(f"Reserved: {torch.cuda.memory_reserved() / 1e9:.2f} GB")
-   ```
-
-3. **Reduce batch size**: Activations scale with batch size
-
-4. **Enable offloading**:
-   ```json
-   "offload_optimizer": {"device": "cpu"},
-   "offload_param": {"device": "cpu"}
-   ```
-
-5. **Check fragmentation**:
-   ```python
-   torch.cuda.memory_summary()
-   # Look for fragmentation
-   ```
-
----
-
-### Q5: "Compare ZeRO-3 with Tensor Parallelism."
-
-**Answer**:
-
-| Aspect | ZeRO-3 | Tensor Parallelism |
-|--------|--------|-------------------|
-| **What's split** | All model states | Individual layers |
-| **Replica count** | 1 (sharded) | 1 (split) |
-| **Communication** | All-Gather (infrequent, bulk) | All-Reduce/All-Gather (every layer) |
-| **Memory** | 2Ψ/N + activations | Ψ/N + reduced activations |
-| **Computation** | Same as single GPU | Distributed per layer |
-| **Latency sensitivity** | Low (bulk transfers) | High (frequent ops) |
-| **Typical scale** | Across nodes (DP-like) | Within node (NVLink) |
-
-**Can combine**: TP within nodes (8 GPUs), ZeRO-3 across nodes.
-
----
-
----
-
 ## 8. Memory Calculation Example
 
 **7B model, 8 GPUs, FP16, Adam optimizer**
@@ -386,8 +255,6 @@ Per GPU:
 - **Total: 14 GB** ✅✅✅
 
 > **Note**: These exclude activations! With batch_size=32, sequence_length=2048, activations can be 10-20 GB.
-
----
 
 ---
 
@@ -429,8 +296,6 @@ see_memory_usage("After forward", force=True)
 
 ---
 
----
-
 ## 10. Integration with Hugging Face
 
 ```python
@@ -452,8 +317,6 @@ trainer = Trainer(
 
 trainer.train()
 ```
-
----
 
 ---
 

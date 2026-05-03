@@ -1,3 +1,5 @@
+# Pipeline Parallelism
+
 ## 1. Core Concept
 
 Pipeline Parallelism splits the model **by layer depth** across devices.
@@ -12,8 +14,6 @@ GPU 3: Layers 10-12 ─┘
 ```
 
 **When to use**: Very deep models where depth is the bottleneck.
-
----
 
 ---
 
@@ -38,8 +38,6 @@ This idle time is called the **"pipeline bubble"**.
 
 ---
 
----
-
 ## 3. Micro-Batching Solution
 
 Split the global batch into **M micro-batches** that flow through the pipeline.
@@ -61,8 +59,6 @@ GPU 3:          F1 F2 F3 F4 B4 B3 B2 B1
 
 ---
 
----
-
 ## 4. Pipeline Bubble Calculation
 
 **Bubble fraction** = (Number of pipeline stages - 1) / Number of micro-batches
@@ -77,8 +73,6 @@ For P pipeline stages and M micro-batches:
 - 4 stages, 16 micro-batches: 3/16 = **18.75% bubble** ✅
 
 > **Rule of thumb**: Use at least 4× micro-batches as pipeline stages.
-
----
 
 ---
 
@@ -135,8 +129,6 @@ GPU 3: Stages 4, 8
 
 ---
 
----
-
 ## 6. Memory Trade-offs
 
 ### Activation Memory
@@ -165,8 +157,6 @@ Example: GPT-3 175B
 
 ---
 
----
-
 ## 7. Communication Pattern
 
 ### Forward Pass
@@ -179,116 +169,6 @@ Example: GPT-3 175B
 
 **Bandwidth**: Lower than TP (only inter-stage, not all-to-all)  
 **Latency**: Higher than DP (sequential dependency)
-
----
-
----
-
-## 8. Common Interview Questions
-
-### Q1: "Explain the pipeline bubble and how to reduce it."
-
-**Strong Answer**:
-
-**Pipeline bubble** = idle time when GPUs wait for activations/gradients.
-
-**Cause**: With naive pipelining, only one stage is active at a time.
-
-**Solutions**:
-1. **Micro-batching**: Split batch into M chunks
-   - Bubble = (P-1)/M where P = num stages
-   - Use M ≥ 4P for <25% bubble
-
-2. **Better schedules**: 1F1B instead of fill-drain
-   - Reduces bubble further
-   - Interleaves forward and backward
-
-3. **Virtual pipeline stages**: Each GPU handles multiple non-contiguous stages
-   - Minimal bubble
-   - Added complexity
-
----
-
-### Q2: "What's the memory overhead of pipeline parallelism?"
-
-**Answer**:
-
-**Increased memory**:
-- **Activation storage**: Must hold activations for all M micro-batches in flight
-- Memory grows with M: more micro-batches → more memory
-- Trade-off: Utilization ↑, Memory ↑
-
-**Decreased memory**:
-- **Parameter storage**: Each GPU only stores P/N layers (N = num GPUs)
-- **Gradient storage**: Also P/N
-- **Optimizer states**: Also P/N
-
-**Net effect**: Saves parameter memory but increases activation memory.
-
-**Example**: 48-layer model on 4 GPUs
-- Each GPU: 12 layers instead of 48
-- But: Must store activations for 16 micro-batches
-
----
-
-### Q3: "Compare Pipeline Parallelism vs Tensor Parallelism."
-
-**Answer**:
-
-| Aspect | Pipeline Parallelism | Tensor Parallelism |
-|--------|---------------------|-------------------|
-| **Splits** | Layers (depth) | Individual layers (width) |
-| **Communication** | Point-to-point (between stages) | All-to-all (All-Gather, All-Reduce) |
-| **Frequency** | Once per micro-batch | Every layer in fwd/bwd |
-| **Latency** | Higher (sequential) | Lower (parallel) |
-| **Memory** | ↑ Activations, ↓ Parameters | ↓ Both |
-| **Bubble** | Yes (need micro-batching) | No |
-| **Use case** | Very deep models | Very wide layers |
-
-**Often combined**: TP within stages, PP across stages.
-
----
-
-### Q4: "How do you choose the number of pipeline stages?"
-
-**Answer**:
-
-**Considerations**:
-
-1. **Model depth**: Natural split points (e.g., every 12 transformer layers)
-
-2. **Memory balance**: Each stage should have similar memory footprint
-
-3. **Communication**: More stages → more inter-stage communication
-
-4. **Bubble**: More stages → larger bubble (need more micro-batches)
-
-**Typical choices**:
-- GPT-3 175B: 8-16 pipeline stages
-- Smaller models (<10B): 2-4 stages if used at all
-- Often matches node count (1 stage per node)
-
-**Rule**: Balance memory reduction with bubble overhead. Usually 4-16 stages.
-
----
-
-### Q5: "Why does Pipeline Parallelism hurt latency-sensitive workloads?"
-
-**Answer**:
-
-**In training**: Not a huge issue because we optimize for throughput
-- Large batches amortize bubble overhead
-- Micro-batching keeps GPUs busy
-
-**In inference**: Major problem
-- Small batch sizes (often batch=1)
-- Can't use micro-batching effectively
-- Sequential dependency → high latency
-- Token generation is sequential by nature
-
-**Result**: PP rarely used for inference. Prefer model replication or TP.
-
----
 
 ---
 
@@ -331,8 +211,6 @@ class PipelineStage:
 
 ---
 
----
-
 ## 10. Gradient Accumulation vs Micro-batching
 
 ### Gradient Accumulation (DP)
@@ -358,8 +236,6 @@ GPU 0: micro_batch_2 → ...
 - Enables pipeline parallelism
 
 **Key difference**: PP micro-batches are **in-flight simultaneously** across stages.
-
----
 
 ---
 
@@ -391,8 +267,6 @@ GPU 0: micro_batch_2 → ...
 
 ---
 
----
-
 ## 12. Advanced: Hybrid PP + TP
 
 Most efficient setup for large models:
@@ -415,8 +289,6 @@ Most efficient setup for large models:
 - TP reduces per-stage memory (use NVLink within node)
 - PP reduces total parameter memory (across nodes)
 - Minimizes cross-node communication (only inter-stage activations)
-
----
 
 ---
 

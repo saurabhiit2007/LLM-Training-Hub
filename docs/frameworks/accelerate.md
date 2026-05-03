@@ -1,4 +1,4 @@
-# ⚡ Accelerate: Efficient Training for Large Language Models
+# Accelerate: Efficient Training for Large Language Models
 
 ### 1. Overview
 Accelerate is a lightweight framework by Hugging Face that simplifies distributed and mixed-precision training for large models, including LLMs. It abstracts device placement, process coordination, and backend integration so developers can scale from single GPU to multi-node setups with minimal code changes.

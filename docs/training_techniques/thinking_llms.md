@@ -1,11 +1,11 @@
+# LLM Reasoning and Thinking Models
+
 ## 1. Overview: The System 1 vs. System 2 Shift
 
 In 2026, the AI landscape is defined by the transition from "Next-Token Predictors" to "Reasoning Agents." This is often explained using Daniel Kahneman's framework:
 
 * **Generic LLMs (System 1):** Fast, intuitive, and associative. They respond instantly based on high-probability patterns.
 * **Thinking LLMs (System 2):** Slow, deliberate, and logical. They use "Inference-Time Compute" to verify their own work before displaying it.
-
----
 
 ---
 
@@ -18,8 +18,6 @@ In 2026, the AI landscape is defined by the transition from "Next-Token Predicto
 | **Internal Process** | Direct Output | Hidden "Chain of Thought" (CoT) |
 | **Self-Correction** | Rare (usually hallucinations) | Native (backtracks on errors) |
 | **Best For** | Chat, Summaries, Creative Writing | Coding, Math, Strategic Planning |
-
----
 
 ---
 
@@ -42,8 +40,6 @@ Thinking models expose inference compute as a tunable parameter:
 - Low compute approximates System 1 behavior
 - High compute activates deeper reasoning loops
 - This decouples model intelligence from latency constraints, enabling dynamic deployment strategies.
-
----
 
 ---
 
@@ -71,8 +67,6 @@ This reframes inference as a planning problem rather than a single forward pass.
 
 ---
 
----
-
 ## 5. Reinforcement Learning for Reasoning
 
 ### 5.1 Outcome Reward Models vs Process Reward Models
@@ -96,8 +90,6 @@ This removes reliance on large teacher models and enables reasoning capability t
 
 ---
 
----
-
 ## 6. Distillation of Reasoning
 
 Reasoning capabilities are **distillable**, even when learned via reinforcement learning.
@@ -108,8 +100,6 @@ Reasoning capabilities are **distillable**, even when learned via reinforcement 
 3. Use them as supervised fine-tuning data for smaller models
 
 This has enabled 7B–14B models to exhibit structured reasoning previously limited to frontier-scale systems.
-
----
 
 ---
 
@@ -130,8 +120,6 @@ Adaptive early stopping is commonly used to terminate reasoning once confidence 
 
 ---
 
----
-
 ## 8. Evaluation and Benchmarks
 
 Reasoning models require benchmarks that stress multi-step cognition.
@@ -144,8 +132,6 @@ Reasoning models require benchmarks that stress multi-step cognition.
 | Codeforces | Long-horizon program synthesis |
 
 Evaluation must consider **accuracy versus compute trade-offs**, not accuracy alone.
-
----
 
 ---
 
@@ -164,8 +150,6 @@ Hybrid systems increasingly route queries dynamically based on estimated difficu
 
 ---
 
----
-
 
 ## 10. Notable Models of 2025–2026
 
@@ -173,8 +157,6 @@ Hybrid systems increasingly route queries dynamically based on estimated difficu
 * **DeepSeek-R1:** A massive breakthrough for open-source AI. It proved that RL can "distill" reasoning capabilities into smaller models (like 7B or 14B parameters).
 * **Claude 3.7 Sonnet:** Introduced "Hybrid Reasoning," allowing the user to toggle "Extended Thinking." This solves the latency issue by letting users choose when they need the model to "think."
 * **Gemini 2.5 Pro (Reasoning):** Uses Google’s massive context window to reason across hours of video or thousands of lines of code simultaneously.
-
----
 
 ---
 
@@ -187,31 +169,5 @@ Thinking behavior emerges from the interaction of all training stages:
 - RL-based post-training activates inference-time computation strategies
 
 System 2 capability is therefore **not purely a post-training artifact**.
-
----
-
----
-
-## 12. Technical Q&A
-
-**Q: What is "Reward Hacking" in reasoning models?**
-
-**A:** It’s a failure mode where a model learns that writing *longer* reasoning chains results in higher rewards from the PRM, even if the logic is circular or redundant. Engineers combat this by penalizing length or using more diverse reward signals.
-
----
-
-**Q: How do you decide when to deploy a Thinking LLM vs. a Generic LLM?**
-
-**A:** It's a trade-off between **Latency, Cost, and Accuracy**. 
-* Use **Generic** for high-throughput, low-latency tasks (customer service bots, simple translations).
-* Use **Thinking** for high-stakes accuracy (legal analysis, complex debugging, scientific research).
-
----
-
-**Q: Can you distill reasoning?**
-
-**A:** Yes. You can take the "Thinking Traces" from a large model (like o1) and use them as fine-tuning data for a smaller model (like Llama 8B). This teaches the smaller model to "mimic" the logical structure of the larger one.
-
----
 
 ---

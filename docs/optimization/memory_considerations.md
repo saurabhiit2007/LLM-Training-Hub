@@ -1,4 +1,4 @@
-# 💾 Memory Considerations for LLM Training and Inference
+# Memory Considerations for LLM Training and Inference
 
 ## 1. GPU and CPU Memory and Transfer Rates
 
@@ -59,8 +59,6 @@ Data movement between GPU and CPU happens over interconnects.
 
 ---
 
----
-
 ## 2. Bandwidth, Latency, and Compute
 
 ### 2.1 Bandwidth vs Latency vs Compute
@@ -94,8 +92,6 @@ $$
 **Compute bound operations:**
 
 - Large matrix multiplications (when batch size and dimensions are large)
-
----
 
 ---
 
@@ -199,8 +195,6 @@ $$
 
 ---
 
----
-
 ## 4. Memory Differences Between Training and Inference
 
 ### 4.1 Training vs Inference Memory Profile
@@ -220,8 +214,6 @@ $$
 - No gradients
 - No optimizer states
 - Minimal activation storage
-
----
 
 ---
 
@@ -300,8 +292,6 @@ $$
 
 ---
 
----
-
 ## 6. Multi-GPU Memory Considerations
 
 ### 6.1 Data Parallelism (DP)
@@ -352,209 +342,6 @@ Enables training on GPUs with <16 GB memory.
 - Sequential processing with pipeline stages
 
 **Both reduce per-GPU memory but require careful implementation.**
-
----
-
----
-
-## 7. Interview Questions
-
-### Q1: Why does training a 7B model require ~100GB but inference only ~20GB?
-
-**Answer:**
-
-**Training (7B model):**
-- Weights: 14 GB
-- Gradients: 14 GB
-- Optimizer (Adam): 56 GB
-- Activations: 5-32 GB
-- **Total: 89-116 GB**
-
-**Inference (7B model):**
-- Weights: 14 GB
-- Activations: 1-2 GB (minimal)
-- KV cache: 5-20 GB
-- **Total: 20-36 GB**
-
-**Key differences:**
-- No gradients in inference (no backward pass)
-- No optimizer states (not training)
-- Activations only for current layer (not stored for backprop)
-
-Optimizer states alone (56 GB) exceed entire inference budget.
-
----
-
-### Q2: Walk through the memory bottleneck when fine-tuning a 13B model on a single 80GB A100.
-
-**Answer:**
-
-**Memory breakdown (13B parameters, BF16):**
-
-| Component | Memory |
-|-----------|--------|
-| Weights | 26 GB |
-| Gradients | 26 GB |
-| Adam states | 104 GB ⚠️ |
-| Activations | 10-40 GB |
-| **Total** | **166-196 GB** ❌ |
-
-**Problem:** Optimizer states alone exceed GPU capacity.
-
-**Solutions (stacked):**
-
-1. **Gradient checkpointing:** 40 GB → 5 GB (activations)
-   - New total: ~161 GB (still doesn't fit)
-
-2. **8-bit optimizer:** 104 GB → 26 GB (optimizer)
-   - New total: 26 + 26 + 26 + 5 = **83 GB** (still over)
-
-3. **Reduce batch size:** 4 → 1 with gradient accumulation
-   - Activations: 5 GB → 2 GB
-   - New total: **80 GB** ✅ (barely fits!)
-
-**Alternative: LoRA (rank 32)**
-- Trainable params: ~50M (0.4% of 13B)
-- Total memory: 26 (weights) + 0.1 (grads) + 0.4 (optimizer) + 2 (act) = **28.5 GB** ✅
-
-**Recommendation:** LoRA for efficiency, or 8-bit Adam + checkpointing + small batch for full fine-tuning.
-
----
-
-### Q3: Explain why attention becomes memory-bound for long sequences.
-
-**Answer:**
-
-**Attention computation:**
-$$
-\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-$$
-
-**The bottleneck:** The intermediate $S \times S$ attention matrix.
-
-For sequence length $S=8192$:
-- Attention matrix size: $8192^2 \times 2 \text{ bytes} = 134$ MB per head
-- 32 heads: $32 \times 134 = 4.3$ GB just for attention scores
-- This must be materialized in memory → **memory bound**
-
-**Arithmetic intensity is low:**
-
-For large $S$, most operations are reading/writing the $S^2$ matrix, not computing.
-
-**Flash Attention solution:**
-- Never materializes full $S \times S$ matrix
-- Recomputes attention in blocks (tiling)
-- Reduces memory: $O(S^2) \rightarrow O(S)$
-
----
-
-### Q4: You're serving 100 requests with a 7B model. KV cache is 60GB. How can you reduce this?
-
-**Answer:**
-
-**Current state:** 60 GB / 100 requests = 0.6 GB per request
-
-This implies ~1,144 tokens per request average (context + generation).
-
-**Reduction strategies:**
-
-| Strategy | Reduction | Trade-off |
-|----------|-----------|-----------|
-| **Reduce context to 512 tokens** | 55% | May truncate important context |
-| **Use GQA model (8 KV heads vs 32)** | 75% | Requires different model |
-| **PagedAttention (vLLM)** | 10-30% | Better packing, no quality loss |
-| **KV cache quantization (INT8)** | 50% | Slight quality degradation |
-| **Reduce concurrent requests (100→50)** | 50% | Lower throughput |
-
-**Recommended:**
-- vLLM with PagedAttention + context limit (1024 tokens)
-- Achieves ~70% reduction without quality loss
-- Total: ~18-24 GB
-
----
-
-### Q5: Compare memory patterns of Data Parallel vs ZeRO-3.
-
-**Answer:**
-
-**Setup:** 8 GPUs, 7B model (14 GB parameters)
-
-**Data Parallel (DP):**
-
-Memory per GPU:
-- Full model copy: 14 GB
-- Full optimizer: 56 GB
-- 1/8 of activations/gradients
-- **Total: ~84 GB**
-
-Communication:
-- All-reduce gradients: 14 GB per GPU
-- Simple, efficient
-
-**ZeRO-3:**
-
-Memory per GPU:
-- 1/8 of model: 1.75 GB
-- 1/8 of optimizer: 7 GB
-- 1/8 of gradients: 1.75 GB
-- **Total: ~12-15 GB** (5-7× less!)
-
-Communication:
-- All-gather parameters before each layer
-- Reduce-scatter gradients
-- Total: ~28 GB per GPU (2× DP)
-
-**Trade-off:**
-- ZeRO-3: Less memory, more communication
-- DP: More memory, less communication
-
-**When to use:**
-- **DP:** Model fits on single GPU, want max throughput
-- **ZeRO-3:** Model doesn't fit, willing to trade speed for capacity
-
----
-
-### Q6: Design a memory budget for serving a 70B model at 1000 QPS.
-
-**Answer:**
-
-**Model:** 70B parameters (140 GB in BF16)
-
-**Throughput analysis:**
-- QPS: 1000 requests/sec
-- Average latency: ~6 seconds (input processing + generation)
-- Concurrent requests: 1000 × 6 = 6000 ⚠️
-
-**This is unrealistic.** Must optimize:
-
-**1. Use Grouped-Query Attention:**
-- Reduce KV heads 80 → 8 (10× reduction)
-
-**2. Realistic concurrent batching:**
-- vLLM continuous batching
-- Actual concurrent: ~500-1000 (not 6000)
-
-**3. Average active tokens:**
-- Not all requests at max length
-- Effective: ~300 tokens per request
-
-**KV cache estimate:**
-- 1000 concurrent × 300 tokens × 0.26 MB/token = **78 GB**
-
-**System design (8× H100 80GB):**
-
-| Component | Memory per GPU |
-|-----------|---------------|
-| Model (TP-8) | 140 GB / 8 = 17.5 GB |
-| KV cache | 78 GB / 8 = 9.75 GB |
-| Workspace | 2 GB |
-| **Total** | **29.25 GB** ✅ |
-
-**Architecture:**
-- 8× H100 80GB (tensor parallelism)
-- vLLM with PagedAttention
-- 70B model with GQA
-- Expected: 800-1200 QPS sustained
 
 ---
 

@@ -1,3 +1,5 @@
+# Distributed Training: Parallelism Overview
+
 ## 1. The Memory-Compute-Communication Triangle
 
 Distributed training is fundamentally constrained by a three-way trade-off:
@@ -7,8 +9,6 @@ Distributed training is fundamentally constrained by a three-way trade-off:
 - **Communication**: Determines synchronization speed
 
 > Improving one dimension often degrades another. Real systems balance all three.
-
----
 
 ---
 
@@ -33,8 +33,6 @@ This doesn't fit on an 80GB A100 → **Need sharding strategies**
 
 ---
 
----
-
 ## 3. The Four Main Parallelism Types
 
 | Type | What It Splits | When to Use | Communication |
@@ -43,8 +41,6 @@ This doesn't fit on an 80GB A100 → **Need sharding strategies**
 | **Tensor Parallelism (TP)** | Individual layers | When layers don't fit on one GPU | All-Reduce/All-Gather in fwd/bwd pass |
 | **Pipeline Parallelism (PP)** | Model depth (layers) | Very deep models | Activation passing between stages |
 | **ZeRO / FSDP** | Model states (params, grads, optimizer) | Large models, memory constrained | Reduce-Scatter, All-Gather |
-
----
 
 ---
 
@@ -71,8 +67,6 @@ Real systems combine multiple strategies:
 3. Add Tensor Parallelism (8-way) within nodes for very large layers
 4. Add Pipeline Parallelism for extreme depth
 5. Scale Data Parallelism across nodes
-
----
 
 ---
 
@@ -107,8 +101,6 @@ Real systems combine multiple strategies:
 
 ---
 
----
-
 ## 6. Memory Reduction Techniques
 
 ### Activation Checkpointing
@@ -128,8 +120,6 @@ Real systems combine multiple strategies:
 
 ---
 
----
-
 ## 7. Critical Communication Primitives
 
 | Operation | Purpose | Example Use |
@@ -143,58 +133,7 @@ Real systems combine multiple strategies:
 
 ---
 
-## 8. Common Interview Questions
-
-**Q1: "How would you scale training from 1 GPU to 256 GPUs?"**
-
-**Answer**:
-
-1. **1-8 GPUs**: Start with Data Parallelism (DDP)
-2. **8-64 GPUs**: Add ZeRO-2 to shard optimizer states and gradients
-3. **64-256 GPUs**: Consider:
-
-   - ZeRO-3/FSDP for full parameter sharding
-   - 8-way Tensor Parallelism within nodes
-   - 4-way Pipeline Parallelism if model is very deep
-   - Data Parallelism across remaining dimension
-
----
-
-**Q2: "What's the difference between model parallelism and data parallelism?"**
-
-**Answer**:
-
-- **Data Parallelism**: Replicate entire model on each GPU, split batch
-  
-  - Communication: Once per iteration (gradient sync)
-  - Limitation: Model must fit on single GPU
-  
-- **Model Parallelism**: Split model itself across GPUs
-
-  - **Tensor Parallelism**: Split individual layers
-  - **Pipeline Parallelism**: Split by depth
-  - Communication: Multiple times per forward/backward pass
-  - Enables training models larger than single GPU memory
-
----
-
-**Q3: "Why can't we just use Data Parallelism for everything?"**
-
-**Answer**:
-
-Memory constraints. Standard DP requires:
-
-- Full model parameters on each GPU
-- Full gradients on each GPU
-- Full optimizer states on each GPU
-
-For large models (>10B parameters), this exceeds single GPU memory even before considering activations.
-
----
-
----
-
-## 9. Key Takeaways for Interviews
+## 9. Key Takeaways
 
 1. **No single best strategy** - choice depends on model size, hardware, and constraints
 2. **Communication is often the bottleneck** at scale

@@ -1,3 +1,5 @@
+# Data Parallelism
+
 ## 1. Overview
 
 The most widely used baseline parallelism strategy:
@@ -5,8 +7,6 @@ The most widely used baseline parallelism strategy:
 - Each worker processes a **different shard** of the input batch
 - Gradients are **synchronized** after backward pass
 - All replicas apply **identical optimizer updates**
-
----
 
 ---
 
@@ -24,8 +24,6 @@ GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
 ```
 
 **Result**: Effective batch size = N × local batch size
-
----
 
 ---
 
@@ -87,8 +85,6 @@ Comm:        [Bucket 1 All-Reduce─────────────]
 
 ---
 
----
-
 ## 4. Memory Requirements
 
 Each GPU must store:
@@ -98,8 +94,6 @@ Each GPU must store:
 - **Activations**: Depends on batch size and sequence length
 
 **Total**: ~16Ψ bytes per GPU (excluding activations)
-
----
 
 ---
 
@@ -124,8 +118,6 @@ For 7B model (14GB gradients in FP16):
 
 ---
 
----
-
 ## 6. Gradient Accumulation with DDP
 
 **Purpose**: Simulate larger batch size without increasing memory
@@ -147,66 +139,6 @@ for i, batch in enumerate(dataloader):
 - Saves communication bandwidth
 
 **Trade-off**: Slower convergence per step (but same per sample)
-
----
-
----
-
-## 7. Common Interview Questions
-
-### Q1: "What happens during DDP gradient synchronization?"
-
-**Strong Answer**:
-1. Each GPU computes gradients on its local batch
-2. Gradients are bucketed (default: 25MB buckets)
-3. As each bucket is ready, DDP launches **async All-Reduce**
-4. All-Reduce computes average across GPUs: `grad_avg = sum(grad_i) / N`
-5. Result is written back to each GPU's gradient buffer
-6. Optimizer updates using averaged gradients
-
-**Not**: Gradients aren't sent to a central server and back. All-Reduce is a collective operation.
-
----
-
-### Q2: "Why does DDP use All-Reduce instead of Parameter Server?"
-
-**Answer**:
-- **Parameter Server**: Central node becomes bottleneck (bandwidth: O(Ψ))
-- **All-Reduce**: Peer-to-peer communication (bandwidth: O(Ψ/N) per GPU)
-- Ring All-Reduce scales much better for large clusters
-- No single point of failure
-
----
-
-### Q3: "What are DDP's limitations?"
-
-**Answer**:
-1. **Memory**: Full model must fit on single GPU
-   - For 7B model: ~112GB needed (doesn't fit on 80GB GPU)
-2. **Scaling**: Communication cost grows linearly with GPUs
-3. **Batch size**: Global batch = N × local_batch can become too large
-   - Large batches hurt generalization
-   - Require careful LR tuning
-
-**Solution**: Use ZeRO/FSDP for memory, Tensor/Pipeline Parallelism for scaling
-
----
-
-### Q4: "How does DDP differ from ZeRO-1?"
-
-**Answer**:
-
-| Aspect | DDP | ZeRO-1 |
-|--------|-----|--------|
-| **Parameters** | Replicated | Replicated |
-| **Gradients** | Replicated | Replicated |
-| **Optimizer States** | Replicated | **Sharded** |
-| **Memory per GPU** | 16Ψ | ~12Ψ (saves 4Ψ) |
-| **Communication** | All-Reduce gradients | All-Reduce gradients + Gather optimizer states |
-
-ZeRO-1 is a strict improvement over DDP for memory, with minimal communication overhead.
-
----
 
 ---
 
@@ -239,8 +171,6 @@ model = DDP(model, find_unused_parameters=True)
 model = DDP(model, static_graph=True)  # PyTorch 1.11+
 # Reduces overhead by ~10%
 ```
-
----
 
 ---
 

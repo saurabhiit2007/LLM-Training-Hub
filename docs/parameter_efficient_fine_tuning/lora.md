@@ -1,4 +1,4 @@
-# 🧩 LORA: Low-Rank Adaptation
+# LORA: Low-Rank Adaptation
 
 ---
 
@@ -179,8 +179,6 @@ class LoRALinear(nn.Module):
 
 ---
 
----
-
 ### 10. Best Practices & Checklist
 
 - Start with small **rank** `r = 4–16` and `α = 2 × r`.  
@@ -193,8 +191,6 @@ class LoRALinear(nn.Module):
 
 ---
 
----
-
 ### 11. Limitations & Challenges
 
 - **Rank–Capacity Tradeoff**: Small `r` may underfit; large `r` increases memory use and instability.  
@@ -202,8 +198,6 @@ class LoRALinear(nn.Module):
 - **Quantization Effects**: Combining LoRA with quantization (as in QLoRA) requires additional tuning.  
 - **Adapter Management**: Multiple adapters need clear naming and metadata to avoid conflicts.  
 - **Not a Universal Replacement**: For extreme distribution shifts, full fine-tuning may still be necessary.  
-
----
 
 ---
 
@@ -293,8 +287,6 @@ Where $\Delta V$ is the LoRA update.
 
 ---
 
----
-
 ### 13. Comparison: LoRA vs Other Methods
 
 | **Method**          | **Parameter Efficiency** | **Compute Cost** | **Flexibility** | **Notes** |
@@ -305,152 +297,3 @@ Where $\Delta V$ is the LoRA update.
 | **LoRA**             | ✅                      | Low              | High            | Mergeable, simple low-rank updates |
 | **QLoRA**            | ✅✅                     | Very Low         | High            | 4-bit quantization + LoRA |
 
----
-
-### 14. Interview Questions
-
-
-#### Q1: What's the effect of LoRA rank on training dynamics?
-
-**Answer:**
-
-**Rank controls the capacity of LoRA to represent weight updates.**
-
----
-
-**Low rank (r = 1-4):**
-
-- Very few parameters
-- Forces the model to find the most essential update direction
-- Strong regularization effect
-- Works surprisingly well for simple tasks
-- Risk: underfitting for complex tasks
-
-```python
-# r=4: 4,194,304 trainable params for 7B model (0.06%)
-lora_config = LoraConfig(r=4, lora_alpha=8, ...)
-```
-
----
-
-**Medium rank (r = 8-32):**
-
-- Sweet spot for most tasks
-- Enough capacity for complex adaptation
-- Training still stable and fast
-- Most common in practice (r=16 very popular)
-
-```python
-# r=16: 16,777,216 trainable params for 7B model (0.25%)
-lora_config = LoraConfig(r=16, lora_alpha=32, ...)
-```
-
----
-
-**High rank (r = 64-256):**
-
-- Approaches full fine-tuning expressiveness
-- More likely to overfit on small datasets
-- Training slower (more parameters)
-- Useful when you have large, diverse datasets
-- Diminishing returns above r=64 for most tasks
-
----
-
-**Empirical results (LoRA paper):**
-
-GPT-3 fine-tuned on NLU tasks:
-
-| Rank | WikiSQL (Acc) | MultiNLI (Acc) | Trainable Params |
-|------|-------------|----------------|-----------------|
-| r=1 | 74.3 | 89.5 | 0.01% |
-| r=2 | 74.8 | 89.8 | 0.02% |
-| r=4 | 75.6 | 91.2 | 0.04% |
-| r=8 | 75.2 | 91.5 | 0.08% |
-| r=64 | 76.1 | 91.6 | 0.60% |
-
-**Key insight:** Performance plateaus quickly. Going from r=4 to r=64 gives modest gain while increasing params by 16×.
-
----
-
-**Practical advice:**
-
-1. Start with r=16 (robust default)
-2. If underfitting: double rank
-3. If overfitting: halve rank or add dropout
-4. Monitor: if r=16 and r=32 give same result, you have enough capacity
-5. For instruction tuning: r=64 often worth it for quality
-
----
-
-**Follow-up:** Why does increasing $\alpha$ proportionally to $r$ matter?  
-
-**Answer:** The effective learning rate of the LoRA path is $\frac{\alpha}{r}$. If you double $r$ but keep $\alpha$ fixed, you halve the LoRA contribution. Common practice: keep $\frac{\alpha}{r}$ constant (e.g., always use $\alpha = 2r$) when sweeping rank.
-
----
-
----
-
-#### Q2: Compare LoRA and full fine-tuning on catastrophic forgetting.
-
-**Answer:**
-
-**Catastrophic forgetting:** When learning new information, a model loses previously learned capabilities.
-
----
-
-**Full Fine-Tuning:**
-
-- All weights updated
-- **High risk** of catastrophic forgetting
-- Model can "overwrite" pre-trained knowledge
-- Especially problematic with small datasets or high LR
-
-**Example:**
-- Fine-tune GPT on medical QA
-- Model may lose general language capabilities
-- Only knows medical domain after training
-
-**Mitigation for full fine-tuning:**
-- Replay buffer (mix old + new data)
-- Lower learning rate
-- Early stopping
-
----
-
-**LoRA:**
-
-- Only $A$ and $B$ matrices updated
-- Base model weights **never change**
-- **Low risk** of catastrophic forgetting
-
-**Why LoRA is more resistant:**
-
-1. **Frozen base:** All pre-trained knowledge preserved in $W_0$
-2. **Small update:** $\Delta W = BA$ is small (low-rank), bounded change
-3. **Residual structure:** New task is additive: $W_{\text{total}} = W_0 + \Delta W$
-4. **Recovery:** Can always fall back to $W_0$ by zeroing $\Delta W$
-
-**Quantitative evidence:**
-
-| Method | Task Performance | Pre-training Preservation |
-|--------|-----------------|--------------------------|
-| Full FT | 100% | 70-90% |
-| LoRA (r=16) | 96% | 95-98% |
-| (IA)³ | 90% | ~100% |
-
----
-
-**In practice:**
-
-LoRA is preferred for:
-- Instruction tuning (preserve general knowledge)
-- Domain adaptation (keep base capabilities)
-- Continual learning across tasks
-
-Full fine-tuning preferred when:
-- Task-specific performance is paramount
-- Forgetting pre-training is acceptable
-- Enough data to prevent overfitting
-
----

@@ -1,10 +1,11 @@
-# Fine-Tuning Methods
+# LLM Training Hub
 
-Welcome to my documentation site on fine-tuning techniques like **LoRA**, **QLoRA**, and **PEFT**.
+A technical reference for training large language models — covering pre-training, fine-tuning, distributed training, PEFT, and optimization techniques.
 
-This project complements my main repo where I implement and test various methods.
 Use the sidebar to explore:
 
-- Theory and mathematical intuition
-- Implementation details
-- Experimental results
+- **Training Phases** — pre-training objectives, mid-training domain adaptation, and supervised fine-tuning
+- **Distributed Training** — data parallelism, tensor/pipeline parallelism, ZeRO/FSDP
+- **PEFT** — LoRA, QLoRA, adapters, and the bitsandbytes library
+- **Optimization** — mixed precision, gradient checkpointing, memory-efficient optimizers, quantization
+- **Training Pipeline** — LLM foundations and reasoning/thinking model training

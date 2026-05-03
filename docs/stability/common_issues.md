@@ -1,3 +1,5 @@
+# Training Stability: Common Issues
+
 ## 2 Numerical Stability
 
 ### 2.4 Loss Spikes and Divergence Diagnosis

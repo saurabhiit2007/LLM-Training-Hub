@@ -1,3 +1,5 @@
+# LLM Training Foundations
+
 ## 1 What is an LLM Optimizing?
 
 At its core, a Large Language Model (LLM) is a probabilistic system designed to model the distribution of natural language. Despite emergent reasoning and planning behaviors, the training objective itself is simple: **reduce uncertainty about the next token given prior context**.

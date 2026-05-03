@@ -1,4 +1,4 @@
-# 🧩 QLoRA: Quantized Low-Rank Adaptation
+# QLoRA: Quantized Low-Rank Adaptation
 
 ---
 

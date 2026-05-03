@@ -6,8 +6,6 @@ Supervised Fine-Tuning (SFT) transforms a **pre-trained base model** into a **us
 
 ---
 
----
-
 ## 1. Conceptual Foundation
 
 ### 1.1 What SFT Optimizes
@@ -24,8 +22,6 @@ This transformation happens through supervised learning, not reinforcement learn
 
 - **Instruction Tuning:** Defines *what* behavior you teach
 - **Task Formatting:** Defines *how* that behavior is presented
-
----
 
 ---
 
@@ -70,8 +66,6 @@ Modern SFT uses **structured role-based templates** (ChatML, LLaMA-style):
 2. **Gradient routing:** Loss masking + role tokens shape response behavior
 3. **Inference controllability:** Enables injection of safety/tools without retraining
 4. **Multi-turn state compression:** Helps model compress dialogue history into latent states
-
----
 
 ---
 
@@ -120,8 +114,6 @@ Diversity prevents shortcut learning and maintains circuit coverage.
 
 ---
 
----
-
 ## 4. Synthetic Data Generation
 
 ### 4.1 Self-Instruct
@@ -164,8 +156,6 @@ Creates implicit difficulty progression:
 - Over-optimization toward reward model
 - Reduced output diversity
 - Reward hacking with weak scorers
-
----
 
 ---
 
@@ -224,8 +214,6 @@ Creates implicit difficulty progression:
 
 ---
 
----
-
 ## 6. Common Challenges
 
 ### 6.1 Catastrophic Forgetting
@@ -271,8 +259,6 @@ Caused by knowledge contradiction between SFT and pre-training data.
 
 ---
 
----
-
 ## 7. LoRA vs Full Fine-Tuning
 
 ### LoRA (PEFT)
@@ -291,8 +277,6 @@ Caused by knowledge contradiction between SFT and pre-training data.
 
 ---
 
----
-
 ## 8. SFT vs Pre-training
 
 | Aspect | Pre-training | Supervised Fine-Tuning |
@@ -302,30 +286,6 @@ Caused by knowledge contradiction between SFT and pre-training data.
 | **Loss** | Full sequence NTP | Masked response NTP |
 | **Compute** | Massive | Moderate |
 | **Primary risk** | Under-training | Overfitting, forgetting |
-
----
-
----
-
-## 9. Common Interview Questions
-
-### Conceptual Questions
-
-**Q1: What's the fundamental difference between pre-training and SFT?**
-
-Pre-training learns *what to know* (world modeling via next-token prediction on massive unlabeled data). SFT learns *how to respond* (instruction following via supervised learning on curated examples). Pre-training builds capabilities; SFT aligns behavior.
-
----
-
-**Q2: Why do we mask the prompt tokens during SFT loss calculation?**
-
-Without masking, the model would waste gradients trying to "predict" the prompt it was just given. Masking ensures gradients only optimize the assistant's response generation, preventing prompt memorization and improving alignment stability.
-
----
-
-**Q3: Explain the LIMA hypothesis and its implications.**
-
-LIMA ("Less Is More for Alignment") showed that ~1,000 carefully curated examples can match or exceed the performance of tens of thousands of lower-quality examples. This implies that data quality and diversity matter far more than quantity for alignment, and suggests that most capabilities come from pre-training rather than SFT.
 
 ---
 
@@ -445,8 +405,6 @@ Catastrophic forgetting occurs when the model loses pre-training knowledge while
 3. Use contrastive pairs (safe vs unsafe versions of similar prompts)
 4. Consider preference optimization to fine-tune refusal boundary
 5. Check system prompt isn't triggering false refusals
-
----
 
 ---
 

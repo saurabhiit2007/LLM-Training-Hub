@@ -1,3 +1,5 @@
+# Mid-Training
+
 ## 1. Overview
 
 **Mid-training**, also known as **Continued Pre-Training** or the **Annealing Phase**, is a critical intermediate stage in modern LLM development that bridges general pre-training and task-specific alignment (SFT/RLHF).
@@ -9,8 +11,6 @@
 - Enhanced reasoning capabilities
 - Reduced downstream alignment complexity
 - 2-5× reduction in SFT data requirements
-
----
 
 ---
 
@@ -34,8 +34,6 @@ Transition from pattern matching to structured reasoning through exposure to:
 
 ---
 
----
-
 ## 3. Resource Requirements
 
 | Resource | Requirement | Notes |
@@ -44,8 +42,6 @@ Transition from pattern matching to structured reasoning through exposure to:
 | **Optimizer States** | Full Adam/AdamW moments | Critical for stability |
 | **Data Quality** | >95% signal-to-noise ratio | Aggressive filtering needed |
 | **Replay Buffer** | 10-20% general data | Prevents catastrophic forgetting |
-
----
 
 ---
 
@@ -101,8 +97,6 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 
 ---
 
----
-
 ## 5. Common Failure Modes
 
 | Failure Mode | Cause | Detection |
@@ -111,8 +105,6 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 | **Reasoning Overfitting** | Excessive synthetic data | Check output diversity, verbosity |
 | **Semantic Drift** | Insufficient replay buffer | Test general knowledge perplexity |
 | **Context Illusions** | RoPE issues without true understanding | Needle-in-haystack tasks |
-
----
 
 ---
 
@@ -133,8 +125,6 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 
 ---
 
----
-
 ## 7. Impact on Downstream Stages
 
 A well-executed mid-training phase:
@@ -142,8 +132,6 @@ A well-executed mid-training phase:
 - ✅ Improves RLHF stability
 - ✅ Lowers reward hacking risk
 - ✅ Pre-internalizes reasoning norms
-
----
 
 ---
 
@@ -160,8 +148,6 @@ Using a "proctor" model to adjust data mixture in real-time based on primary mod
 
 ---
 
----
-
 ## 9. Training Phase Comparison
 
 | Aspect | Pre-Training | Mid-Training | Post-Training (SFT) |
@@ -171,34 +157,6 @@ Using a "proctor" model to adjust data mixture in real-time based on primary mod
 | **Data Source** | Raw web scrapes | Curated + Synthetic | Human demonstrations |
 | **Compute** | ~100% | ~5-15% | <1% |
 | **Forgetting Risk** | N/A | High (needs replay) | Moderate |
-
----
-
----
-
-## 10. Common Interview Questions
-
-### Conceptual Understanding
-
-**Q1: What is the primary difference between pre-training and mid-training?**
-
-**A:** Pre-training focuses on broad language understanding from diverse web data (5-15T tokens), while mid-training specializes the model on curated/synthetic data (100-500B tokens) for reasoning and domain expertise. Pre-training builds breadth; mid-training builds depth.
-
----
-
-**Q2: Why can't we just add specialized data during pre-training?**
-
-**A:** Specialized data (math proofs, code, domain texts) would be diluted in the massive pre-training corpus. Mid-training allows controlled, high-concentration exposure after general capabilities are established, preventing domain data from being "drowned out."
-
----
-
-**Q3: What is catastrophic forgetting and how does mid-training address it?**
-
-**A:** Catastrophic forgetting occurs when training on new data causes the model to lose previously learned knowledge. Mid-training mitigates this by:
-- Including 10-20% general data in the replay buffer
-- Using lower learning rates (annealing)
-- Selectively freezing early layers
-- Continuous evaluation on general benchmarks
 
 ---
 
@@ -317,8 +275,6 @@ This creates models that inherently prefer correct reasoning structures.
 - Target domains are broad and varied
 
 Mid-training offers better ROI for specialization at 5-15% of pre-training cost.
-
----
 
 ---
 

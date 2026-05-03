@@ -1,3 +1,5 @@
+# FSDP: Fully Sharded Data Parallel
+
 ## 1. Overview
 
 **FSDP** is PyTorch's native implementation of the **ZeRO-3** algorithm.
@@ -10,8 +12,6 @@
 
 ---
 
----
-
 ## 2. Core Concept
 
 Like ZeRO-3, FSDP shards **all model states** across GPUs:
@@ -20,8 +20,6 @@ Like ZeRO-3, FSDP shards **all model states** across GPUs:
 - Optimizer states (12Ψ/N per GPU)
 
 **Memory**: ~2Ψ/N per GPU (excluding activations)
-
----
 
 ---
 
@@ -83,8 +81,6 @@ grad_shard = reduce_scatter(grad_params)  # Each GPU gets its shard
 
 ---
 
----
-
 ## 4. Wrapping Strategies
 
 **Critical for performance**: How you wrap your model determines memory efficiency.
@@ -143,8 +139,6 @@ model = FSDP(model, auto_wrap_policy=auto_wrap_policy)
 
 ---
 
----
-
 ## 5. Why Wrapping Matters
 
 ### Bad Wrapping (No Sub-Module Wrapping)
@@ -174,8 +168,6 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 
 ---
 
----
-
 ## 6. FSDP vs DeepSpeed
 
 | Feature | FSDP | DeepSpeed ZeRO-3 |
@@ -199,8 +191,6 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 - Extreme scale (100B+ parameters)
 - Need NVMe offload
 - Want maximum optimization
-
----
 
 ---
 
@@ -229,8 +219,6 @@ for layer in model.layers:
 
 fully_shard(model)  # Wrap whole model
 ```
-
----
 
 ---
 
@@ -268,8 +256,6 @@ model = FSDP(
 
 ---
 
----
-
 ## 9. Memory Calculation Example
 
 **7B model, 8 GPUs, FP16, Adam**
@@ -287,137 +273,6 @@ model = FSDP(
 - **Total per GPU: 14 GB** ✅
 
 **Plus activations**: ~10-20 GB depending on batch size.
-
----
-
----
-
-## 10. Common Interview Questions
-
-### Q1: "What's the difference between FSDP and DDP?"
-
-**Strong Answer**:
-
-**DDP (DistributedDataParallel)**:
-- Replicates **full model** on each GPU
-- Shards only the **data** (batches)
-- Communication: All-Reduce gradients once per step
-- Memory: 16Ψ per GPU
-- Use case: Model fits on single GPU
-
-**FSDP (Fully Sharded Data Parallel)**:
-- Shards **model states** across GPUs
-- Also shards the data
-- Communication: All-Gather params + Reduce-Scatter grads (multiple times per step)
-- Memory: 2Ψ/N per GPU
-- Use case: Model doesn't fit on single GPU
-
-**Key**: FSDP is ZeRO-3, DDP is standard Data Parallelism.
-
----
-
-### Q2: "Why is wrapping policy important in FSDP?"
-
-**Answer**:
-
-**Bad wrapping** (wrap entire model):
-```python
-model = FSDP(model)  # No auto_wrap_policy
-```
-- All parameters gathered at once
-- Peak memory = full model (defeats purpose!)
-
-**Good wrapping** (wrap per layer):
-```python
-model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
-```
-- Each layer gathered/freed independently
-- Peak memory = single layer + activations
-
-**Example**: 7B model with 32 layers
-- Bad wrapping: Peak = 14 GB params
-- Good wrapping: Peak = 14/32 = 0.44 GB params per layer
-
-**Wrap granularity affects memory efficiency dramatically.**
-
----
-
-### Q3: "How does HSDP help with scaling?"
-
-**Answer**:
-
-**Standard FSDP problem at scale**:
-- 128 GPUs → 128-way all-gather across all GPUs
-- Cross-node bandwidth: 100 Gb/s (slow!)
-- Communication dominates runtime
-
-**HSDP solution**:
-```
-┌─────────────┐  ┌─────────────┐
-│ Node 0 (8x) │  │ Node 1 (8x) │  ← Data Parallel
-│ FSDP shard  │  │ FSDP shard  │     (same params)
-└─────────────┘  └─────────────┘
-      ↑ NVLink           ↑ NVLink
-    (900 GB/s)        (900 GB/s)
-```
-
-**Benefits**:
-- Sharding within node uses fast NVLink
-- Replication across nodes uses slower Ethernet
-- Best of both: memory savings + manageable communication
-
-**Use case**: Multi-node clusters (>8 GPUs)
-
----
-
-### Q4: "Compare FSDP with ZeRO-2."
-
-**Answer**:
-
-| Aspect | FSDP (ZeRO-3) | ZeRO-2 |
-|--------|---------------|---------|
-| **Parameters** | Sharded (Ψ/N) | Replicated (Ψ) |
-| **Gradients** | Sharded (Ψ/N) | Sharded (Ψ/N) |
-| **Optimizer** | Sharded (12Ψ/N) | Sharded (12Ψ/N) |
-| **Memory** | ~2Ψ/N | ~8Ψ |
-| **Communication** | 2× All-Gather + Reduce-Scatter | 1× Reduce-Scatter |
-| **Use case** | Very large models | Medium models |
-
-**Trade-off**: FSDP saves more memory but requires more communication.
-
-**Example (7B model, 8 GPUs)**:
-- ZeRO-2: 26 GB per GPU
-- FSDP: 14 GB per GPU
-
-If 26 GB fits, ZeRO-2 is faster. If not, must use FSDP.
-
----
-
-### Q5: "Why use FSDP2 over original FSDP?"
-
-**Answer**:
-
-**Original FSDP**:
-- Flattens parameters into 1D buffer
-- Breaks `torch.compile` optimizations
-- Harder to debug
-
-**FSDP2** (PyTorch 2.x):
-- Preserves parameter shapes (uses DTensors)
-- Works seamlessly with `torch.compile`
-- 10-30% faster due to better kernel fusion
-- Cleaner, more composable API
-
-**Example**:
-```python
-# FSDP2 with torch.compile
-model = torch.compile(fully_shard(model))
-# → Significant speedup from compiled kernels
-```
-
-**Recommendation**: Use FSDP2 for new projects (PyTorch 2.0+).
-
----
 
 ---
 
@@ -498,8 +353,6 @@ model = FSDP(model)
 
 ---
 
----
-
 ## 12. Debugging Tips
 
 ### Issue: OOM During Training
@@ -550,8 +403,6 @@ model = FSDP(model)
 
 ---
 
----
-
 ## 14. Integration with Hugging Face
 
 ```python
@@ -576,8 +427,6 @@ trainer = Trainer(
 
 trainer.train()
 ```
-
----
 
 ---
 ## 15. Key Takeaways
