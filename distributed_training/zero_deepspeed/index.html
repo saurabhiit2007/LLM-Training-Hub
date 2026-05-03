@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-the-core-problem" class="md-skip">
+        <a href="#zero-and-deepspeed" class="md-skip">
           Skip to content
         </a>
       
@@ -531,6 +531,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -562,6 +564,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -710,66 +714,6 @@
   <a href="#configuration-example" class="md-nav__link">
     <span class="md-ellipsis">
       Configuration Example
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-explain-the-difference-between-zero-2-and-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "Explain the difference between ZeRO-2 and ZeRO-3."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-when-should-you-use-zero-offload" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "When should you use ZeRO-Offload?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-whats-the-communication-overhead-of-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "What's the communication overhead of ZeRO-3?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-how-do-you-debug-oom-with-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "How do you debug OOM with ZeRO-3?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-compare-zero-3-with-tensor-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Compare ZeRO-3 with Tensor Parallelism."
     </span>
   </a>
   
@@ -1279,29 +1223,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1511,6 +1432,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1669,66 +1592,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-explain-the-difference-between-zero-2-and-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "Explain the difference between ZeRO-2 and ZeRO-3."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-when-should-you-use-zero-offload" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "When should you use ZeRO-Offload?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-whats-the-communication-overhead-of-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "What's the communication overhead of ZeRO-3?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-how-do-you-debug-oom-with-zero-3" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "How do you debug OOM with ZeRO-3?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-compare-zero-3-with-tensor-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Compare ZeRO-3 with Tensor Parallelism."
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#8-memory-calculation-example" class="md-nav__link">
     <span class="md-ellipsis">
       8. Memory Calculation Example
@@ -1867,8 +1730,7 @@
   
 
 
-  <h1>Zero-Deepspeed</h1>
-
+<h1 id="zero-and-deepspeed">ZeRO and DeepSpeed<a class="headerlink" href="#zero-and-deepspeed" title="Permanent link">&para;</a></h1>
 <h2 id="1-the-core-problem">1. The Core Problem<a class="headerlink" href="#1-the-core-problem" title="Permanent link">&para;</a></h2>
 <p><strong>Standard Data Parallelism</strong> replicates everything on each GPU:</p>
 <ul>
@@ -1882,7 +1744,6 @@
 <li>7B × 16 bytes = <strong>112 GB</strong> (doesn't fit on 80GB GPU!)</li>
 </ul>
 <p><strong>ZeRO's insight</strong>: This redundancy is unnecessary. Share the memory burden.</p>
-<hr />
 <hr />
 <h2 id="2-zero-zero-redundancy-optimizer">2. ZeRO: Zero Redundancy Optimizer<a class="headerlink" href="#2-zero-zero-redundancy-optimizer" title="Permanent link">&para;</a></h2>
 <p><strong>Goal</strong>: Eliminate memory redundancy while keeping the efficiency of Data Parallelism.</p>
@@ -1924,7 +1785,6 @@
 <blockquote>
 <p><strong>Note</strong>: These numbers exclude activations, which can be substantial.</p>
 </blockquote>
-<hr />
 <hr />
 <h2 id="3-stage-by-stage-breakdown">3. Stage-by-Stage Breakdown<a class="headerlink" href="#3-stage-by-stage-breakdown" title="Permanent link">&para;</a></h2>
 <h3 id="zero-1-optimizer-state-sharding">ZeRO-1: Optimizer State Sharding<a class="headerlink" href="#zero-1-optimizer-state-sharding" title="Permanent link">&para;</a></h3>
@@ -1986,7 +1846,6 @@
 <p><strong>Trade-off</strong>: Significantly more communication (2× All-Gather per layer)</p>
 <p><strong>Use case</strong>: Very large models (70B+ parameters)</p>
 <hr />
-<hr />
 <h2 id="4-zero-3-communication-pattern">4. ZeRO-3 Communication Pattern<a class="headerlink" href="#4-zero-3-communication-pattern" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Pseudo-code for one layer forward/backward</span>
 
@@ -2003,7 +1862,6 @@
 <span class="n">grad_shard</span> <span class="o">=</span> <span class="n">reduce_scatter</span><span class="p">(</span><span class="n">grad_params</span><span class="p">)</span>  <span class="c1"># Each GPU gets its shard</span>
 </code></pre></div>
 <p><strong>Key insight</strong>: Parameters are materialized <strong>only when needed</strong>, then immediately freed.</p>
-<hr />
 <hr />
 <h2 id="5-zero-offload">5. ZeRO Offload<a class="headerlink" href="#5-zero-offload" title="Permanent link">&para;</a></h2>
 <p><strong>Problem</strong>: Even ZeRO-3 may not fit very large models on GPU.</p>
@@ -2033,7 +1891,6 @@ CPU: Store optimizer states, occasionally parameters
 <p><strong>Use case</strong>: Trillion-parameter models (research, not production)</p>
 <p><strong>Trade-off</strong>: GPU memory ↓↓↓, Training speed ↓↓↓ (NVMe: ~7 GB/s)</p>
 <hr />
-<hr />
 <h2 id="6-deepspeed-the-library">6. DeepSpeed: The Library<a class="headerlink" href="#6-deepspeed-the-library" title="Permanent link">&para;</a></h2>
 <p><strong>DeepSpeed</strong> is Microsoft's implementation of ZeRO with many optimizations.</p>
 <h3 id="key-features">Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h3>
@@ -2047,9 +1904,7 @@ CPU: Store optimizer states, occasionally parameters
 <li>
 <p><strong>Optimized Kernels</strong>: Custom CUDA kernels for:</p>
 </li>
-<li>
-<p>Fused Adam optimizer</p>
-</li>
+<li>Fused Adam optimizer</li>
 <li>Fused layer norm</li>
 <li>
 <p>Communication-computation overlap</p>
@@ -2096,185 +1951,43 @@ CPU: Store optimizer states, occasionally parameters
 <span class="p">}</span>
 </code></pre></div>
 <hr />
-<hr />
-<h2 id="7-common-interview-questions">7. Common Interview Questions<a class="headerlink" href="#7-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-explain-the-difference-between-zero-2-and-zero-3">Q1: "Explain the difference between ZeRO-2 and ZeRO-3."<a class="headerlink" href="#q1-explain-the-difference-between-zero-2-and-zero-3" title="Permanent link">&para;</a></h3>
-<p><strong>Strong Answer</strong>:</p>
-<p><strong>ZeRO-2</strong>:</p>
-<ul>
-<li>Shards: Optimizer states + gradients</li>
-<li>Parameters: <strong>Fully replicated</strong> on each GPU</li>
-<li>Memory: ~8Ψ per GPU</li>
-<li>Communication: Reduce-Scatter for gradients</li>
-<li>Use case: Models up to ~13B on 8×A100</li>
-</ul>
-<p><strong>ZeRO-3</strong>:</p>
-<ul>
-<li>Shards: Optimizer states + gradients + <strong>parameters</strong></li>
-<li>Parameters: Only 1/N on each GPU</li>
-<li>Memory: ~2Ψ per GPU (scales linearly with N)</li>
-<li>Communication: All-Gather params in fwd/bwd (2× per layer)</li>
-<li>Use case: Very large models (70B+)</li>
-</ul>
-<p><strong>Trade-off</strong>: ZeRO-3 saves more memory but adds significant communication overhead.</p>
-<hr />
-<h3 id="q2-when-should-you-use-zero-offload">Q2: "When should you use ZeRO-Offload?"<a class="headerlink" href="#q2-when-should-you-use-zero-offload" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Use when</strong>:</p>
-<ol>
-<li>Model doesn't fit in GPU memory even with ZeRO-3</li>
-<li>You have sufficient CPU RAM (≥2× GPU memory)</li>
-<li>Training speed is not critical (e.g., research, fine-tuning)</li>
-<li>Limited GPU resources (consumer GPUs)</li>
-</ol>
-<p><strong>Don't use when</strong>:</p>
-<ol>
-<li>Model fits with ZeRO-2 or ZeRO-3</li>
-<li>Training throughput is critical</li>
-<li>Limited CPU RAM</li>
-</ol>
-<p><strong>Example</strong>: Training 13B model on single RTX 3090 (24GB)</p>
-<ul>
-<li>Without offload: OOM</li>
-<li>With offload: ~100 tokens/sec (vs ~500 tokens/sec on A100 without offload)</li>
-</ul>
-<hr />
-<h3 id="q3-whats-the-communication-overhead-of-zero-3">Q3: "What's the communication overhead of ZeRO-3?"<a class="headerlink" href="#q3-whats-the-communication-overhead-of-zero-3" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Per layer</strong>:</p>
-<ul>
-<li>2× All-Gather in forward and backward (to reconstruct parameters)</li>
-<li>1× Reduce-Scatter for gradients</li>
-</ul>
-<p><strong>Total</strong>: 3× communication per layer vs 1× for standard DP</p>
-<p><strong>Mitigation strategies</strong>:</p>
-<ol>
-<li><strong>Communication-computation overlap</strong>: Start All-Gather before it's needed</li>
-<li><strong>Prefetching</strong>: Fetch next layer's parameters while computing current</li>
-<li><strong>Contiguous memory</strong>: Reduce fragmentation overhead</li>
-</ol>
-<p><strong>When it's worth it</strong>:</p>
-<ul>
-<li>Model is so large that ZeRO-2 won't fit</li>
-<li>High-bandwidth interconnect (NVLink, InfiniBand)</li>
-<li>Memory is the bottleneck, not compute</li>
-</ul>
-<hr />
-<h3 id="q4-how-do-you-debug-oom-with-zero-3">Q4: "How do you debug OOM with ZeRO-3?"<a class="headerlink" href="#q4-how-do-you-debug-oom-with-zero-3" title="Permanent link">&para;</a></h3>
-<p><strong>Checklist</strong>:</p>
-<ol>
-<li>
-<p><strong>Check activation memory</strong>:
-   <div class="highlight"><pre><span></span><code><span class="c1"># ZeRO only shards model states, not activations</span>
-<span class="c1"># Use activation checkpointing</span>
-<span class="n">model</span><span class="o">.</span><span class="n">gradient_checkpointing_enable</span><span class="p">()</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Verify sharding</strong>:
-   <div class="highlight"><pre><span></span><code><span class="c1"># Print memory usage per GPU</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Allocated: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_allocated</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GB&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reserved: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_reserved</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1e9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> GB&quot;</span><span class="p">)</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Reduce batch size</strong>: Activations scale with batch size</p>
-</li>
-<li>
-<p><strong>Enable offloading</strong>:
-   <div class="highlight"><pre><span></span><code><span class="nt">&quot;offload_optimizer&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">},</span>
-<span class="nt">&quot;offload_param&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;device&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cpu&quot;</span><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Check fragmentation</strong>:
-   <div class="highlight"><pre><span></span><code><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">memory_summary</span><span class="p">()</span>
-<span class="c1"># Look for fragmentation</span>
-</code></pre></div></p>
-</li>
-</ol>
-<hr />
-<h3 id="q5-compare-zero-3-with-tensor-parallelism">Q5: "Compare ZeRO-3 with Tensor Parallelism."<a class="headerlink" href="#q5-compare-zero-3-with-tensor-parallelism" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>ZeRO-3</th>
-<th>Tensor Parallelism</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>What's split</strong></td>
-<td>All model states</td>
-<td>Individual layers</td>
-</tr>
-<tr>
-<td><strong>Replica count</strong></td>
-<td>1 (sharded)</td>
-<td>1 (split)</td>
-</tr>
-<tr>
-<td><strong>Communication</strong></td>
-<td>All-Gather (infrequent, bulk)</td>
-<td>All-Reduce/All-Gather (every layer)</td>
-</tr>
-<tr>
-<td><strong>Memory</strong></td>
-<td>2Ψ/N + activations</td>
-<td>Ψ/N + reduced activations</td>
-</tr>
-<tr>
-<td><strong>Computation</strong></td>
-<td>Same as single GPU</td>
-<td>Distributed per layer</td>
-</tr>
-<tr>
-<td><strong>Latency sensitivity</strong></td>
-<td>Low (bulk transfers)</td>
-<td>High (frequent ops)</td>
-</tr>
-<tr>
-<td><strong>Typical scale</strong></td>
-<td>Across nodes (DP-like)</td>
-<td>Within node (NVLink)</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Can combine</strong>: TP within nodes (8 GPUs), ZeRO-3 across nodes.</p>
-<hr />
-<hr />
 <h2 id="8-memory-calculation-example">8. Memory Calculation Example<a class="headerlink" href="#8-memory-calculation-example" title="Permanent link">&para;</a></h2>
 <p><strong>7B model, 8 GPUs, FP16, Adam optimizer</strong></p>
 <h3 id="without-zero-standard-dp">Without ZeRO (Standard DP)<a class="headerlink" href="#without-zero-standard-dp" title="Permanent link">&para;</a></h3>
-<p>Per GPU:
-- Parameters: 14 GB
-- Gradients: 14 GB
-- Optimizer: 84 GB
-- <strong>Total: 112 GB</strong> ❌ (doesn't fit on 80GB A100)</p>
+<p>Per GPU:</p>
+<ul>
+<li>Parameters: 14 GB</li>
+<li>Gradients: 14 GB</li>
+<li>Optimizer: 84 GB</li>
+<li><strong>Total: 112 GB</strong> ❌ (doesn't fit on 80GB A100)</li>
+</ul>
 <h3 id="with-zero-1">With ZeRO-1<a class="headerlink" href="#with-zero-1" title="Permanent link">&para;</a></h3>
-<p>Per GPU:
-- Parameters: 14 GB
-- Gradients: 14 GB
-- Optimizer: 84/8 = 10.5 GB
-- <strong>Total: 38.5 GB</strong> ✅</p>
+<p>Per GPU:</p>
+<ul>
+<li>Parameters: 14 GB</li>
+<li>Gradients: 14 GB</li>
+<li>Optimizer: 84/8 = 10.5 GB</li>
+<li><strong>Total: 38.5 GB</strong> ✅</li>
+</ul>
 <h3 id="with-zero-2">With ZeRO-2<a class="headerlink" href="#with-zero-2" title="Permanent link">&para;</a></h3>
-<p>Per GPU:
-- Parameters: 14 GB
-- Gradients: 14/8 = 1.75 GB
-- Optimizer: 84/8 = 10.5 GB
-- <strong>Total: 26.25 GB</strong> ✅✅</p>
+<p>Per GPU:</p>
+<ul>
+<li>Parameters: 14 GB</li>
+<li>Gradients: 14/8 = 1.75 GB</li>
+<li>Optimizer: 84/8 = 10.5 GB</li>
+<li><strong>Total: 26.25 GB</strong> ✅✅</li>
+</ul>
 <h3 id="with-zero-3">With ZeRO-3<a class="headerlink" href="#with-zero-3" title="Permanent link">&para;</a></h3>
-<p>Per GPU:
-- Parameters: 14/8 = 1.75 GB
-- Gradients: 14/8 = 1.75 GB
-- Optimizer: 84/8 = 10.5 GB
-- <strong>Total: 14 GB</strong> ✅✅✅</p>
+<p>Per GPU:</p>
+<ul>
+<li>Parameters: 14/8 = 1.75 GB</li>
+<li>Gradients: 14/8 = 1.75 GB</li>
+<li>Optimizer: 84/8 = 10.5 GB</li>
+<li><strong>Total: 14 GB</strong> ✅✅✅</li>
+</ul>
 <blockquote>
 <p><strong>Note</strong>: These exclude activations! With batch_size=32, sequence_length=2048, activations can be 10-20 GB.</p>
 </blockquote>
-<hr />
 <hr />
 <h2 id="9-practical-tips">9. Practical Tips<a class="headerlink" href="#9-practical-tips" title="Permanent link">&para;</a></h2>
 <h3 id="1-start-with-zero-2">1. Start with ZeRO-2<a class="headerlink" href="#1-start-with-zero-2" title="Permanent link">&para;</a></h3>
@@ -2304,7 +2017,6 @@ CPU: Store optimizer states, occasionally parameters
 <span class="p">}</span>
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="10-integration-with-hugging-face">10. Integration with Hugging Face<a class="headerlink" href="#10-integration-with-hugging-face" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
 
@@ -2324,7 +2036,6 @@ CPU: Store optimizer states, occasionally parameters
 
 <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>

@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-core-concept" class="md-skip">
+        <a href="#pipeline-parallelism" class="md-skip">
           Skip to content
         </a>
       
@@ -508,6 +508,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -539,6 +541,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -711,66 +715,6 @@
   <a href="#backward-pass" class="md-nav__link">
     <span class="md-ellipsis">
       Backward Pass
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-explain-the-pipeline-bubble-and-how-to-reduce-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "Explain the pipeline bubble and how to reduce it."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-whats-the-memory-overhead-of-pipeline-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "What's the memory overhead of pipeline parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-compare-pipeline-parallelism-vs-tensor-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "Compare Pipeline Parallelism vs Tensor Parallelism."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-how-do-you-choose-the-number-of-pipeline-stages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "How do you choose the number of pipeline stages?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-why-does-pipeline-parallelism-hurt-latency-sensitive-workloads" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Why does Pipeline Parallelism hurt latency-sensitive workloads?"
     </span>
   </a>
   
@@ -1300,29 +1244,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1532,6 +1453,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1714,66 +1637,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-explain-the-pipeline-bubble-and-how-to-reduce-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "Explain the pipeline bubble and how to reduce it."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-whats-the-memory-overhead-of-pipeline-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "What's the memory overhead of pipeline parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-compare-pipeline-parallelism-vs-tensor-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "Compare Pipeline Parallelism vs Tensor Parallelism."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-how-do-you-choose-the-number-of-pipeline-stages" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "How do you choose the number of pipeline stages?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-why-does-pipeline-parallelism-hurt-latency-sensitive-workloads" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Why does Pipeline Parallelism hurt latency-sensitive workloads?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#9-practical-implementation" class="md-nav__link">
     <span class="md-ellipsis">
       9. Practical Implementation
@@ -1909,8 +1772,7 @@
   
 
 
-  <h1>Pipeline Parallelism</h1>
-
+<h1 id="pipeline-parallelism">Pipeline Parallelism<a class="headerlink" href="#pipeline-parallelism" title="Permanent link">&para;</a></h1>
 <h2 id="1-core-concept">1. Core Concept<a class="headerlink" href="#1-core-concept" title="Permanent link">&para;</a></h2>
 <p>Pipeline Parallelism splits the model <strong>by layer depth</strong> across devices.</p>
 <p><strong>Key Idea</strong>: Each GPU owns a contiguous block of layers (a "stage").</p>
@@ -1920,7 +1782,6 @@ GPU 2: Layers 7-9    │  Backward: 3→2→1→0
 GPU 3: Layers 10-12 ─┘
 </code></pre></div>
 <p><strong>When to use</strong>: Very deep models where depth is the bottleneck.</p>
-<hr />
 <hr />
 <h2 id="2-the-pipeline-bubble-problem">2. The Pipeline Bubble Problem<a class="headerlink" href="#2-the-pipeline-bubble-problem" title="Permanent link">&para;</a></h2>
 <h3 id="naive-pipeline-no-micro-batching">Naive Pipeline (No Micro-Batching)<a class="headerlink" href="#naive-pipeline-no-micro-batching" title="Permanent link">&para;</a></h3>
@@ -1936,7 +1797,6 @@ GPU 3:                [FWD] [BWD]
 <p><strong>Problem</strong>: Only one GPU is active at a time → <strong>75% idle time!</strong></p>
 <p>This idle time is called the <strong>"pipeline bubble"</strong>.</p>
 <hr />
-<hr />
 <h2 id="3-micro-batching-solution">3. Micro-Batching Solution<a class="headerlink" href="#3-micro-batching-solution" title="Permanent link">&para;</a></h2>
 <p>Split the global batch into <strong>M micro-batches</strong> that flow through the pipeline.</p>
 <h3 id="example-4-micro-batches">Example: 4 Micro-Batches<a class="headerlink" href="#example-4-micro-batches" title="Permanent link">&para;</a></h3>
@@ -1951,21 +1811,21 @@ GPU 3:          F1 F2 F3 F4 B4 B3 B2 B1
 </code></pre></div>
 <p><strong>Result</strong>: Much better GPU utilization!</p>
 <hr />
-<hr />
 <h2 id="4-pipeline-bubble-calculation">4. Pipeline Bubble Calculation<a class="headerlink" href="#4-pipeline-bubble-calculation" title="Permanent link">&para;</a></h2>
 <p><strong>Bubble fraction</strong> = (Number of pipeline stages - 1) / Number of micro-batches</p>
 <p>For P pipeline stages and M micro-batches:</p>
 <ul>
 <li>Bubble time = <code>(P - 1) / M</code></li>
 </ul>
-<p><strong>Example</strong>:
-- 4 stages, 1 micro-batch: 3/1 = <strong>75% bubble</strong> ❌
-- 4 stages, 8 micro-batches: 3/8 = <strong>37.5% bubble</strong> ⚠️
-- 4 stages, 16 micro-batches: 3/16 = <strong>18.75% bubble</strong> ✅</p>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>4 stages, 1 micro-batch: 3/1 = <strong>75% bubble</strong> ❌</li>
+<li>4 stages, 8 micro-batches: 3/8 = <strong>37.5% bubble</strong> ⚠️</li>
+<li>4 stages, 16 micro-batches: 3/16 = <strong>18.75% bubble</strong> ✅</li>
+</ul>
 <blockquote>
 <p><strong>Rule of thumb</strong>: Use at least 4× micro-batches as pipeline stages.</p>
 </blockquote>
-<hr />
 <hr />
 <h2 id="5-pipeline-schedules">5. Pipeline Schedules<a class="headerlink" href="#5-pipeline-schedules" title="Permanent link">&para;</a></h2>
 <h3 id="1-gpipe-fill-drain">1. GPipe (Fill-Drain)<a class="headerlink" href="#1-gpipe-fill-drain" title="Permanent link">&para;</a></h3>
@@ -2001,13 +1861,14 @@ GPU 3: Stages 4, 8
 <p><strong>Pros</strong>: Further reduces bubble<br />
 <strong>Cons</strong>: More complex, higher communication</p>
 <hr />
-<hr />
 <h2 id="6-memory-trade-offs">6. Memory Trade-offs<a class="headerlink" href="#6-memory-trade-offs" title="Permanent link">&para;</a></h2>
 <h3 id="activation-memory">Activation Memory<a class="headerlink" href="#activation-memory" title="Permanent link">&para;</a></h3>
 <p>Unlike DP or TP, PP <strong>increases activation memory</strong>.</p>
-<p><strong>Why?</strong>
-- Must store activations for all in-flight micro-batches
-- Each micro-batch's activations held until backward pass</p>
+<p><strong>Why?</strong></p>
+<ul>
+<li>Must store activations for all in-flight micro-batches</li>
+<li>Each micro-batch's activations held until backward pass</li>
+</ul>
 <p><strong>Memory</strong>: O(M × activation_size)</p>
 <p>Where M = number of micro-batches.</p>
 <h3 id="memory-vs-utilization-trade-off">Memory vs Utilization Trade-off<a class="headerlink" href="#memory-vs-utilization-trade-off" title="Permanent link">&para;</a></h3>
@@ -2020,7 +1881,6 @@ GPU 3: Stages 4, 8
 - 32 micro-batches → Good utilization but ~4GB activations per stage
 - 8 micro-batches → Poor utilization but ~1GB activations per stage
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="7-communication-pattern">7. Communication Pattern<a class="headerlink" href="#7-communication-pattern" title="Permanent link">&para;</a></h2>
 <h3 id="forward-pass">Forward Pass<a class="headerlink" href="#forward-pass" title="Permanent link">&para;</a></h3>
@@ -2035,130 +1895,6 @@ GPU 3: Stages 4, 8
 </ul>
 <p><strong>Bandwidth</strong>: Lower than TP (only inter-stage, not all-to-all)<br />
 <strong>Latency</strong>: Higher than DP (sequential dependency)</p>
-<hr />
-<hr />
-<h2 id="8-common-interview-questions">8. Common Interview Questions<a class="headerlink" href="#8-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-explain-the-pipeline-bubble-and-how-to-reduce-it">Q1: "Explain the pipeline bubble and how to reduce it."<a class="headerlink" href="#q1-explain-the-pipeline-bubble-and-how-to-reduce-it" title="Permanent link">&para;</a></h3>
-<p><strong>Strong Answer</strong>:</p>
-<p><strong>Pipeline bubble</strong> = idle time when GPUs wait for activations/gradients.</p>
-<p><strong>Cause</strong>: With naive pipelining, only one stage is active at a time.</p>
-<p><strong>Solutions</strong>:
-1. <strong>Micro-batching</strong>: Split batch into M chunks
-   - Bubble = (P-1)/M where P = num stages
-   - Use M ≥ 4P for &lt;25% bubble</p>
-<ol>
-<li><strong>Better schedules</strong>: 1F1B instead of fill-drain</li>
-<li>Reduces bubble further</li>
-<li>
-<p>Interleaves forward and backward</p>
-</li>
-<li>
-<p><strong>Virtual pipeline stages</strong>: Each GPU handles multiple non-contiguous stages</p>
-</li>
-<li>Minimal bubble</li>
-<li>Added complexity</li>
-</ol>
-<hr />
-<h3 id="q2-whats-the-memory-overhead-of-pipeline-parallelism">Q2: "What's the memory overhead of pipeline parallelism?"<a class="headerlink" href="#q2-whats-the-memory-overhead-of-pipeline-parallelism" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Increased memory</strong>:
-- <strong>Activation storage</strong>: Must hold activations for all M micro-batches in flight
-- Memory grows with M: more micro-batches → more memory
-- Trade-off: Utilization ↑, Memory ↑</p>
-<p><strong>Decreased memory</strong>:
-- <strong>Parameter storage</strong>: Each GPU only stores P/N layers (N = num GPUs)
-- <strong>Gradient storage</strong>: Also P/N
-- <strong>Optimizer states</strong>: Also P/N</p>
-<p><strong>Net effect</strong>: Saves parameter memory but increases activation memory.</p>
-<p><strong>Example</strong>: 48-layer model on 4 GPUs
-- Each GPU: 12 layers instead of 48
-- But: Must store activations for 16 micro-batches</p>
-<hr />
-<h3 id="q3-compare-pipeline-parallelism-vs-tensor-parallelism">Q3: "Compare Pipeline Parallelism vs Tensor Parallelism."<a class="headerlink" href="#q3-compare-pipeline-parallelism-vs-tensor-parallelism" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Pipeline Parallelism</th>
-<th>Tensor Parallelism</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Splits</strong></td>
-<td>Layers (depth)</td>
-<td>Individual layers (width)</td>
-</tr>
-<tr>
-<td><strong>Communication</strong></td>
-<td>Point-to-point (between stages)</td>
-<td>All-to-all (All-Gather, All-Reduce)</td>
-</tr>
-<tr>
-<td><strong>Frequency</strong></td>
-<td>Once per micro-batch</td>
-<td>Every layer in fwd/bwd</td>
-</tr>
-<tr>
-<td><strong>Latency</strong></td>
-<td>Higher (sequential)</td>
-<td>Lower (parallel)</td>
-</tr>
-<tr>
-<td><strong>Memory</strong></td>
-<td>↑ Activations, ↓ Parameters</td>
-<td>↓ Both</td>
-</tr>
-<tr>
-<td><strong>Bubble</strong></td>
-<td>Yes (need micro-batching)</td>
-<td>No</td>
-</tr>
-<tr>
-<td><strong>Use case</strong></td>
-<td>Very deep models</td>
-<td>Very wide layers</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Often combined</strong>: TP within stages, PP across stages.</p>
-<hr />
-<h3 id="q4-how-do-you-choose-the-number-of-pipeline-stages">Q4: "How do you choose the number of pipeline stages?"<a class="headerlink" href="#q4-how-do-you-choose-the-number-of-pipeline-stages" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Considerations</strong>:</p>
-<ol>
-<li>
-<p><strong>Model depth</strong>: Natural split points (e.g., every 12 transformer layers)</p>
-</li>
-<li>
-<p><strong>Memory balance</strong>: Each stage should have similar memory footprint</p>
-</li>
-<li>
-<p><strong>Communication</strong>: More stages → more inter-stage communication</p>
-</li>
-<li>
-<p><strong>Bubble</strong>: More stages → larger bubble (need more micro-batches)</p>
-</li>
-</ol>
-<p><strong>Typical choices</strong>:
-- GPT-3 175B: 8-16 pipeline stages
-- Smaller models (&lt;10B): 2-4 stages if used at all
-- Often matches node count (1 stage per node)</p>
-<p><strong>Rule</strong>: Balance memory reduction with bubble overhead. Usually 4-16 stages.</p>
-<hr />
-<h3 id="q5-why-does-pipeline-parallelism-hurt-latency-sensitive-workloads">Q5: "Why does Pipeline Parallelism hurt latency-sensitive workloads?"<a class="headerlink" href="#q5-why-does-pipeline-parallelism-hurt-latency-sensitive-workloads" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>In training</strong>: Not a huge issue because we optimize for throughput
-- Large batches amortize bubble overhead
-- Micro-batching keeps GPUs busy</p>
-<p><strong>In inference</strong>: Major problem
-- Small batch sizes (often batch=1)
-- Can't use micro-batching effectively
-- Sequential dependency → high latency
-- Token generation is sequential by nature</p>
-<p><strong>Result</strong>: PP rarely used for inference. Prefer model replication or TP.</p>
-<hr />
 <hr />
 <h2 id="9-practical-implementation">9. Practical Implementation<a class="headerlink" href="#9-practical-implementation" title="Permanent link">&para;</a></h2>
 <h3 id="gpipe-style-pytorch">GPipe Style (PyTorch)<a class="headerlink" href="#gpipe-style-pytorch" title="Permanent link">&para;</a></h3>
@@ -2194,7 +1930,6 @@ GPU 3: Stages 4, 8
         <span class="k">return</span> <span class="n">outputs</span>
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="10-gradient-accumulation-vs-micro-batching">10. Gradient Accumulation vs Micro-batching<a class="headerlink" href="#10-gradient-accumulation-vs-micro-batching" title="Permanent link">&para;</a></h2>
 <h3 id="gradient-accumulation-dp">Gradient Accumulation (DP)<a class="headerlink" href="#gradient-accumulation-dp" title="Permanent link">&para;</a></h3>
 <p><div class="highlight"><pre><span></span><code>for micro_batch in batches:
@@ -2215,27 +1950,31 @@ GPU 0: micro_batch_2 → ...
 - Enables pipeline parallelism</p>
 <p><strong>Key difference</strong>: PP micro-batches are <strong>in-flight simultaneously</strong> across stages.</p>
 <hr />
-<hr />
 <h2 id="11-debugging-tips">11. Debugging Tips<a class="headerlink" href="#11-debugging-tips" title="Permanent link">&para;</a></h2>
 <h3 id="issue-poor-utilization">Issue: Poor Utilization<a class="headerlink" href="#issue-poor-utilization" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms</strong>: GPUs idle most of the time</p>
-<p><strong>Solutions</strong>:
-- Increase number of micro-batches (4× pipeline stages minimum)
-- Use 1F1B schedule instead of GPipe
-- Profile bubble time</p>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Increase number of micro-batches (4× pipeline stages minimum)</li>
+<li>Use 1F1B schedule instead of GPipe</li>
+<li>Profile bubble time</li>
+</ul>
 <h3 id="issue-out-of-memory">Issue: Out of Memory<a class="headerlink" href="#issue-out-of-memory" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms</strong>: OOM during training</p>
-<p><strong>Solutions</strong>:
-- Reduce number of micro-batches (less activation memory)
-- Use activation checkpointing
-- Reduce batch size per micro-batch</p>
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Reduce number of micro-batches (less activation memory)</li>
+<li>Use activation checkpointing</li>
+<li>Reduce batch size per micro-batch</li>
+</ul>
 <h3 id="issue-slow-communication">Issue: Slow Communication<a class="headerlink" href="#issue-slow-communication" title="Permanent link">&para;</a></h3>
 <p><strong>Symptoms</strong>: High time in Send/Recv</p>
-<p><strong>Solutions</strong>:
-- Check inter-node bandwidth
-- Ensure balanced stage sizes
-- Consider hybrid TP+PP (TP within node, PP across nodes)</p>
-<hr />
+<p><strong>Solutions</strong>:</p>
+<ul>
+<li>Check inter-node bandwidth</li>
+<li>Ensure balanced stage sizes</li>
+<li>Consider hybrid TP+PP (TP within node, PP across nodes)</li>
+</ul>
 <hr />
 <h2 id="12-advanced-hybrid-pp-tp">12. Advanced: Hybrid PP + TP<a class="headerlink" href="#12-advanced-hybrid-pp-tp" title="Permanent link">&para;</a></h2>
 <p>Most efficient setup for large models:</p>
@@ -2251,11 +1990,12 @@ GPU 0: micro_batch_2 → ...
 │  [GPU 8-15]        │
 └─────────────────┘
 </code></pre></div>
-<p><strong>Benefits</strong>:
-- TP reduces per-stage memory (use NVLink within node)
-- PP reduces total parameter memory (across nodes)
-- Minimizes cross-node communication (only inter-stage activations)</p>
-<hr />
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>TP reduces per-stage memory (use NVLink within node)</li>
+<li>PP reduces total parameter memory (across nodes)</li>
+<li>Minimizes cross-node communication (only inter-stage activations)</li>
+</ul>
 <hr />
 <h2 id="13-key-takeaways">13. Key Takeaways<a class="headerlink" href="#13-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>

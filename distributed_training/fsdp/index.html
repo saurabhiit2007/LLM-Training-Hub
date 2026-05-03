@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-overview" class="md-skip">
+        <a href="#fsdp-fully-sharded-data-parallel" class="md-skip">
           Skip to content
         </a>
       
@@ -554,6 +554,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -585,6 +587,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -808,66 +812,6 @@
   <a href="#fsdp-full-sharding" class="md-nav__link">
     <span class="md-ellipsis">
       FSDP (Full Sharding)
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-whats-the-difference-between-fsdp-and-ddp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "What's the difference between FSDP and DDP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-why-is-wrapping-policy-important-in-fsdp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "Why is wrapping policy important in FSDP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-how-does-hsdp-help-with-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "How does HSDP help with scaling?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-compare-fsdp-with-zero-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "Compare FSDP with ZeRO-2."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-why-use-fsdp2-over-original-fsdp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Why use FSDP2 over original FSDP?"
     </span>
   </a>
   
@@ -1327,29 +1271,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1558,6 +1479,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1792,66 +1715,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#10-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-whats-the-difference-between-fsdp-and-ddp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "What's the difference between FSDP and DDP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-why-is-wrapping-policy-important-in-fsdp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "Why is wrapping policy important in FSDP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-how-does-hsdp-help-with-scaling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "How does HSDP help with scaling?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-compare-fsdp-with-zero-2" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "Compare FSDP with ZeRO-2."
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-why-use-fsdp2-over-original-fsdp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "Why use FSDP2 over original FSDP?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#11-practical-implementation" class="md-nav__link">
     <span class="md-ellipsis">
       11. Practical Implementation
@@ -1963,24 +1826,25 @@
   
 
 
-  <h1>FSDP</h1>
-
+<h1 id="fsdp-fully-sharded-data-parallel">FSDP: Fully Sharded Data Parallel<a class="headerlink" href="#fsdp-fully-sharded-data-parallel" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
 <p><strong>FSDP</strong> is PyTorch's native implementation of the <strong>ZeRO-3</strong> algorithm.</p>
-<p><strong>Key difference from DeepSpeed</strong>: Built directly into PyTorch, offering:
-- Better integration with PyTorch ecosystem
-- Compatibility with <code>torch.compile</code>
-- More Pythonic API
-- Native support for advanced features like HSDP</p>
-<hr />
+<p><strong>Key difference from DeepSpeed</strong>: Built directly into PyTorch, offering:</p>
+<ul>
+<li>Better integration with PyTorch ecosystem</li>
+<li>Compatibility with <code>torch.compile</code></li>
+<li>More Pythonic API</li>
+<li>Native support for advanced features like HSDP</li>
+</ul>
 <hr />
 <h2 id="2-core-concept">2. Core Concept<a class="headerlink" href="#2-core-concept" title="Permanent link">&para;</a></h2>
-<p>Like ZeRO-3, FSDP shards <strong>all model states</strong> across GPUs:
-- Parameters (Ψ/N per GPU)
-- Gradients (Ψ/N per GPU)
-- Optimizer states (12Ψ/N per GPU)</p>
+<p>Like ZeRO-3, FSDP shards <strong>all model states</strong> across GPUs:</p>
+<ul>
+<li>Parameters (Ψ/N per GPU)</li>
+<li>Gradients (Ψ/N per GPU)</li>
+<li>Optimizer states (12Ψ/N per GPU)</li>
+</ul>
 <p><strong>Memory</strong>: ~2Ψ/N per GPU (excluding activations)</p>
-<hr />
 <hr />
 <h2 id="3-how-fsdp-works">3. How FSDP Works<a class="headerlink" href="#3-how-fsdp-works" title="Permanent link">&para;</a></h2>
 <h3 id="1-sharding-strategy">1. Sharding Strategy<a class="headerlink" href="#1-sharding-strategy" title="Permanent link">&para;</a></h3>
@@ -2025,7 +1889,6 @@
 <span class="n">grad_shard</span> <span class="o">=</span> <span class="n">reduce_scatter</span><span class="p">(</span><span class="n">grad_params</span><span class="p">)</span>  <span class="c1"># Each GPU gets its shard</span>
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="4-wrapping-strategies">4. Wrapping Strategies<a class="headerlink" href="#4-wrapping-strategies" title="Permanent link">&para;</a></h2>
 <p><strong>Critical for performance</strong>: How you wrap your model determines memory efficiency.</p>
 <h3 id="1-auto-wrap-recommended">1. Auto Wrap (Recommended)<a class="headerlink" href="#1-auto-wrap-recommended" title="Permanent link">&para;</a></h3>
@@ -2068,25 +1931,27 @@
 <span class="n">model</span> <span class="o">=</span> <span class="n">FSDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auto_wrap_policy</span><span class="o">=</span><span class="n">auto_wrap_policy</span><span class="p">)</span>
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="5-why-wrapping-matters">5. Why Wrapping Matters<a class="headerlink" href="#5-why-wrapping-matters" title="Permanent link">&para;</a></h2>
 <h3 id="bad-wrapping-no-sub-module-wrapping">Bad Wrapping (No Sub-Module Wrapping)<a class="headerlink" href="#bad-wrapping-no-sub-module-wrapping" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Wrap entire model as one unit</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">FSDP</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>  <span class="c1"># No auto_wrap_policy</span>
 </code></pre></div>
-<p><strong>Problem</strong>: All parameters gathered at once
-- Peak memory = full model size (defeats purpose of FSDP!)
-- No parameter overlap</p>
+<p><strong>Problem</strong>: All parameters gathered at once</p>
+<ul>
+<li>Peak memory = full model size (defeats purpose of FSDP!)</li>
+<li>No parameter overlap</li>
+</ul>
 <hr />
 <h3 id="good-wrapping-layer-by-layer">Good Wrapping (Layer-by-Layer)<a class="headerlink" href="#good-wrapping-layer-by-layer" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Wrap each transformer layer</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">FSDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auto_wrap_policy</span><span class="o">=</span><span class="n">transformer_auto_wrap_policy</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Benefit</strong>: 
-- Layer 1 gathers → computes → frees
-- Layer 2 gathers → computes → frees
-- Peak memory = single layer + activations</p>
-<hr />
+<p><strong>Benefit</strong>: </p>
+<ul>
+<li>Layer 1 gathers → computes → frees</li>
+<li>Layer 2 gathers → computes → frees</li>
+<li>Peak memory = single layer + activations</li>
+</ul>
 <hr />
 <h2 id="6-fsdp-vs-deepspeed">6. FSDP vs DeepSpeed<a class="headerlink" href="#6-fsdp-vs-deepspeed" title="Permanent link">&para;</a></h2>
 <table>
@@ -2140,16 +2005,19 @@
 </tr>
 </tbody>
 </table>
-<p><strong>When to use FSDP</strong>:
-- PyTorch-native workflow
-- Using <code>torch.compile</code> for speedup
-- Models &lt;20B parameters
-- Want simple Python API</p>
-<p><strong>When to use DeepSpeed</strong>:
-- Extreme scale (100B+ parameters)
-- Need NVMe offload
-- Want maximum optimization</p>
-<hr />
+<p><strong>When to use FSDP</strong>:</p>
+<ul>
+<li>PyTorch-native workflow</li>
+<li>Using <code>torch.compile</code> for speedup</li>
+<li>Models &lt;20B parameters</li>
+<li>Want simple Python API</li>
+</ul>
+<p><strong>When to use DeepSpeed</strong>:</p>
+<ul>
+<li>Extreme scale (100B+ parameters)</li>
+<li>Need NVMe offload</li>
+<li>Want maximum optimization</li>
+</ul>
 <hr />
 <h2 id="7-fsdp2-the-modern-version">7. FSDP2: The Modern Version<a class="headerlink" href="#7-fsdp2-the-modern-version" title="Permanent link">&para;</a></h2>
 <p><strong>Introduced in PyTorch 2.x</strong>, built on DTensors (Distributed Tensors).</p>
@@ -2181,7 +2049,6 @@
 </li>
 </ol>
 <hr />
-<hr />
 <h2 id="8-hybrid-sharding-hsdp">8. Hybrid Sharding (HSDP)<a class="headerlink" href="#8-hybrid-sharding-hsdp" title="Permanent link">&para;</a></h2>
 <p><strong>Problem</strong>: All-to-all communication across 1000s of GPUs is slow.</p>
 <p><strong>Solution</strong>: <strong>Hybrid Sharding</strong> = Shard within nodes, replicate across nodes.</p>
@@ -2190,10 +2057,12 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 ...
         ↕ Data Parallel replication
 </code></pre></div>
-<p><strong>Benefits</strong>:
-- Fast NVLink communication within nodes (900 GB/s)
-- Avoid slow inter-node all-gather (100 Gb/s Ethernet)
-- Scale to thousands of GPUs</p>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Fast NVLink communication within nodes (900 GB/s)</li>
+<li>Avoid slow inter-node all-gather (100 Gb/s Ethernet)</li>
+<li>Scale to thousands of GPUs</li>
+</ul>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torch.distributed.fsdp</span> <span class="kn">import</span> <span class="n">ShardingStrategy</span>
 
@@ -2204,7 +2073,6 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 <span class="p">)</span>
 </code></pre></div>
 <p><strong>Use case</strong>: Multi-node training where network is the bottleneck.</p>
-<hr />
 <hr />
 <h2 id="9-memory-calculation-example">9. Memory Calculation Example<a class="headerlink" href="#9-memory-calculation-example" title="Permanent link">&para;</a></h2>
 <p><strong>7B model, 8 GPUs, FP16, Adam</strong></p>
@@ -2223,129 +2091,6 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 <li><strong>Total per GPU: 14 GB</strong> ✅</li>
 </ul>
 <p><strong>Plus activations</strong>: ~10-20 GB depending on batch size.</p>
-<hr />
-<hr />
-<h2 id="10-common-interview-questions">10. Common Interview Questions<a class="headerlink" href="#10-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-whats-the-difference-between-fsdp-and-ddp">Q1: "What's the difference between FSDP and DDP?"<a class="headerlink" href="#q1-whats-the-difference-between-fsdp-and-ddp" title="Permanent link">&para;</a></h3>
-<p><strong>Strong Answer</strong>:</p>
-<p><strong>DDP (DistributedDataParallel)</strong>:
-- Replicates <strong>full model</strong> on each GPU
-- Shards only the <strong>data</strong> (batches)
-- Communication: All-Reduce gradients once per step
-- Memory: 16Ψ per GPU
-- Use case: Model fits on single GPU</p>
-<p><strong>FSDP (Fully Sharded Data Parallel)</strong>:
-- Shards <strong>model states</strong> across GPUs
-- Also shards the data
-- Communication: All-Gather params + Reduce-Scatter grads (multiple times per step)
-- Memory: 2Ψ/N per GPU
-- Use case: Model doesn't fit on single GPU</p>
-<p><strong>Key</strong>: FSDP is ZeRO-3, DDP is standard Data Parallelism.</p>
-<hr />
-<h3 id="q2-why-is-wrapping-policy-important-in-fsdp">Q2: "Why is wrapping policy important in FSDP?"<a class="headerlink" href="#q2-why-is-wrapping-policy-important-in-fsdp" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Bad wrapping</strong> (wrap entire model):
-<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">FSDP</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>  <span class="c1"># No auto_wrap_policy</span>
-</code></pre></div>
-- All parameters gathered at once
-- Peak memory = full model (defeats purpose!)</p>
-<p><strong>Good wrapping</strong> (wrap per layer):
-<div class="highlight"><pre><span></span><code><span class="n">model</span> <span class="o">=</span> <span class="n">FSDP</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auto_wrap_policy</span><span class="o">=</span><span class="n">transformer_auto_wrap_policy</span><span class="p">)</span>
-</code></pre></div>
-- Each layer gathered/freed independently
-- Peak memory = single layer + activations</p>
-<p><strong>Example</strong>: 7B model with 32 layers
-- Bad wrapping: Peak = 14 GB params
-- Good wrapping: Peak = 14/32 = 0.44 GB params per layer</p>
-<p><strong>Wrap granularity affects memory efficiency dramatically.</strong></p>
-<hr />
-<h3 id="q3-how-does-hsdp-help-with-scaling">Q3: "How does HSDP help with scaling?"<a class="headerlink" href="#q3-how-does-hsdp-help-with-scaling" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Standard FSDP problem at scale</strong>:
-- 128 GPUs → 128-way all-gather across all GPUs
-- Cross-node bandwidth: 100 Gb/s (slow!)
-- Communication dominates runtime</p>
-<p><strong>HSDP solution</strong>:
-<div class="highlight"><pre><span></span><code>┌─────────────┐  ┌─────────────┐
-│ Node 0 (8x) │  │ Node 1 (8x) │  ← Data Parallel
-│ FSDP shard  │  │ FSDP shard  │     (same params)
-└─────────────┘  └─────────────┘
-      ↑ NVLink           ↑ NVLink
-    (900 GB/s)        (900 GB/s)
-</code></pre></div></p>
-<p><strong>Benefits</strong>:
-- Sharding within node uses fast NVLink
-- Replication across nodes uses slower Ethernet
-- Best of both: memory savings + manageable communication</p>
-<p><strong>Use case</strong>: Multi-node clusters (&gt;8 GPUs)</p>
-<hr />
-<h3 id="q4-compare-fsdp-with-zero-2">Q4: "Compare FSDP with ZeRO-2."<a class="headerlink" href="#q4-compare-fsdp-with-zero-2" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>FSDP (ZeRO-3)</th>
-<th>ZeRO-2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Parameters</strong></td>
-<td>Sharded (Ψ/N)</td>
-<td>Replicated (Ψ)</td>
-</tr>
-<tr>
-<td><strong>Gradients</strong></td>
-<td>Sharded (Ψ/N)</td>
-<td>Sharded (Ψ/N)</td>
-</tr>
-<tr>
-<td><strong>Optimizer</strong></td>
-<td>Sharded (12Ψ/N)</td>
-<td>Sharded (12Ψ/N)</td>
-</tr>
-<tr>
-<td><strong>Memory</strong></td>
-<td>~2Ψ/N</td>
-<td>~8Ψ</td>
-</tr>
-<tr>
-<td><strong>Communication</strong></td>
-<td>2× All-Gather + Reduce-Scatter</td>
-<td>1× Reduce-Scatter</td>
-</tr>
-<tr>
-<td><strong>Use case</strong></td>
-<td>Very large models</td>
-<td>Medium models</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Trade-off</strong>: FSDP saves more memory but requires more communication.</p>
-<p><strong>Example (7B model, 8 GPUs)</strong>:
-- ZeRO-2: 26 GB per GPU
-- FSDP: 14 GB per GPU</p>
-<p>If 26 GB fits, ZeRO-2 is faster. If not, must use FSDP.</p>
-<hr />
-<h3 id="q5-why-use-fsdp2-over-original-fsdp">Q5: "Why use FSDP2 over original FSDP?"<a class="headerlink" href="#q5-why-use-fsdp2-over-original-fsdp" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<p><strong>Original FSDP</strong>:
-- Flattens parameters into 1D buffer
-- Breaks <code>torch.compile</code> optimizations
-- Harder to debug</p>
-<p><strong>FSDP2</strong> (PyTorch 2.x):
-- Preserves parameter shapes (uses DTensors)
-- Works seamlessly with <code>torch.compile</code>
-- 10-30% faster due to better kernel fusion
-- Cleaner, more composable API</p>
-<p><strong>Example</strong>:
-<div class="highlight"><pre><span></span><code><span class="c1"># FSDP2 with torch.compile</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">fully_shard</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
-<span class="c1"># → Significant speedup from compiled kernels</span>
-</code></pre></div></p>
-<p><strong>Recommendation</strong>: Use FSDP2 for new projects (PyTorch 2.0+).</p>
-<hr />
 <hr />
 <h2 id="11-practical-implementation">11. Practical Implementation<a class="headerlink" href="#11-practical-implementation" title="Permanent link">&para;</a></h2>
 <h3 id="basic-fsdp-setup">Basic FSDP Setup<a class="headerlink" href="#basic-fsdp-setup" title="Permanent link">&para;</a></h3>
@@ -2409,16 +2154,17 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 </code></pre></div>
 <p><strong>Benefit</strong>: Further reduce activation memory.</p>
 <hr />
-<hr />
 <h2 id="12-debugging-tips">12. Debugging Tips<a class="headerlink" href="#12-debugging-tips" title="Permanent link">&para;</a></h2>
 <h3 id="issue-oom-during-training">Issue: OOM During Training<a class="headerlink" href="#issue-oom-during-training" title="Permanent link">&para;</a></h3>
-<p><strong>Solutions</strong>:
-1. <strong>Check wrapping</strong>:
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>Check wrapping</strong>:
    <div class="highlight"><pre><span></span><code><span class="c1"># Print FSDP structure</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="c1"># Each transformer layer should be wrapped</span>
 </code></pre></div></p>
-<ol>
+</li>
 <li>
 <p><strong>Reduce batch size</strong>: Activations scale with batch</p>
 </li>
@@ -2435,13 +2181,15 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 </ol>
 <hr />
 <h3 id="issue-slow-training">Issue: Slow Training<a class="headerlink" href="#issue-slow-training" title="Permanent link">&para;</a></h3>
-<p><strong>Checklist</strong>:
-1. <strong>Communication overhead</strong>: Profile with PyTorch profiler
+<p><strong>Checklist</strong>:</p>
+<ol>
+<li>
+<p><strong>Communication overhead</strong>: Profile with PyTorch profiler
    <div class="highlight"><pre><span></span><code><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span> <span class="k">as</span> <span class="n">prof</span><span class="p">:</span>
     <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">key_averages</span><span class="p">()</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">sort_by</span><span class="o">=</span><span class="s2">&quot;cuda_time_total&quot;</span><span class="p">))</span>
 </code></pre></div></p>
-<ol>
+</li>
 <li>
 <p><strong>Wrapping granularity</strong>: Too fine → overhead, too coarse → memory</p>
 </li>
@@ -2456,7 +2204,6 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 </code></pre></div></p>
 </li>
 </ol>
-<hr />
 <hr />
 <h2 id="14-integration-with-hugging-face">14. Integration with Hugging Face<a class="headerlink" href="#14-integration-with-hugging-face" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">Trainer</span><span class="p">,</span> <span class="n">TrainingArguments</span>
@@ -2480,7 +2227,6 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 
 <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="15-key-takeaways">15. Key Takeaways<a class="headerlink" href="#15-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>

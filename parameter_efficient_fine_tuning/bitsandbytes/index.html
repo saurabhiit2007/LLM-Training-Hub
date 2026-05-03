@@ -20,7 +20,7 @@
     
     
       
-        <title>Bitsandbytes - LLM Training Hub Documentation</title>
+        <title>bitsandbytes - LLM Training Hub Documentation</title>
       
     
     
@@ -71,6 +71,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#bitsandbytes" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -103,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bitsandbytes
+              bitsandbytes
             
           </span>
         </div>
@@ -902,29 +907,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1134,6 +1116,34 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#key-apis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key APIs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1152,9 +1162,29 @@
   
 
 
-  <h1>Bitsandbytes</h1>
+<h1 id="bitsandbytes">bitsandbytes<a class="headerlink" href="#bitsandbytes" title="Permanent link">&para;</a></h1>
+<p><strong>bitsandbytes</strong> is a lightweight CUDA extension by Tim Dettmers that provides:</p>
+<ul>
+<li><strong>8-bit and 4-bit quantized matrix multiplication</strong> via <code>LLM.int8()</code> and NF4</li>
+<li><strong>8-bit optimizers</strong> (<code>Adam8bit</code>, <code>PagedAdam8bit</code>) for 4× optimizer state memory reduction</li>
+<li><strong>Device-map-aware quantization</strong> for loading large models across GPUs and CPU</li>
+</ul>
+<p>It is the underlying library for QLoRA and is integrated into Hugging Face Transformers via the <code>BitsAndBytesConfig</code> class.</p>
+<h2 id="key-apis">Key APIs<a class="headerlink" href="#key-apis" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">bitsandbytes</span> <span class="k">as</span> <span class="nn">bnb</span>
 
+<span class="c1"># 8-bit Adam (4× less optimizer memory)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
 
+<span class="c1"># Paged 8-bit Adam (avoids OOM spikes via CPU paging)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdam8bit</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-4</span><span class="p">)</span>
+</code></pre></div>
+<p>For 4-bit model loading and QLoRA usage, see <a href="../qlora/">QLoRA</a>. For the block-wise quantization math behind 8-bit optimizers, see <a href="../../optimization/memory_efficient_optimizers/">Memory-Efficient Optimizers</a>.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/TimDettmers/bitsandbytes">bitsandbytes GitHub</a></li>
+<li><a href="https://arxiv.org/abs/2208.07339">LLM.int8() Paper (2022)</a></li>
+</ul>
 
 
 

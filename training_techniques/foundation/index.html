@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-what-is-an-llm-optimizing" class="md-skip">
+        <a href="#llm-training-foundations" class="md-skip">
           Skip to content
         </a>
       
@@ -911,29 +911,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1064,6 +1041,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1095,6 +1074,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1439,6 +1420,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1723,8 +1706,7 @@
   
 
 
-  <h1>Foundation</h1>
-
+<h1 id="llm-training-foundations">LLM Training Foundations<a class="headerlink" href="#llm-training-foundations" title="Permanent link">&para;</a></h1>
 <h2 id="1-what-is-an-llm-optimizing">1 What is an LLM Optimizing?<a class="headerlink" href="#1-what-is-an-llm-optimizing" title="Permanent link">&para;</a></h2>
 <p>At its core, a Large Language Model (LLM) is a probabilistic system designed to model the distribution of natural language. Despite emergent reasoning and planning behaviors, the training objective itself is simple: <strong>reduce uncertainty about the next token given prior context</strong>.</p>
 <h3 id="11-the-autoregressive-objective">1.1 The Autoregressive Objective<a class="headerlink" href="#11-the-autoregressive-objective" title="Permanent link">&para;</a></h3>
@@ -1743,10 +1725,12 @@ P(x_1, \dots, x_T) = \prod_{t=1}^{T} P(x_t \mid x_{&lt;t})
 <div class="arithmatex">\[
 \mathcal{L}(\theta) = - \mathbb{E}_{(x_1,\dots,x_T) \sim D} \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{&lt;t})
 \]</div>
-<p>Where:
-- <span class="arithmatex">\(\theta\)</span> are the model parameters
-- <span class="arithmatex">\(x_{&lt;t}\)</span> is the context window
-- <span class="arithmatex">\(P_\theta\)</span> is the predicted probability distribution produced by a Softmax layer</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\theta\)</span> are the model parameters</li>
+<li><span class="arithmatex">\(x_{&lt;t}\)</span> is the context window</li>
+<li><span class="arithmatex">\(P_\theta\)</span> is the predicted probability distribution produced by a Softmax layer</li>
+</ul>
 <h3 id="13-cross-entropy-kl-divergence-and-learning">1.3 Cross-Entropy, KL Divergence, and Learning<a class="headerlink" href="#13-cross-entropy-kl-divergence-and-learning" title="Permanent link">&para;</a></h3>
 <p>Minimizing cross-entropy implicitly minimizes the <strong>KL divergence</strong> between the true data distribution <span class="arithmatex">\(P_{data}\)</span> and the model distribution <span class="arithmatex">\(P_\theta\)</span>:</p>
 <div class="arithmatex">\[
@@ -1860,10 +1844,12 @@ H(P_{data}, P_\theta) = H(P_{data}) + D_{KL}(P_{data} \| P_\theta)
 <li>Minimizing cross-entropy during training directly minimizes perplexity.</li>
 </ul>
 <h4 id="important-clarification">Important Clarification<a class="headerlink" href="#important-clarification" title="Permanent link">&para;</a></h4>
-<p>Perplexity is <strong>not</strong> a direct measure of:
-- Reasoning ability
-- Factual correctness
-- Alignment or instruction following</p>
+<p>Perplexity is <strong>not</strong> a direct measure of:</p>
+<ul>
+<li>Reasoning ability</li>
+<li>Factual correctness</li>
+<li>Alignment or instruction following</li>
+</ul>
 <p>It only measures how well the model predicts the data distribution. While lower perplexity often correlates with better text quality, it does not guarantee better downstream performance.</p>
 <hr />
 <h2 id="3-why-scaling-works-and-where-it-breaks">3. Why Scaling Works and Where it Breaks<a class="headerlink" href="#3-why-scaling-works-and-where-it-breaks" title="Permanent link">&para;</a></h2>

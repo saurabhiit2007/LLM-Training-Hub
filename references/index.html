@@ -73,6 +73,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#references" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -904,29 +909,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1110,6 +1092,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -1122,6 +1119,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#peft-and-fine-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      PEFT and Fine-Tuning
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1144,6 +1169,25 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#peft-and-fine-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      PEFT and Fine-Tuning
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1162,26 +1206,14 @@
   
 
 
-  <h1>References</h1>
-
+<h1 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h1>
+<h2 id="peft-and-fine-tuning">PEFT and Fine-Tuning<a class="headerlink" href="#peft-and-fine-tuning" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Hu, E. J., et al. <em>LoRA: Low-Rank Adaptation of Large Language Models.</em> <a href="https://arxiv.org/abs/2106.09685">arXiv:2106.09685</a>  </li>
-<li>Dettmers, T., et al. <em>QLoRA: Efficient Finetuning of Quantized LLMs.</em> <a href="https://arxiv.org/abs/2305.14314">arXiv:2305.14314</a>  </li>
-<li><strong>Hugging Face PEFT documentation:</strong> <a href="https://huggingface.co/docs/peft">https://huggingface.co/docs/peft</a>  </li>
-<li>Community writeups and practical tips (e.g., blog posts and notebooks on LoRA/QLoRA setups).</li>
-<li>"4-bit NormalFloat (NF4) Quantization" – EmergentMind. <a href="https://www.emergentmind.com/topics/4-bit-normalfloat-nf4-quantization">Link</a>  </li>
-<li>Dettmers et al., <em>QLoRA: Efficient Finetuning of Quantized LLMs</em> (2023)</li>
-<li>Tim Dettmers, <em>bitsandbytes</em> GitHub: <a href="https://github.com/TimDettmers/bitsandbytes">https://github.com/TimDettmers/bitsandbytes</a></li>
+<li>Hu, E. J., et al. <em>LoRA: Low-Rank Adaptation of Large Language Models</em> (2021). <a href="https://arxiv.org/abs/2106.09685">arXiv:2106.09685</a></li>
+<li>Dettmers, T., et al. <em>QLoRA: Efficient Finetuning of Quantized LLMs</em> (2023). <a href="https://arxiv.org/abs/2305.14314">arXiv:2305.14314</a></li>
 <li>Hugging Face PEFT Documentation: <a href="https://huggingface.co/docs/peft">https://huggingface.co/docs/peft</a></li>
-<li>Manal Elaidouni, <em>4-Bit Quantization in QLoRA Explained</em></li>
-<li>
-<p>D. Prasad, <em>QLoRA Explained – A Deep Dive into Parameter Efficient Fine-Tuning</em></p>
-</li>
-<li>
-<p><strong>Paper:</strong> <a href="https://arxiv.org/abs/2305.14314">QLoRA: Efficient Finetuning of Quantized LLMs (Dettmers et al., 2023)</a></p>
-</li>
-<li><strong>Hugging Face PEFT:</strong> <a href="https://huggingface.co/docs/peft">https://huggingface.co/docs/peft</a></li>
-<li><strong>Bitsandbytes Library:</strong> <a href="https://github.com/TimDettmers/bitsandbytes">https://github.com/TimDettmers/bitsandbytes</a></li>
+<li>bitsandbytes Library: <a href="https://github.com/TimDettmers/bitsandbytes">https://github.com/TimDettmers/bitsandbytes</a></li>
+<li>EmergentMind. <em>4-bit NormalFloat (NF4) Quantization</em>. <a href="https://www.emergentmind.com/topics/4-bit-normalfloat-nf4-quantization">Link</a></li>
 </ul>
 
 

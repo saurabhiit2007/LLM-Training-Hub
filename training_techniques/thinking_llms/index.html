@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-overview-the-system-1-vs-system-2-shift" class="md-skip">
+        <a href="#llm-reasoning-and-thinking-models" class="md-skip">
           Skip to content
         </a>
       
@@ -911,29 +911,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1087,6 +1064,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1118,6 +1097,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1322,15 +1303,6 @@
   <a href="#11-relationship-to-training-phases" class="md-nav__link">
     <span class="md-ellipsis">
       11. Relationship to Training Phases
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-technical-qa" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. Technical Q&amp;A
     </span>
   </a>
   
@@ -1391,6 +1363,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1599,15 +1573,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#12-technical-qa" class="md-nav__link">
-    <span class="md-ellipsis">
-      12. Technical Q&amp;A
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1627,15 +1592,13 @@
   
 
 
-  <h1>LLM Reasoning & Thinking Models</h1>
-
+<h1 id="llm-reasoning-and-thinking-models">LLM Reasoning and Thinking Models<a class="headerlink" href="#llm-reasoning-and-thinking-models" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview-the-system-1-vs-system-2-shift">1. Overview: The System 1 vs. System 2 Shift<a class="headerlink" href="#1-overview-the-system-1-vs-system-2-shift" title="Permanent link">&para;</a></h2>
 <p>In 2026, the AI landscape is defined by the transition from "Next-Token Predictors" to "Reasoning Agents." This is often explained using Daniel Kahneman's framework:</p>
 <ul>
 <li><strong>Generic LLMs (System 1):</strong> Fast, intuitive, and associative. They respond instantly based on high-probability patterns.</li>
 <li><strong>Thinking LLMs (System 2):</strong> Slow, deliberate, and logical. They use "Inference-Time Compute" to verify their own work before displaying it.</li>
 </ul>
-<hr />
 <hr />
 <h2 id="2-technical-comparison-table">2. Technical Comparison Table<a class="headerlink" href="#2-technical-comparison-table" title="Permanent link">&para;</a></h2>
 <table>
@@ -1675,7 +1638,6 @@
 </tbody>
 </table>
 <hr />
-<hr />
 <h2 id="3-core-mechanism-test-time-compute-scaling">3. Core Mechanism: Test-Time Compute Scaling<a class="headerlink" href="#3-core-mechanism-test-time-compute-scaling" title="Permanent link">&para;</a></h2>
 <h3 id="31-inference-time-scaling-laws">3.1 Inference-Time Scaling Laws<a class="headerlink" href="#31-inference-time-scaling-laws" title="Permanent link">&para;</a></h3>
 <p>Reasoning performance scales with compute allocated at inference, not just with parameter count. This manifests as:</p>
@@ -1692,7 +1654,6 @@
 <li>High compute activates deeper reasoning loops</li>
 <li>This decouples model intelligence from latency constraints, enabling dynamic deployment strategies.</li>
 </ul>
-<hr />
 <hr />
 <h2 id="4-internal-reasoning-representations">4. Internal Reasoning Representations<a class="headerlink" href="#4-internal-reasoning-representations" title="Permanent link">&para;</a></h2>
 <h3 id="41-hidden-chain-of-thought">4.1 Hidden Chain-of-Thought<a class="headerlink" href="#41-hidden-chain-of-thought" title="Permanent link">&para;</a></h3>
@@ -1712,8 +1673,10 @@
 </ul>
 <p>This reframes inference as a planning problem rather than a single forward pass.</p>
 <hr />
-<hr />
 <h2 id="5-reinforcement-learning-for-reasoning">5. Reinforcement Learning for Reasoning<a class="headerlink" href="#5-reinforcement-learning-for-reasoning" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>RL alignment techniques (RLHF, PPO, DPO, GRPO) are covered in depth in the <a href="https://github.com/saurabhiit2007/LLM-Alignment-Reasoning">LLM Alignment &amp; Reasoning</a> repo. This section covers only the aspects specific to training thinking/reasoning models.</p>
+</blockquote>
 <h3 id="51-outcome-reward-models-vs-process-reward-models">5.1 Outcome Reward Models vs Process Reward Models<a class="headerlink" href="#51-outcome-reward-models-vs-process-reward-models" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1746,7 +1709,6 @@
 </ul>
 <p>This removes reliance on large teacher models and enables reasoning capability to emerge from self-comparison.</p>
 <hr />
-<hr />
 <h2 id="6-distillation-of-reasoning">6. Distillation of Reasoning<a class="headerlink" href="#6-distillation-of-reasoning" title="Permanent link">&para;</a></h2>
 <p>Reasoning capabilities are <strong>distillable</strong>, even when learned via reinforcement learning.</p>
 <h3 id="distillation-pipeline">Distillation Pipeline<a class="headerlink" href="#distillation-pipeline" title="Permanent link">&para;</a></h3>
@@ -1757,12 +1719,13 @@
 </ol>
 <p>This has enabled 7B–14B models to exhibit structured reasoning previously limited to frontier-scale systems.</p>
 <hr />
-<hr />
 <h2 id="7-failure-modes-and-trade-offs">7. Failure Modes and Trade-offs<a class="headerlink" href="#7-failure-modes-and-trade-offs" title="Permanent link">&para;</a></h2>
 <h3 id="71-reward-hacking">7.1 Reward Hacking<a class="headerlink" href="#71-reward-hacking" title="Permanent link">&para;</a></h3>
-<p>Models may learn that:
-- Longer reasoning chains yield higher rewards
-- Redundancy masquerades as correctness</p>
+<p>Models may learn that:</p>
+<ul>
+<li>Longer reasoning chains yield higher rewards</li>
+<li>Redundancy masquerades as correctness</li>
+</ul>
 <p>Mitigations include length penalties, diversity rewards, and consistency checks.</p>
 <h3 id="72-overthinking">7.2 Overthinking<a class="headerlink" href="#72-overthinking" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1770,7 +1733,6 @@
 <li>Latency increases without accuracy gains</li>
 </ul>
 <p>Adaptive early stopping is commonly used to terminate reasoning once confidence thresholds are met.</p>
-<hr />
 <hr />
 <h2 id="8-evaluation-and-benchmarks">8. Evaluation and Benchmarks<a class="headerlink" href="#8-evaluation-and-benchmarks" title="Permanent link">&para;</a></h2>
 <p>Reasoning models require benchmarks that stress multi-step cognition.</p>
@@ -1802,16 +1764,16 @@
 </table>
 <p>Evaluation must consider <strong>accuracy versus compute trade-offs</strong>, not accuracy alone.</p>
 <hr />
-<hr />
 <h2 id="9-deployment-decision-framework">9. Deployment Decision Framework<a class="headerlink" href="#9-deployment-decision-framework" title="Permanent link">&para;</a></h2>
-<p>Choosing between System 1 and System 2 depends on:
-- Latency tolerance
-- Cost constraints
-- Error sensitivity</p>
+<p>Choosing between System 1 and System 2 depends on:</p>
+<ul>
+<li>Latency tolerance</li>
+<li>Cost constraints</li>
+<li>Error sensitivity</li>
+</ul>
 <p><strong>System 1</strong> models are preferred for high-throughput, low-risk tasks.</p>
 <p><strong>System 2</strong> models are preferred when correctness dominates, such as legal analysis, scientific reasoning, and complex debugging.</p>
 <p>Hybrid systems increasingly route queries dynamically based on estimated difficulty.</p>
-<hr />
 <hr />
 <h2 id="10-notable-models-of-20252026">10. Notable Models of 2025–2026<a class="headerlink" href="#10-notable-models-of-20252026" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1821,7 +1783,6 @@
 <li><strong>Gemini 2.5 Pro (Reasoning):</strong> Uses Google’s massive context window to reason across hours of video or thousands of lines of code simultaneously.</li>
 </ul>
 <hr />
-<hr />
 <h2 id="11-relationship-to-training-phases">11. Relationship to Training Phases<a class="headerlink" href="#11-relationship-to-training-phases" title="Permanent link">&para;</a></h2>
 <p>Thinking behavior emerges from the interaction of all training stages:</p>
 <ul>
@@ -1830,20 +1791,6 @@
 <li>RL-based post-training activates inference-time computation strategies</li>
 </ul>
 <p>System 2 capability is therefore <strong>not purely a post-training artifact</strong>.</p>
-<hr />
-<hr />
-<h2 id="12-technical-qa">12. Technical Q&amp;A<a class="headerlink" href="#12-technical-qa" title="Permanent link">&para;</a></h2>
-<p><strong>Q: What is "Reward Hacking" in reasoning models?</strong></p>
-<p><strong>A:</strong> It’s a failure mode where a model learns that writing <em>longer</em> reasoning chains results in higher rewards from the PRM, even if the logic is circular or redundant. Engineers combat this by penalizing length or using more diverse reward signals.</p>
-<hr />
-<p><strong>Q: How do you decide when to deploy a Thinking LLM vs. a Generic LLM?</strong></p>
-<p><strong>A:</strong> It's a trade-off between <strong>Latency, Cost, and Accuracy</strong>. 
-* Use <strong>Generic</strong> for high-throughput, low-latency tasks (customer service bots, simple translations).
-* Use <strong>Thinking</strong> for high-stakes accuracy (legal analysis, complex debugging, scientific research).</p>
-<hr />
-<p><strong>Q: Can you distill reasoning?</strong></p>
-<p><strong>A:</strong> Yes. You can take the "Thinking Traces" from a large model (like o1) and use them as fine-tuning data for a smaller model (like Llama 8B). This teaches the smaller model to "mimic" the logical structure of the larger one.</p>
-<hr />
 <hr />
 
 

@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-the-memory-compute-communication-triangle" class="md-skip">
+        <a href="#distributed-training-parallelism-overview" class="md-skip">
           Skip to content
         </a>
       
@@ -439,6 +439,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -470,6 +472,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -614,18 +618,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-common-interview-questions" class="md-nav__link">
+  <a href="#9-key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Common Interview Questions
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-key-takeaways-for-interviews" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Key Takeaways for Interviews
+      9. Key Takeaways
     </span>
   </a>
   
@@ -1102,29 +1097,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1334,6 +1306,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1477,18 +1451,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#8-common-interview-questions" class="md-nav__link">
+  <a href="#9-key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      8. Common Interview Questions
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-key-takeaways-for-interviews" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Key Takeaways for Interviews
+      9. Key Takeaways
     </span>
   </a>
   
@@ -1513,8 +1478,7 @@
   
 
 
-  <h1>Parallelism Overview</h1>
-
+<h1 id="distributed-training-parallelism-overview">Distributed Training: Parallelism Overview<a class="headerlink" href="#distributed-training-parallelism-overview" title="Permanent link">&para;</a></h1>
 <h2 id="1-the-memory-compute-communication-triangle">1. The Memory-Compute-Communication Triangle<a class="headerlink" href="#1-the-memory-compute-communication-triangle" title="Permanent link">&para;</a></h2>
 <p>Distributed training is fundamentally constrained by a three-way trade-off:</p>
 <ul>
@@ -1525,7 +1489,6 @@
 <blockquote>
 <p>Improving one dimension often degrades another. Real systems balance all three.</p>
 </blockquote>
-<hr />
 <hr />
 <h2 id="2-why-we-need-parallelism">2. Why We Need Parallelism<a class="headerlink" href="#2-why-we-need-parallelism" title="Permanent link">&para;</a></h2>
 <h3 id="memory-requirements-7b-parameter-model-example">Memory Requirements (7B Parameter Model Example)<a class="headerlink" href="#memory-requirements-7b-parameter-model-example" title="Permanent link">&para;</a></h3>
@@ -1545,7 +1508,6 @@
 </ul>
 <p><strong>Total</strong>: ~112 GB (excludes activations!)</p>
 <p>This doesn't fit on an 80GB A100 → <strong>Need sharding strategies</strong></p>
-<hr />
 <hr />
 <h2 id="3-the-four-main-parallelism-types">3. The Four Main Parallelism Types<a class="headerlink" href="#3-the-four-main-parallelism-types" title="Permanent link">&para;</a></h2>
 <table>
@@ -1585,7 +1547,6 @@
 </tbody>
 </table>
 <hr />
-<hr />
 <h2 id="4-hybrid-parallelism-in-practice">4. Hybrid Parallelism in Practice<a class="headerlink" href="#4-hybrid-parallelism-in-practice" title="Permanent link">&para;</a></h2>
 <p>Real systems combine multiple strategies:</p>
 <div class="highlight"><pre><span></span><code>┌─────────────────────────────────────┐
@@ -1606,7 +1567,6 @@
 <li>Add Pipeline Parallelism for extreme depth</li>
 <li>Scale Data Parallelism across nodes</li>
 </ol>
-<hr />
 <hr />
 <h2 id="5-training-vs-inference-optimization">5. Training vs Inference Optimization<a class="headerlink" href="#5-training-vs-inference-optimization" title="Permanent link">&para;</a></h2>
 <h3 id="training-throughput-oriented">Training (Throughput-Oriented)<a class="headerlink" href="#training-throughput-oriented" title="Permanent link">&para;</a></h3>
@@ -1639,7 +1599,6 @@
 <p><strong>Key Insight</strong>: Training amortizes communication over large batches; inference cannot hide communication latency easily.</p>
 </blockquote>
 <hr />
-<hr />
 <h2 id="6-memory-reduction-techniques">6. Memory Reduction Techniques<a class="headerlink" href="#6-memory-reduction-techniques" title="Permanent link">&para;</a></h2>
 <h3 id="activation-checkpointing">Activation Checkpointing<a class="headerlink" href="#activation-checkpointing" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1659,7 +1618,6 @@
 <li><strong>Benefit</strong>: Simulates larger batch size, reduces sync frequency</li>
 <li><strong>Effective batch</strong>: K × mini_batch_size</li>
 </ul>
-<hr />
 <hr />
 <h2 id="7-critical-communication-primitives">7. Critical Communication Primitives<a class="headerlink" href="#7-critical-communication-primitives" title="Permanent link">&para;</a></h2>
 <table>
@@ -1695,58 +1653,7 @@
 </table>
 <hr />
 <hr />
-<h2 id="8-common-interview-questions">8. Common Interview Questions<a class="headerlink" href="#8-common-interview-questions" title="Permanent link">&para;</a></h2>
-<p><strong>Q1: "How would you scale training from 1 GPU to 256 GPUs?"</strong></p>
-<p><strong>Answer</strong>:</p>
-<ol>
-<li><strong>1-8 GPUs</strong>: Start with Data Parallelism (DDP)</li>
-<li><strong>8-64 GPUs</strong>: Add ZeRO-2 to shard optimizer states and gradients</li>
-<li>
-<p><strong>64-256 GPUs</strong>: Consider:</p>
-</li>
-<li>
-<p>ZeRO-3/FSDP for full parameter sharding</p>
-</li>
-<li>8-way Tensor Parallelism within nodes</li>
-<li>4-way Pipeline Parallelism if model is very deep</li>
-<li>Data Parallelism across remaining dimension</li>
-</ol>
-<hr />
-<p><strong>Q2: "What's the difference between model parallelism and data parallelism?"</strong></p>
-<p><strong>Answer</strong>:</p>
-<ul>
-<li>
-<p><strong>Data Parallelism</strong>: Replicate entire model on each GPU, split batch</p>
-</li>
-<li>
-<p>Communication: Once per iteration (gradient sync)</p>
-</li>
-<li>
-<p>Limitation: Model must fit on single GPU</p>
-</li>
-<li>
-<p><strong>Model Parallelism</strong>: Split model itself across GPUs</p>
-</li>
-<li>
-<p><strong>Tensor Parallelism</strong>: Split individual layers</p>
-</li>
-<li><strong>Pipeline Parallelism</strong>: Split by depth</li>
-<li>Communication: Multiple times per forward/backward pass</li>
-<li>Enables training models larger than single GPU memory</li>
-</ul>
-<hr />
-<p><strong>Q3: "Why can't we just use Data Parallelism for everything?"</strong></p>
-<p><strong>Answer</strong>:</p>
-<p>Memory constraints. Standard DP requires:</p>
-<ul>
-<li>Full model parameters on each GPU</li>
-<li>Full gradients on each GPU</li>
-<li>Full optimizer states on each GPU</li>
-</ul>
-<p>For large models (&gt;10B parameters), this exceeds single GPU memory even before considering activations.</p>
-<hr />
-<hr />
-<h2 id="9-key-takeaways-for-interviews">9. Key Takeaways for Interviews<a class="headerlink" href="#9-key-takeaways-for-interviews" title="Permanent link">&para;</a></h2>
+<h2 id="9-key-takeaways">9. Key Takeaways<a class="headerlink" href="#9-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>No single best strategy</strong> - choice depends on model size, hardware, and constraints</li>
 <li><strong>Communication is often the bottleneck</strong> at scale</li>

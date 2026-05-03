@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-overview" class="md-skip">
+        <a href="#pre-training" class="md-skip">
           Skip to content
         </a>
       
@@ -323,6 +323,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -354,6 +356,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -618,26 +622,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Common Interview Questions">
+    <nav class="md-nav" aria-label="5. Key Takeaways">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-understanding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Understanding
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-deep-dives" class="md-nav__link">
@@ -1249,29 +1235,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1480,6 +1443,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1744,26 +1709,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Common Interview Questions">
+    <nav class="md-nav" aria-label="5. Key Takeaways">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-understanding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Understanding
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-deep-dives" class="md-nav__link">
@@ -1807,11 +1754,9 @@
   
 
 
-  <h1>Pre-Training</h1>
-
+<h1 id="pre-training">Pre-Training<a class="headerlink" href="#pre-training" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
 <p>Pre-training defines the raw capability ceiling of a Large Language Model. The architectural choices, data quality, and scaling decisions made during this phase dominate downstream performance far more than post-training alignment or prompting techniques. Most limitations observed in production are traceable to decisions made during pre-training.</p>
-<hr />
 <hr />
 <h2 id="2-training-objectives-and-scaling-laws">2. Training Objectives and Scaling Laws<a class="headerlink" href="#2-training-objectives-and-scaling-laws" title="Permanent link">&para;</a></h2>
 <h3 id="self-supervised-learning">Self-Supervised Learning<a class="headerlink" href="#self-supervised-learning" title="Permanent link">&para;</a></h3>
@@ -1885,7 +1830,6 @@
 <p>Smaller models are capacity-limited, not data-limited. By exposing them to vastly more data, representations become more robust, rare patterns are reinforced, and generalization improves significantly.</p>
 <p>Even though labeled as "over-training" by Chinchilla standards, additional data continues to reduce error, improve reasoning, and make smaller models competitive with larger alternatives.</p>
 <hr />
-<hr />
 <h2 id="3-data-pipeline-and-quality">3. Data Pipeline and Quality<a class="headerlink" href="#3-data-pipeline-and-quality" title="Permanent link">&para;</a></h2>
 <p>Data quality often matters more than model size. The principle "garbage in, garbage out" applies strictly to LLMs. A well-curated dataset can outperform a larger, noisier one.</p>
 <h3 id="raw-data-sources">Raw Data Sources<a class="headerlink" href="#raw-data-sources" title="Permanent link">&para;</a></h3>
@@ -1932,7 +1876,6 @@
 <p>Synthetic data fills gaps and emphasizes rare skills. However, uncontrolled use risks model collapse—reinforcement of errors leading to distribution narrowing and reduced creativity.</p>
 <p>Synthetic feedback loops can permanently damage model quality if not carefully managed.</p>
 <hr />
-<hr />
 <h2 id="4-architecture-choices">4. Architecture Choices<a class="headerlink" href="#4-architecture-choices" title="Permanent link">&para;</a></h2>
 <h3 id="decoder-only-transformers">Decoder-Only Transformers<a class="headerlink" href="#decoder-only-transformers" title="Permanent link">&para;</a></h3>
 <p>Most LLMs use decoder-only Transformers for causal attention alignment, simpler deployment with KV caching, and strong scaling behavior.</p>
@@ -1975,7 +1918,6 @@
 <li><strong>Ring Attention:</strong> For sequences longer than single-GPU memory</li>
 </ul>
 <hr />
-<hr />
 <h2 id="5-key-takeaways">5. Key Takeaways<a class="headerlink" href="#5-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Scaling laws are objective-dependent:</strong> Chinchilla optimizes training compute; inference-optimal scaling optimizes deployment cost</li>
@@ -1984,21 +1926,6 @@
 <li><strong>Tokenization matters:</strong> Byte-fallback and digit splitting significantly impact performance</li>
 <li><strong>Pre-training decisions are hard to fix:</strong> Most limitations observed later trace back to architecture, data, or scaling choices made here</li>
 </ol>
-<hr />
-<hr />
-<h2 id="6-common-interview-questions">6. Common Interview Questions<a class="headerlink" href="#6-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="conceptual-understanding">Conceptual Understanding<a class="headerlink" href="#conceptual-understanding" title="Permanent link">&para;</a></h3>
-<p><strong>Q1: What is the difference between Chinchilla-optimal and inference-optimal scaling?</strong></p>
-<p>Chinchilla-optimal minimizes training compute by scaling parameters and tokens proportionally (~20 tokens per parameter). Inference-optimal minimizes deployment cost by training smaller models on far more tokens (100+), accepting higher training costs for lower recurring inference costs. The key insight is that most LLM costs are paid during inference, not training.</p>
-<hr />
-<p><strong>Q2: Why can't we just fine-tune a poorly pre-trained model to fix its limitations?</strong></p>
-<p>Pre-training defines the capability ceiling. If a model hasn't learned fundamental patterns during pre-training (e.g., syntax, world knowledge, reasoning structures), fine-tuning cannot inject these capabilities—it can only specialize existing ones. You can't teach calculus through fine-tuning if the model never learned arithmetic during pre-training.</p>
-<hr />
-<p><strong>Q3: What is model collapse and how does synthetic data cause it?</strong></p>
-<p>Model collapse occurs when models are trained on data generated by other models, creating a feedback loop that amplifies errors and reduces diversity. Each generation reinforces biases and mistakes, leading to distribution narrowing and degraded outputs. It's particularly dangerous in uncontrolled synthetic data pipelines.</p>
-<hr />
-<p><strong>Q4: Why do we remove duplicates from training data?</strong></p>
-<p>Duplicates distort the training distribution, causing the model to overfit to repeated patterns and waste compute on redundant examples. They lead to inflated frequency biases, artificially low validation loss (the model memorizes instead of generalizing), and poor performance on novel inputs.</p>
 <hr />
 <h3 id="technical-deep-dives">Technical Deep Dives<a class="headerlink" href="#technical-deep-dives" title="Permanent link">&para;</a></h3>
 <p><strong>Q5: How does Mixture of Experts (MoE) reduce inference cost while maintaining capacity?</strong></p>

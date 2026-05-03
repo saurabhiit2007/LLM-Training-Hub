@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-overview" class="md-skip">
+        <a href="#adapters-and-peft-methods" class="md-skip">
           Skip to content
         </a>
       
@@ -670,6 +670,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -701,6 +703,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -936,66 +940,6 @@
   <a href="#83-multi-task-learning-with-adapters" class="md-nav__link">
     <span class="md-ellipsis">
       8.3 Multi-task Learning with Adapters
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-what-is-the-fundamental-difference-between-lora-and-traditional-adapters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: What is the fundamental difference between LoRA and traditional adapters?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-explain-the-math-behind-why-lora-works-why-does-low-rank-make-sense" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: Explain the math behind why LoRA works. Why does low rank make sense?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-you-need-to-fine-tune-a-13b-model-on-a-single-24gb-gpu-what-peft-strategy-would-you-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: You need to fine-tune a 13B model on a single 24GB GPU. What PEFT strategy would you use?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-why-doesnt-lora-add-inference-overhead-but-adapters-do" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: Why doesn't LoRA add inference overhead, but adapters do?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-how-does-adapterfusion-combine-knowledge-from-multiple-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: How does AdapterFusion combine knowledge from multiple tasks?
     </span>
   </a>
   
@@ -1246,29 +1190,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1477,6 +1398,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1722,66 +1645,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#9-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-what-is-the-fundamental-difference-between-lora-and-traditional-adapters" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: What is the fundamental difference between LoRA and traditional adapters?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-explain-the-math-behind-why-lora-works-why-does-low-rank-make-sense" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: Explain the math behind why LoRA works. Why does low rank make sense?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-you-need-to-fine-tune-a-13b-model-on-a-single-24gb-gpu-what-peft-strategy-would-you-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: You need to fine-tune a 13B model on a single 24GB GPU. What PEFT strategy would you use?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-why-doesnt-lora-add-inference-overhead-but-adapters-do" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: Why doesn't LoRA add inference overhead, but adapters do?
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-how-does-adapterfusion-combine-knowledge-from-multiple-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: How does AdapterFusion combine knowledge from multiple tasks?
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1801,16 +1664,17 @@
   
 
 
-  <h1>Adaptors</h1>
-
+<h1 id="adapters-and-peft-methods">Adapters and PEFT Methods<a class="headerlink" href="#adapters-and-peft-methods" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
 <p><strong>Parameter-Efficient Fine-Tuning (PEFT)</strong> is a family of techniques that adapt a pre-trained model to new tasks by training only a <strong>small subset of parameters</strong> rather than the full model.</p>
 <h3 id="why-peft">Why PEFT?<a class="headerlink" href="#why-peft" title="Permanent link">&para;</a></h3>
-<p>Full fine-tuning of a 7B model requires:
-- Weights: 14 GB
-- Gradients: 14 GB
-- Optimizer states: 56 GB
-- <strong>Total: ~84 GB</strong> (before activations)</p>
+<p>Full fine-tuning of a 7B model requires:</p>
+<ul>
+<li>Weights: 14 GB</li>
+<li>Gradients: 14 GB</li>
+<li>Optimizer states: 56 GB</li>
+<li><strong>Total: ~84 GB</strong> (before activations)</li>
+</ul>
 <p>PEFT reduces trainable parameters from billions to millions while preserving most of the pre-trained model's quality.</p>
 <h3 id="core-idea">Core Idea<a class="headerlink" href="#core-idea" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>Pre-trained model weights (frozen)
@@ -1819,7 +1683,6 @@ Small trainable adapter modules
          =
 Task-specific model
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="2-peft-techniques-taxonomy">2. PEFT Techniques Taxonomy<a class="headerlink" href="#2-peft-techniques-taxonomy" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>PEFT Methods
@@ -1844,7 +1707,6 @@ Task-specific model
     ├── BitFit
     └── (IA)³
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="3-adapters">3. Adapters<a class="headerlink" href="#3-adapters" title="Permanent link">&para;</a></h2>
 <h3 id="31-what-are-adapters">3.1 What Are Adapters?<a class="headerlink" href="#31-what-are-adapters" title="Permanent link">&para;</a></h3>
@@ -1875,20 +1737,24 @@ Output
 </code></pre></div>
 <hr />
 <h3 id="32-adapter-architecture">3.2 Adapter Architecture<a class="headerlink" href="#32-adapter-architecture" title="Permanent link">&para;</a></h3>
-<p>Each adapter module contains:
-1. <strong>Down-projection:</strong> <span class="arithmatex">\(d \rightarrow r\)</span> (compress to bottleneck)
-2. <strong>Non-linearity:</strong> ReLU or GELU
-3. <strong>Up-projection:</strong> <span class="arithmatex">\(r \rightarrow d\)</span> (expand back)
-4. <strong>Residual connection:</strong> Add input to output</p>
+<p>Each adapter module contains:</p>
+<ol>
+<li><strong>Down-projection:</strong> <span class="arithmatex">\(d \rightarrow r\)</span> (compress to bottleneck)</li>
+<li><strong>Non-linearity:</strong> ReLU or GELU</li>
+<li><strong>Up-projection:</strong> <span class="arithmatex">\(r \rightarrow d\)</span> (expand back)</li>
+<li><strong>Residual connection:</strong> Add input to output</li>
+</ol>
 <div class="arithmatex">\[
 \text{Adapter}(h) = h + W_{\text{up}} \cdot \sigma(W_{\text{down}} \cdot h)
 \]</div>
-<p>Where:
-- <span class="arithmatex">\(h \in \mathbb{R}^d\)</span>: input hidden state
-- <span class="arithmatex">\(W_{\text{down}} \in \mathbb{R}^{r \times d}\)</span>: down-projection
-- <span class="arithmatex">\(W_{\text{up}} \in \mathbb{R}^{d \times r}\)</span>: up-projection
-- <span class="arithmatex">\(r \ll d\)</span>: bottleneck dimension (e.g., <span class="arithmatex">\(r = 64\)</span>, <span class="arithmatex">\(d = 4096\)</span>)
-- <span class="arithmatex">\(\sigma\)</span>: non-linearity</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(h \in \mathbb{R}^d\)</span>: input hidden state</li>
+<li><span class="arithmatex">\(W_{\text{down}} \in \mathbb{R}^{r \times d}\)</span>: down-projection</li>
+<li><span class="arithmatex">\(W_{\text{up}} \in \mathbb{R}^{d \times r}\)</span>: up-projection</li>
+<li><span class="arithmatex">\(r \ll d\)</span>: bottleneck dimension (e.g., <span class="arithmatex">\(r = 64\)</span>, <span class="arithmatex">\(d = 4096\)</span>)</li>
+<li><span class="arithmatex">\(\sigma\)</span>: non-linearity</li>
+</ul>
 <p><strong>Initialization:</strong> <span class="arithmatex">\(W_{\text{up}}\)</span> initialized to zero → adapter starts as identity (no perturbation).</p>
 <hr />
 <h3 id="33-parameter-count">3.3 Parameter Count<a class="headerlink" href="#33-parameter-count" title="Permanent link">&para;</a></h3>
@@ -1943,7 +1809,6 @@ N_{\text{adapter}} = 8 \times 32 \times 4096 \times 64 = 67M \text{ params}
 </code></pre></div>
 <p><strong>Advantage:</strong> No additional latency in theory (computed in parallel with attention).</p>
 <hr />
-<hr />
 <h2 id="4-lora-vs-adapters">4. LoRA vs Adapters<a class="headerlink" href="#4-lora-vs-adapters" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1988,7 +1853,6 @@ W_{\text{merged}} = W_0 + \frac{\alpha}{r} B A
 \]</div>
 <p>The merged model has the <strong>same architecture and speed</strong> as the original.</p>
 <hr />
-<hr />
 <h2 id="5-prefix-tuning-and-prompt-tuning">5. Prefix Tuning and Prompt Tuning<a class="headerlink" href="#5-prefix-tuning-and-prompt-tuning" title="Permanent link">&para;</a></h2>
 <h3 id="51-prefix-tuning">5.1 Prefix Tuning<a class="headerlink" href="#51-prefix-tuning" title="Permanent link">&para;</a></h3>
 <p><strong>Concept:</strong> Prepend trainable "prefix" tokens to the <strong>keys and values</strong> of every attention layer.</p>
@@ -2000,11 +1864,13 @@ Prefix attention:
   (prefix tokens are trainable, input tokens are frozen)
 </code></pre></div>
 <p><strong>Memory:</strong> Prefixes stored per layer → <span class="arithmatex">\(L \times k \times 2d\)</span> parameters.</p>
-<p><strong>Characteristics:</strong>
-- No architecture changes to base model
-- Different from LoRA: influences attention differently
-- Works well for generation tasks (summarization, translation)
-- Less popular today (LoRA outperforms in most benchmarks)</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>No architecture changes to base model</li>
+<li>Different from LoRA: influences attention differently</li>
+<li>Works well for generation tasks (summarization, translation)</li>
+<li>Less popular today (LoRA outperforms in most benchmarks)</li>
+</ul>
 <hr />
 <h3 id="52-prompt-tuning">5.2 Prompt Tuning<a class="headerlink" href="#52-prompt-tuning" title="Permanent link">&para;</a></h3>
 <p><strong>Concept:</strong> Prepend trainable soft tokens to the <strong>input embedding</strong> only (not every layer).</p>
@@ -2012,11 +1878,13 @@ Prefix attention:
 Prompted input: [soft₁, ..., softₖ, token₁, ..., tokenₙ]
 </code></pre></div>
 <p><strong>Key difference from prefix tuning:</strong> Only input layer modified (not all layers).</p>
-<p><strong>Characteristics:</strong>
-- Very few parameters (<span class="arithmatex">\(k \times d\)</span> total)
-- Only competitive with full fine-tuning at 10B+ scale
-- Simple to implement
-- Lower performance than LoRA for smaller models</p>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>Very few parameters (<span class="arithmatex">\(k \times d\)</span> total)</li>
+<li>Only competitive with full fine-tuning at 10B+ scale</li>
+<li>Simple to implement</li>
+<li>Lower performance than LoRA for smaller models</li>
+</ul>
 <hr />
 <h3 id="53-bitfit">5.3 BitFit<a class="headerlink" href="#53-bitfit" title="Permanent link">&para;</a></h3>
 <p><strong>Concept:</strong> Only train <strong>bias terms</strong> of the model.</p>
@@ -2027,7 +1895,6 @@ Prompted input: [soft₁, ..., softₖ, token₁, ..., tokenₙ]
 <li>Not competitive for generation/instruction following</li>
 </ul>
 <hr />
-<hr />
 <h2 id="6-ia3">6. (IA)³<a class="headerlink" href="#6-ia3" title="Permanent link">&para;</a></h2>
 <p><strong>Concept:</strong> Learn to <strong>rescale</strong> activations with learned vectors.</p>
 <p>For attention:
@@ -2035,12 +1902,13 @@ $$
 \text{Attention} = \text{softmax}\left(\frac{(l_k \odot K)(l_q \odot Q)^T}{\sqrt{d_k}}\right)(l_v \odot V)
 $$</p>
 <p>Where <span class="arithmatex">\(l_k, l_q, l_v\)</span> are <strong>learned scaling vectors</strong>.</p>
-<p><strong>Characteristics:</strong>
-- ~0.01% trainable params (10× less than LoRA)
-- Good for few-shot and continual learning scenarios
-- Less capacity than LoRA for complex tasks
-- Fast training (very few parameters)</p>
-<hr />
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>~0.01% trainable params (10× less than LoRA)</li>
+<li>Good for few-shot and continual learning scenarios</li>
+<li>Less capacity than LoRA for complex tasks</li>
+<li>Fast training (very few parameters)</li>
+</ul>
 <hr />
 <h2 id="7-choosing-the-right-peft-method">7. Choosing the Right PEFT Method<a class="headerlink" href="#7-choosing-the-right-peft-method" title="Permanent link">&para;</a></h2>
 <h3 id="71-decision-matrix">7.1 Decision Matrix<a class="headerlink" href="#71-decision-matrix" title="Permanent link">&para;</a></h3>
@@ -2123,7 +1991,6 @@ Complex reasoning, coding            r = 32-64
 Full model behavior change           r = 64-128
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="8-peft-in-production">8. PEFT in Production<a class="headerlink" href="#8-peft-in-production" title="Permanent link">&para;</a></h2>
 <h3 id="81-serving-multiple-adapters">8.1 Serving Multiple Adapters<a class="headerlink" href="#81-serving-multiple-adapters" title="Permanent link">&para;</a></h3>
 <p><strong>Problem:</strong> Serving 100 different LoRA adapters would require 100 model copies.</p>
@@ -2150,10 +2017,12 @@ Full model behavior change           r = 64-128
 <div class="highlight"><pre><span></span><code><span class="n">merged</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">merge_and_unload</span><span class="p">()</span>  <span class="c1"># Single adapter, no overhead</span>
 </code></pre></div>
 <p><strong>TIES merging (multiple adapters):</strong></p>
-<p>Combine multiple LoRA adapters by:
-1. Trim small values (sparsify)
-2. Elect sign based on majority vote
-3. Disjoint merge (no conflicts)</p>
+<p>Combine multiple LoRA adapters by:</p>
+<ol>
+<li>Trim small values (sparsify)</li>
+<li>Elect sign based on majority vote</li>
+<li>Disjoint merge (no conflicts)</li>
+</ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Merge customer service + code adapters</span>
 <span class="kn">from</span> <span class="nn">peft</span> <span class="kn">import</span> <span class="n">PeftModel</span>
 
@@ -2182,232 +2051,6 @@ Adapter Adapter Adapter Adapter
 <span class="n">fusion_config</span> <span class="o">=</span> <span class="n">AdapterFusionConfig</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dynamic&quot;</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add_adapter_fusion</span><span class="p">([</span><span class="s2">&quot;ner&quot;</span><span class="p">,</span> <span class="s2">&quot;qa&quot;</span><span class="p">],</span> <span class="n">fusion_config</span><span class="p">)</span>
 </code></pre></div>
-<hr />
-<hr />
-<h2 id="9-interview-questions">9. Interview Questions<a class="headerlink" href="#9-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-what-is-the-fundamental-difference-between-lora-and-traditional-adapters">Q1: What is the fundamental difference between LoRA and traditional adapters?<a class="headerlink" href="#q1-what-is-the-fundamental-difference-between-lora-and-traditional-adapters" title="Permanent link">&para;</a></h3>
-<p><strong>Answer:</strong></p>
-<p>Both train small modules while freezing the base model, but differ in key ways:</p>
-<p><strong>Traditional Adapters:</strong>
-- Inserted <strong>sequentially</strong> between layers
-- Add new computational path in the forward pass
-- <strong>Inference latency:</strong> Always increased (new layers in path)
-- Architecture: <code>Input → Attention → Adapter → FFN → Adapter → Output</code></p>
-<p><strong>LoRA:</strong>
-- Applied <strong>parallel</strong> to existing weight matrices
-- Modifies the weight update, not the architecture
-- <strong>Inference latency:</strong> Zero (weights can be merged post-training)
-- Architecture: Same as original model after merging</p>
-<p><strong>Memory comparison (7B model):</strong>
-- Adapters: ~67M params (2 per layer, <span class="arithmatex">\(r=64\)</span>)
-- LoRA: ~4M params (q, v projections, <span class="arithmatex">\(r=16\)</span>)</p>
-<p><strong>When to prefer adapters:</strong>
-- Multi-task serving (swap without merging)
-- When inference latency is tolerable
-- AdapterFusion scenarios</p>
-<p><strong>When to prefer LoRA:</strong>
-- Production deployment (merge = no overhead)
-- Lower parameter count needed
-- Most LLM fine-tuning scenarios today</p>
-<hr />
-<h3 id="q2-explain-the-math-behind-why-lora-works-why-does-low-rank-make-sense">Q2: Explain the math behind why LoRA works. Why does low rank make sense?<a class="headerlink" href="#q2-explain-the-math-behind-why-lora-works-why-does-low-rank-make-sense" title="Permanent link">&para;</a></h3>
-<p><strong>Answer:</strong></p>
-<p><strong>Empirical observation:</strong> The weight update matrix <span class="arithmatex">\(\Delta W\)</span> during fine-tuning has <strong>low intrinsic rank</strong>.</p>
-<p><strong>What this means:</strong></p>
-<p><span class="arithmatex">\(\Delta W \in \mathbb{R}^{d \times k}\)</span> has rank <span class="arithmatex">\(r^* \ll \min(d, k)\)</span>.</p>
-<p>This means the information gain from fine-tuning lives in a low-dimensional subspace.</p>
-<p><strong>Evidence from the original LoRA paper:</strong></p>
-<ul>
-<li>GPT-3 fine-tuned on NLU tasks</li>
-<li>The "intrinsic dimension" of adaptation is very low</li>
-<li><span class="arithmatex">\(r = 1\)</span> or <span class="arithmatex">\(r = 2\)</span> captures most of the update for some tasks</li>
-<li><span class="arithmatex">\(r = 4\)</span> or <span class="arithmatex">\(r = 8\)</span> works well for most tasks</li>
-<li>Increasing <span class="arithmatex">\(r\)</span> beyond 64 rarely helps</li>
-</ul>
-<p><strong>Mathematical justification:</strong></p>
-<p>If the true update <span class="arithmatex">\(\Delta W = UV^T\)</span> where <span class="arithmatex">\(U \in \mathbb{R}^{d \times r}\)</span>, <span class="arithmatex">\(V \in \mathbb{R}^{k \times r}\)</span>:</p>
-<ul>
-<li>Standard fine-tuning: store <span class="arithmatex">\(d \times k\)</span> values</li>
-<li>LoRA: store <span class="arithmatex">\(d \times r + k \times r = (d+k) \times r\)</span> values</li>
-</ul>
-<p><strong>Compression ratio:</strong>
-$$
-\frac{(d+k) \times r}{d \times k} = r \left(\frac{1}{k} + \frac{1}{d}\right) \approx \frac{2r}{d} \text{ (when } d = k\text{)}
-$$</p>
-<p>For <span class="arithmatex">\(d = 4096\)</span>, <span class="arithmatex">\(r = 16\)</span>: ratio = <span class="arithmatex">\(\frac{32}{4096} = 0.78\%\)</span></p>
-<p><strong>Why randomly initialized <span class="arithmatex">\(A\)</span> + zero <span class="arithmatex">\(B\)</span> works:</strong></p>
-<ul>
-<li><span class="arithmatex">\(A\)</span> initialized with Gaussian noise: creates a random low-rank projection</li>
-<li><span class="arithmatex">\(B\)</span> initialized to zero: <span class="arithmatex">\(\Delta W = BA = 0\)</span> at start (no perturbation)</li>
-<li>As training proceeds, <span class="arithmatex">\(B\)</span> learns the structure of the update</li>
-<li><span class="arithmatex">\(\frac{\alpha}{r}\)</span> scaling controls the effective learning rate of the LoRA path</li>
-</ul>
-<p><strong>Follow-up:</strong> How does rank affect the expressiveness?<br />
-<strong>Answer:</strong> Higher rank → more expressiveness (can represent more complex updates) but more parameters. It's a hyperparameter controlling the capacity of the adaptation.</p>
-<hr />
-<h3 id="q3-you-need-to-fine-tune-a-13b-model-on-a-single-24gb-gpu-what-peft-strategy-would-you-use">Q3: You need to fine-tune a 13B model on a single 24GB GPU. What PEFT strategy would you use?<a class="headerlink" href="#q3-you-need-to-fine-tune-a-13b-model-on-a-single-24gb-gpu-what-peft-strategy-would-you-use" title="Permanent link">&para;</a></h3>
-<p><strong>Answer:</strong></p>
-<p><strong>Memory budget:</strong> 24 GB</p>
-<p><strong>Option 1: LoRA on FP16 model</strong></p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Memory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Base model (FP16)</td>
-<td>26 GB ❌</td>
-</tr>
-</tbody>
-</table>
-<p>Doesn't fit.</p>
-<p><strong>Option 2: QLoRA (4-bit base + LoRA)</strong></p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Memory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Base model (4-bit NF4)</td>
-<td>6.5 GB</td>
-</tr>
-<tr>
-<td>LoRA adapters (r=32, BF16)</td>
-<td>0.5 GB</td>
-</tr>
-<tr>
-<td>Gradients (LoRA only)</td>
-<td>0.5 GB</td>
-</tr>
-<tr>
-<td>Optimizer (8-bit Adam)</td>
-<td>1.0 GB</td>
-</tr>
-<tr>
-<td>Activations (checkpointed)</td>
-<td>2.0 GB</td>
-</tr>
-<tr>
-<td><strong>Total</strong></td>
-<td><strong>~10.5 GB</strong> ✅</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Configuration:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">BitsAndBytesConfig</span>
-<span class="kn">from</span> <span class="nn">peft</span> <span class="kn">import</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">get_peft_model</span>
-
-<span class="c1"># 4-bit quantization</span>
-<span class="n">bnb_config</span> <span class="o">=</span> <span class="n">BitsAndBytesConfig</span><span class="p">(</span>
-    <span class="n">load_in_4bit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">bnb_4bit_use_double_quant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">bnb_4bit_quant_type</span><span class="o">=</span><span class="s2">&quot;nf4&quot;</span><span class="p">,</span>
-    <span class="n">bnb_4bit_compute_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
-    <span class="s2">&quot;meta-llama/Llama-2-13b-hf&quot;</span><span class="p">,</span>
-    <span class="n">quantization_config</span><span class="o">=</span><span class="n">bnb_config</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># LoRA config</span>
-<span class="n">lora_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
-    <span class="n">r</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">target_modules</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;q_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;k_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;v_proj&quot;</span><span class="p">,</span> <span class="s2">&quot;o_proj&quot;</span><span class="p">],</span>
-    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
-    <span class="n">use_dora</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># DoRA for better quality (2024)</span>
-<span class="p">)</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lora_config</span><span class="p">)</span>
-
-<span class="c1"># Optimizer</span>
-<span class="kn">import</span> <span class="nn">bitsandbytes</span> <span class="k">as</span> <span class="nn">bnb</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">bnb</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">PagedAdamW8bit</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">2e-4</span>
-<span class="p">)</span>
-</code></pre></div>
-<p><strong>Why this works:</strong></p>
-<ul>
-<li>4-bit base model: 8× memory reduction for weights</li>
-<li>LoRA: only ~1% of params are trained → tiny gradients/optimizer states</li>
-<li>Gradient checkpointing: reduces activation memory</li>
-<li>8-bit optimizer: further reduces optimizer state memory</li>
-</ul>
-<p><strong>Follow-up:</strong> What quality loss to expect?<br />
-<strong>Answer:</strong> QLoRA on 13B model typically achieves 95-98% of full fine-tuning quality, depending on task complexity and LoRA rank. For most instruction-following tasks, the difference is not noticeable.</p>
-<hr />
-<h3 id="q4-why-doesnt-lora-add-inference-overhead-but-adapters-do">Q4: Why doesn't LoRA add inference overhead, but adapters do?<a class="headerlink" href="#q4-why-doesnt-lora-add-inference-overhead-but-adapters-do" title="Permanent link">&para;</a></h3>
-<p><strong>Answer:</strong></p>
-<p><strong>Adapters add sequential computation:</strong></p>
-<div class="highlight"><pre><span></span><code>Forward pass with adapter:
-h → Attention → h&#39; → W_down → r → σ → W_up → Δh → h&#39; + Δh → ...
-                     (bottleneck)
-</code></pre></div>
-<p>The adapter is <strong>in the computation path</strong> — you can't skip it. Every token goes through the extra layers. Latency increases proportionally to adapter size.</p>
-<p><strong>LoRA can be merged:</strong></p>
-<p>During training:
-$$
-h = W_0 x + \underbrace{\frac{\alpha}{r} B A x}_{\text{LoRA path}}
-$$</p>
-<p>After training, merge:
-$$
-W_{\text{merged}} = W_0 + \frac{\alpha}{r} B A
-$$</p>
-<p>This is just <strong>one matrix multiply</strong> — same as the original operation. LoRA effectively modifies the weights offline, leaving no extra computation at inference time.</p>
-<p><strong>The merge is mathematically exact:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Before merge (two matrix multiplies):</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W0</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">x</span> <span class="o">@</span> <span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
-
-<span class="c1"># After merge (one matrix multiply, same result):</span>
-<span class="n">W_merged</span> <span class="o">=</span> <span class="n">W0</span> <span class="o">+</span> <span class="p">(</span><span class="n">B</span> <span class="o">@</span> <span class="n">A</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W_merged</span><span class="o">.</span><span class="n">T</span>
-</code></pre></div>
-<p><strong>When you can't merge:</strong>
-- Multi-adapter serving (need to hot-swap)
-- Continual learning (adapters change over time)
-- In these cases, adapters may be preferable</p>
-<h3 id="q5-how-does-adapterfusion-combine-knowledge-from-multiple-tasks">Q5: How does AdapterFusion combine knowledge from multiple tasks?<a class="headerlink" href="#q5-how-does-adapterfusion-combine-knowledge-from-multiple-tasks" title="Permanent link">&para;</a></h3>
-<p><strong>Answer:</strong></p>
-<p><strong>Problem:</strong> Train adapters for Task A, Task B, Task C separately. Now fine-tune on Task D that could benefit from all three.</p>
-<p><strong>Naive approach:</strong> Fine-tune new adapter. Loses Task A, B, C knowledge.</p>
-<p><strong>AdapterFusion:</strong> Learn to combine trained adapters dynamically.</p>
-<hr />
-<p><strong>Architecture:</strong></p>
-<p>At each Transformer layer:</p>
-<div class="highlight"><pre><span></span><code>Input h
-  │
-  ├──→ Adapter_A(h) = a_A
-  ├──→ Adapter_B(h) = a_B
-  └──→ Adapter_C(h) = a_C
-
-Fusion layer:
-  scores = softmax(Q(h) · K([a_A, a_B, a_C])^T)
-  output = scores · V([a_A, a_B, a_C])
-</code></pre></div>
-<p>Trained: Fusion attention weights (Q, K, V)<br />
-Frozen: Adapter_A, Adapter_B, Adapter_C, Base model</p>
-<p><strong>Training stages:</strong></p>
-<ol>
-<li><strong>Stage 1:</strong> Train task-specific adapters independently</li>
-<li><strong>Stage 2:</strong> Freeze all adapters, train only fusion attention weights on target task</li>
-</ol>
-<p><strong>Memory at serving:</strong></p>
-<div class="highlight"><pre><span></span><code>Base model: 14 GB (frozen)
-Adapter_A: 50 MB (frozen)
-Adapter_B: 50 MB (frozen)
-Adapter_C: 50 MB (frozen)
-Fusion weights: 10 MB (trained)
-Total: ~14.16 GB vs 4 × 14 = 56 GB for separate full models
-</code></pre></div>
-<p><strong>Limitation:</strong> Only works with same base model. Can't fuse adapters from different base models.</p>
-<hr />
 
 
 

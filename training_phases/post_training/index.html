@@ -677,26 +677,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Interview Questions">
+    <nav class="md-nav" aria-label="8. SFT vs Pre-training">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Questions
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-questions" class="md-nav__link">
@@ -1280,29 +1262,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1786,26 +1745,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Interview Questions">
+    <nav class="md-nav" aria-label="8. SFT vs Pre-training">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Questions
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-questions" class="md-nav__link">
@@ -1871,13 +1812,14 @@
 <p>Supervised Fine-Tuning (SFT) transforms a <strong>pre-trained base model</strong> into a <strong>useful assistant</strong> that follows instructions, respects formats, and exhibits desired interaction behavior. While pre-training builds a broad world model, SFT shapes <em>how</em> that knowledge is expressed.</p>
 <p><strong>Core concept:</strong> Behavioral alignment via supervised learning.</p>
 <hr />
-<hr />
 <h2 id="1-conceptual-foundation">1. Conceptual Foundation<a class="headerlink" href="#1-conceptual-foundation" title="Permanent link">&para;</a></h2>
 <h3 id="11-what-sft-optimizes">1.1 What SFT Optimizes<a class="headerlink" href="#11-what-sft-optimizes" title="Permanent link">&para;</a></h3>
 <p>SFT maps broad knowledge into a consistent, controllable interface.</p>
-<p><strong>Conceptual shift:</strong>
-- <strong>Pre-training:</strong> "Continue this text"
-- <strong>SFT:</strong> "Respond appropriately to a user instruction"</p>
+<p><strong>Conceptual shift:</strong></p>
+<ul>
+<li><strong>Pre-training:</strong> "Continue this text"</li>
+<li><strong>SFT:</strong> "Respond appropriately to a user instruction"</li>
+</ul>
 <p>This transformation happens through supervised learning, not reinforcement learning.</p>
 <h3 id="12-core-components">1.2 Core Components<a class="headerlink" href="#12-core-components" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1885,22 +1827,25 @@
 <li><strong>Task Formatting:</strong> Defines <em>how</em> that behavior is presented</li>
 </ul>
 <hr />
-<hr />
 <h2 id="2-training-mechanics">2. Training Mechanics<a class="headerlink" href="#2-training-mechanics" title="Permanent link">&para;</a></h2>
 <h3 id="21-training-objective">2.1 Training Objective<a class="headerlink" href="#21-training-objective" title="Permanent link">&para;</a></h3>
 <p>Standard cross-entropy loss with <strong>selective loss masking</strong>.</p>
-<p>Given:
-- <span class="arithmatex">\(x\)</span> = prompt tokens (system + user)
-- <span class="arithmatex">\(y\)</span> = assistant response tokens</p>
+<p>Given:</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> = prompt tokens (system + user)</li>
+<li><span class="arithmatex">\(y\)</span> = assistant response tokens</li>
+</ul>
 <p>SFT minimizes:</p>
 <div class="arithmatex">\[
 \mathcal{L}_{\text{SFT}} = -\sum_{t=1}^{|y|} \log P(y_t \mid x, y_{&lt;t})
 \]</div>
 <p><strong>Key:</strong> Tokens in <span class="arithmatex">\(x\)</span> are excluded from the loss.</p>
-<p><strong>Why masking matters:</strong>
-- Prevents prompt memorization
-- Ensures gradients only optimize response generation
-- Stabilizes alignment behavior</p>
+<p><strong>Why masking matters:</strong></p>
+<ul>
+<li>Prevents prompt memorization</li>
+<li>Ensures gradients only optimize response generation</li>
+<li>Stabilizes alignment behavior</li>
+</ul>
 <hr />
 <h3 id="22-task-formatting">2.2 Task Formatting<a class="headerlink" href="#22-task-formatting" title="Permanent link">&para;</a></h3>
 <p>Modern SFT uses <strong>structured role-based templates</strong> (ChatML, LLaMA-style):</p>
@@ -1916,29 +1861,34 @@
 <li><strong>Multi-turn state compression:</strong> Helps model compress dialogue history into latent states</li>
 </ol>
 <hr />
-<hr />
 <h2 id="3-data-strategy">3. Data Strategy<a class="headerlink" href="#3-data-strategy" title="Permanent link">&para;</a></h2>
 <h3 id="31-prompt-diversity-as-regularization">3.1 Prompt Diversity as Regularization<a class="headerlink" href="#31-prompt-diversity-as-regularization" title="Permanent link">&para;</a></h3>
 <p>Diversity prevents shortcut learning and maintains circuit coverage.</p>
-<p><strong>Semantic diversity:</strong>
-- Math and symbolic reasoning
-- Code synthesis
-- Creative generation
-- Factual recall
-- Conversational grounding</p>
-<p><strong>Structural diversity:</strong>
-- Paraphrased intents → prevents lexical memorization
-- Variable verbosity → avoids length priors
-- Explicit vs implicit constraints → forces instruction parsing</p>
+<p><strong>Semantic diversity:</strong></p>
+<ul>
+<li>Math and symbolic reasoning</li>
+<li>Code synthesis</li>
+<li>Creative generation</li>
+<li>Factual recall</li>
+<li>Conversational grounding</li>
+</ul>
+<p><strong>Structural diversity:</strong></p>
+<ul>
+<li>Paraphrased intents → prevents lexical memorization</li>
+<li>Variable verbosity → avoids length priors</li>
+<li>Explicit vs implicit constraints → forces instruction parsing</li>
+</ul>
 <p><strong>Key insight:</strong> Insufficient diversity causes models to learn <em>response templates</em> instead of <em>instruction semantics</em>.</p>
 <hr />
 <h3 id="32-the-lima-hypothesis">3.2 The LIMA Hypothesis<a class="headerlink" href="#32-the-lima-hypothesis" title="Permanent link">&para;</a></h3>
 <p><strong>"Less Is More for Alignment"</strong></p>
 <p>~1,000 high-quality examples can outperform tens of thousands of noisy ones.</p>
-<p><strong>Implications:</strong>
-- Curation &gt; scale
-- Labeler expertise is critical
-- Reduces overfitting and style bias</p>
+<p><strong>Implications:</strong></p>
+<ul>
+<li>Curation &gt; scale</li>
+<li>Labeler expertise is critical</li>
+<li>Reduces overfitting and style bias</li>
+</ul>
 <hr />
 <h3 id="33-typical-sft-data-mix">3.3 Typical SFT Data Mix<a class="headerlink" href="#33-typical-sft-data-mix" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1949,7 +1899,6 @@
 <li>Multi-turn conversations</li>
 </ul>
 <hr />
-<hr />
 <h2 id="4-synthetic-data-generation">4. Synthetic Data Generation<a class="headerlink" href="#4-synthetic-data-generation" title="Permanent link">&para;</a></h2>
 <h3 id="41-self-instruct">4.1 Self-Instruct<a class="headerlink" href="#41-self-instruct" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1959,31 +1908,40 @@
 </ol>
 <hr />
 <h3 id="42-evol-instruct-as-curriculum-learning">4.2 Evol-Instruct as Curriculum Learning<a class="headerlink" href="#42-evol-instruct-as-curriculum-learning" title="Permanent link">&para;</a></h3>
-<p>Creates implicit difficulty progression:
-- Base instruction
-- Added constraints
-- Multi-hop reasoning
-- Strict formatting/safety requirements</p>
-<p><strong>Improves:</strong>
-- Instruction decomposition
-- Constraint satisfaction
-- Planning depth</p>
+<p>Creates implicit difficulty progression:</p>
+<ul>
+<li>Base instruction</li>
+<li>Added constraints</li>
+<li>Multi-hop reasoning</li>
+<li>Strict formatting/safety requirements</li>
+</ul>
+<p><strong>Improves:</strong></p>
+<ul>
+<li>Instruction decomposition</li>
+<li>Constraint satisfaction</li>
+<li>Planning depth</li>
+</ul>
 <hr />
 <h3 id="43-rejection-sampling-best-of-n">4.3 Rejection Sampling (Best-of-N)<a class="headerlink" href="#43-rejection-sampling-best-of-n" title="Permanent link">&para;</a></h3>
-<p><strong>Process:</strong>
-1. Generate <span class="arithmatex">\(K\)</span> responses per prompt
-2. Score using reward model or stronger reference model
-3. Select best response
-4. Fine-tune on selected outputs</p>
-<p><strong>Benefits:</strong>
-- Sharpens instruction adherence without RL
-- Reduces variance vs RLHF
-- Biases toward high-reward modes</p>
-<p><strong>Risks:</strong>
-- Over-optimization toward reward model
-- Reduced output diversity
-- Reward hacking with weak scorers</p>
-<hr />
+<p><strong>Process:</strong></p>
+<ol>
+<li>Generate <span class="arithmatex">\(K\)</span> responses per prompt</li>
+<li>Score using reward model or stronger reference model</li>
+<li>Select best response</li>
+<li>Fine-tune on selected outputs</li>
+</ol>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>Sharpens instruction adherence without RL</li>
+<li>Reduces variance vs RLHF</li>
+<li>Biases toward high-reward modes</li>
+</ul>
+<p><strong>Risks:</strong></p>
+<ul>
+<li>Over-optimization toward reward model</li>
+<li>Reduced output diversity</li>
+<li>Reward hacking with weak scorers</li>
+</ul>
 <hr />
 <h2 id="5-training-optimizations">5. Training Optimizations<a class="headerlink" href="#5-training-optimizations" title="Permanent link">&para;</a></h2>
 <table>
@@ -2023,68 +1981,88 @@
 </tbody>
 </table>
 <h3 id="51-packing-vs-padding">5.1 Packing vs Padding<a class="headerlink" href="#51-packing-vs-padding" title="Permanent link">&para;</a></h3>
-<p><strong>Padding:</strong> All sequences padded to longest length
-- Wastes compute on <code>[PAD]</code> tokens
-- Low token utilization
-- Simple implementation</p>
+<p><strong>Padding:</strong> All sequences padded to longest length</p>
+<ul>
+<li>Wastes compute on <code>[PAD]</code> tokens</li>
+<li>Low token utilization</li>
+<li>Simple implementation</li>
+</ul>
 <p><strong>Packing:</strong> Multiple samples concatenated into one sequence
 <div class="highlight"><pre><span></span><code>[Prompt₁ → Response₁ &lt;EOS&gt; Prompt₂ → Response₂ &lt;EOS&gt; ...]
 </code></pre></div></p>
-<p><strong>Benefits:</strong>
-- 2-3x throughput improvement
-- Higher gradient signal density
-- Better GPU utilization</p>
-<p><strong>Implementation requirements:</strong>
-- Loss masking at sample boundaries
-- Attention masking to prevent cross-example leakage
-- Proper EOS handling</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li>2-3x throughput improvement</li>
+<li>Higher gradient signal density</li>
+<li>Better GPU utilization</li>
+</ul>
+<p><strong>Implementation requirements:</strong></p>
+<ul>
+<li>Loss masking at sample boundaries</li>
+<li>Attention masking to prevent cross-example leakage</li>
+<li>Proper EOS handling</li>
+</ul>
 <hr />
 <h3 id="52-neftune-noisy-embeddings-fine-tuning">5.2 NEFTune (Noisy Embeddings Fine-Tuning)<a class="headerlink" href="#52-neftune-noisy-embeddings-fine-tuning" title="Permanent link">&para;</a></h3>
 <p><strong>Core idea:</strong> Inject controlled noise into embeddings during training.</p>
-<p><strong>Why it works:</strong>
-- Prevents token memorization
-- Improves OOD robustness
-- Smooths loss landscape</p>
-<p><strong>How:</strong>
-- Add Gaussian noise <span class="arithmatex">\(\epsilon \sim \mathcal{N}(0, \sigma^2)\)</span> to embeddings
-- Keep <span class="arithmatex">\(\sigma\)</span> small to preserve semantics
-- Noise shapes gradient updates continuously</p>
-<p><strong>Recent trends (2025-2026):</strong>
-- Standard in instruction-tuning pipelines
-- Layer-wise noise schedules common
-- Combined with packing for long-context dialogues</p>
-<hr />
+<p><strong>Why it works:</strong></p>
+<ul>
+<li>Prevents token memorization</li>
+<li>Improves OOD robustness</li>
+<li>Smooths loss landscape</li>
+</ul>
+<p><strong>How:</strong></p>
+<ul>
+<li>Add Gaussian noise <span class="arithmatex">\(\epsilon \sim \mathcal{N}(0, \sigma^2)\)</span> to embeddings</li>
+<li>Keep <span class="arithmatex">\(\sigma\)</span> small to preserve semantics</li>
+<li>Noise shapes gradient updates continuously</li>
+</ul>
+<p><strong>Recent trends (2025-2026):</strong></p>
+<ul>
+<li>Standard in instruction-tuning pipelines</li>
+<li>Layer-wise noise schedules common</li>
+<li>Combined with packing for long-context dialogues</li>
+</ul>
 <hr />
 <h2 id="6-common-challenges">6. Common Challenges<a class="headerlink" href="#6-common-challenges" title="Permanent link">&para;</a></h2>
 <h3 id="61-catastrophic-forgetting">6.1 Catastrophic Forgetting<a class="headerlink" href="#61-catastrophic-forgetting" title="Permanent link">&para;</a></h3>
 <p>Model loses pre-training knowledge.</p>
-<p><strong>Causes:</strong>
-- Narrow SFT domain
-- High learning rates
-- Full fine-tuning on small datasets</p>
-<p><strong>Mitigations:</strong>
-- Mix 5-10% pre-training data
-- Use LoRA/PEFT methods
-- Lower learning rates</p>
+<p><strong>Causes:</strong></p>
+<ul>
+<li>Narrow SFT domain</li>
+<li>High learning rates</li>
+<li>Full fine-tuning on small datasets</li>
+</ul>
+<p><strong>Mitigations:</strong></p>
+<ul>
+<li>Mix 5-10% pre-training data</li>
+<li>Use LoRA/PEFT methods</li>
+<li>Lower learning rates</li>
+</ul>
 <hr />
 <h3 id="62-overfitting">6.2 Overfitting<a class="headerlink" href="#62-overfitting" title="Permanent link">&para;</a></h3>
 <p>Model learns labeler style, not task intent.</p>
-<p><strong>Symptoms:</strong>
-- Over-politeness
-- Repetitive phrasing
-- Template-like answers</p>
-<p><strong>Mitigations:</strong>
-- Prompt diversity
-- Early stopping
-- NEFTune noise injection</p>
+<p><strong>Symptoms:</strong></p>
+<ul>
+<li>Over-politeness</li>
+<li>Repetitive phrasing</li>
+<li>Template-like answers</li>
+</ul>
+<p><strong>Mitigations:</strong></p>
+<ul>
+<li>Prompt diversity</li>
+<li>Early stopping</li>
+<li>NEFTune noise injection</li>
+</ul>
 <hr />
 <h3 id="63-increased-hallucinations">6.3 Increased Hallucinations<a class="headerlink" href="#63-increased-hallucinations" title="Permanent link">&para;</a></h3>
 <p>Caused by knowledge contradiction between SFT and pre-training data.</p>
-<p><strong>Mitigations:</strong>
-- Fact-consistent SFT data
-- Retrieval-augmented generation
-- Post-SFT preference optimization</p>
-<hr />
+<p><strong>Mitigations:</strong></p>
+<ul>
+<li>Fact-consistent SFT data</li>
+<li>Retrieval-augmented generation</li>
+<li>Post-SFT preference optimization</li>
+</ul>
 <hr />
 <h2 id="7-lora-vs-full-fine-tuning">7. LoRA vs Full Fine-Tuning<a class="headerlink" href="#7-lora-vs-full-fine-tuning" title="Permanent link">&para;</a></h2>
 <h3 id="lora-peft">LoRA (PEFT)<a class="headerlink" href="#lora-peft" title="Permanent link">&para;</a></h3>
@@ -2102,7 +2080,6 @@
 <li><strong>Use for:</strong> Knowledge changes</li>
 </ul>
 <p><strong>Rule of thumb:</strong> Behavior change → LoRA | Knowledge change → Full fine-tuning</p>
-<hr />
 <hr />
 <h2 id="8-sft-vs-pre-training">8. SFT vs Pre-training<a class="headerlink" href="#8-sft-vs-pre-training" title="Permanent link">&para;</a></h2>
 <table>
@@ -2142,18 +2119,6 @@
 </tbody>
 </table>
 <hr />
-<hr />
-<h2 id="9-common-interview-questions">9. Common Interview Questions<a class="headerlink" href="#9-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="conceptual-questions">Conceptual Questions<a class="headerlink" href="#conceptual-questions" title="Permanent link">&para;</a></h3>
-<p><strong>Q1: What's the fundamental difference between pre-training and SFT?</strong></p>
-<p>Pre-training learns <em>what to know</em> (world modeling via next-token prediction on massive unlabeled data). SFT learns <em>how to respond</em> (instruction following via supervised learning on curated examples). Pre-training builds capabilities; SFT aligns behavior.</p>
-<hr />
-<p><strong>Q2: Why do we mask the prompt tokens during SFT loss calculation?</strong></p>
-<p>Without masking, the model would waste gradients trying to "predict" the prompt it was just given. Masking ensures gradients only optimize the assistant's response generation, preventing prompt memorization and improving alignment stability.</p>
-<hr />
-<p><strong>Q3: Explain the LIMA hypothesis and its implications.</strong></p>
-<p>LIMA ("Less Is More for Alignment") showed that ~1,000 carefully curated examples can match or exceed the performance of tens of thousands of lower-quality examples. This implies that data quality and diversity matter far more than quantity for alignment, and suggests that most capabilities come from pre-training rather than SFT.</p>
-<hr />
 <h3 id="technical-questions">Technical Questions<a class="headerlink" href="#technical-questions" title="Permanent link">&para;</a></h3>
 <p><strong>Q4: How does packing improve SFT efficiency, and what are the implementation risks?</strong></p>
 <p>Packing concatenates multiple short samples into single sequences up to max context length, improving throughput 2-3x by eliminating padding waste. Implementation must ensure: (1) loss masking resets at sample boundaries, (2) attention masks prevent cross-example leakage, (3) proper EOS token handling. Without these, you get cross-contamination and training instability.</p>
@@ -2170,34 +2135,44 @@
 <h3 id="design-questions">Design Questions<a class="headerlink" href="#design-questions" title="Permanent link">&para;</a></h3>
 <p><strong>Q8: You notice your SFT model is overly verbose and repetitive. What's likely wrong and how do you fix it?</strong></p>
 <p><strong>Diagnosis:</strong> The model is overfitting to labeler style rather than learning instruction semantics. This happens with insufficient prompt diversity or training too long.</p>
-<p><strong>Solutions:</strong>
-- Increase structural diversity (paraphrasing, variable verbosity)
-- Apply early stopping based on validation metrics
-- Use NEFTune to inject noise
-- Check if dataset has repetitive labeler patterns</p>
+<p><strong>Solutions:</strong></p>
+<ul>
+<li>Increase structural diversity (paraphrasing, variable verbosity)</li>
+<li>Apply early stopping based on validation metrics</li>
+<li>Use NEFTune to inject noise</li>
+<li>Check if dataset has repetitive labeler patterns</li>
+</ul>
 <hr />
 <p><strong>Q9: When would you choose LoRA over full fine-tuning for SFT?</strong></p>
-<p><strong>Choose LoRA when:</strong>
-- Making behavioral/style changes (tone, format, refusals)
-- Working with limited compute
-- Want to preserve pre-training knowledge
-- Need to deploy multiple adapters</p>
-<p><strong>Choose full fine-tuning when:</strong>
-- Large domain shift (e.g., medical → legal)
-- Need to inject significant new knowledge
-- Have compute budget and careful regularization strategy</p>
+<p><strong>Choose LoRA when:</strong></p>
+<ul>
+<li>Making behavioral/style changes (tone, format, refusals)</li>
+<li>Working with limited compute</li>
+<li>Want to preserve pre-training knowledge</li>
+<li>Need to deploy multiple adapters</li>
+</ul>
+<p><strong>Choose full fine-tuning when:</strong></p>
+<ul>
+<li>Large domain shift (e.g., medical → legal)</li>
+<li>Need to inject significant new knowledge</li>
+<li>Have compute budget and careful regularization strategy</li>
+</ul>
 <hr />
 <p><strong>Q10: Your SFT model hallucinates more than the base model. Why and how do you debug?</strong></p>
-<p><strong>Likely causes:</strong>
-1. SFT data contradicts pre-training facts
-2. Model prioritizes format compliance over correctness
-3. Overfitting to confident but wrong labeler responses</p>
-<p><strong>Debug steps:</strong>
-1. Sample hallucination cases and trace to training data
-2. Check for fact contradictions between SFT and base model knowledge
-3. Evaluate on factual QA benchmarks
-4. Consider adding retrieval augmentation or fact-checking in SFT data
-5. Try preference optimization (DPO) post-SFT to penalize hallucinations</p>
+<p><strong>Likely causes:</strong></p>
+<ol>
+<li>SFT data contradicts pre-training facts</li>
+<li>Model prioritizes format compliance over correctness</li>
+<li>Overfitting to confident but wrong labeler responses</li>
+</ol>
+<p><strong>Debug steps:</strong></p>
+<ol>
+<li>Sample hallucination cases and trace to training data</li>
+<li>Check for fact contradictions between SFT and base model knowledge</li>
+<li>Evaluate on factual QA benchmarks</li>
+<li>Consider adding retrieval augmentation or fact-checking in SFT data</li>
+<li>Try preference optimization (DPO) post-SFT to penalize hallucinations</li>
+</ol>
 <hr />
 <h3 id="system-design">System Design<a class="headerlink" href="#system-design" title="Permanent link">&para;</a></h3>
 <p><strong>Q11: Design an SFT data pipeline for a new domain (e.g., medical assistant).</strong></p>
@@ -2241,17 +2216,20 @@
 </ol>
 <hr />
 <p><strong>Q12: How would you diagnose and fix a model that refuses benign requests after SFT?</strong></p>
-<p><strong>Diagnosis:</strong>
-- Over-indexed on safety/refusal examples
-- Poor prompt diversity in refusal data
-- Model learned conservative heuristics</p>
-<p><strong>Fixes:</strong>
-1. Audit refusal training data for false positives
-2. Add positive examples for borderline benign cases
-3. Use contrastive pairs (safe vs unsafe versions of similar prompts)
-4. Consider preference optimization to fine-tune refusal boundary
-5. Check system prompt isn't triggering false refusals</p>
-<hr />
+<p><strong>Diagnosis:</strong></p>
+<ul>
+<li>Over-indexed on safety/refusal examples</li>
+<li>Poor prompt diversity in refusal data</li>
+<li>Model learned conservative heuristics</li>
+</ul>
+<p><strong>Fixes:</strong></p>
+<ol>
+<li>Audit refusal training data for false positives</li>
+<li>Add positive examples for borderline benign cases</li>
+<li>Use contrastive pairs (safe vs unsafe versions of similar prompts)</li>
+<li>Consider preference optimization to fine-tune refusal boundary</li>
+<li>Check system prompt isn't triggering false refusals</li>
+</ol>
 <hr />
 <h2 id="10-key-takeaways">10. Key Takeaways<a class="headerlink" href="#10-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>

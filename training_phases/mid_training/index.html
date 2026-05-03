@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-overview" class="md-skip">
+        <a href="#mid-training" class="md-skip">
           Skip to content
         </a>
       
@@ -346,6 +346,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -377,6 +379,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -620,26 +624,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Common Interview Questions">
+    <nav class="md-nav" aria-label="9. Training Phase Comparison">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-understanding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Understanding
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-implementation" class="md-nav__link">
@@ -1255,29 +1241,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1486,6 +1449,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -1729,26 +1694,8 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Common Interview Questions">
+    <nav class="md-nav" aria-label="9. Training Phase Comparison">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#conceptual-understanding" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conceptual Understanding
-    </span>
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#technical-implementation" class="md-nav__link">
@@ -1819,34 +1766,35 @@
   
 
 
-  <h1>Mid-Training</h1>
-
+<h1 id="mid-training">Mid-Training<a class="headerlink" href="#mid-training" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
 <p><strong>Mid-training</strong>, also known as <strong>Continued Pre-Training</strong> or the <strong>Annealing Phase</strong>, is a critical intermediate stage in modern LLM development that bridges general pre-training and task-specific alignment (SFT/RLHF).</p>
 <p><strong>Core Purpose:</strong> Transform a general-purpose foundation model into a high-reasoning, domain-specialized system while minimizing catastrophic forgetting.</p>
-<p><strong>Key Benefits:</strong>
-- Domain specialization at scale
-- Enhanced reasoning capabilities
-- Reduced downstream alignment complexity
-- 2-5× reduction in SFT data requirements</p>
-<hr />
+<p><strong>Key Benefits:</strong></p>
+<ul>
+<li>Domain specialization at scale</li>
+<li>Enhanced reasoning capabilities</li>
+<li>Reduced downstream alignment complexity</li>
+<li>2-5× reduction in SFT data requirements</li>
+</ul>
 <hr />
 <h2 id="2-strategic-value">2. Strategic Value<a class="headerlink" href="#2-strategic-value" title="Permanent link">&para;</a></h2>
 <p>Mid-training has become essential for frontier models, serving three primary functions:</p>
 <h3 id="1-domain-deep-diving">1. Domain Deep-Diving<a class="headerlink" href="#1-domain-deep-diving" title="Permanent link">&para;</a></h3>
 <p>Injection of large-scale, curated domain corpora (law, biomedical, mathematics, code) that would dilute general pre-training but enable deep specialization.</p>
 <h3 id="2-reasoning-architecture">2. Reasoning Architecture<a class="headerlink" href="#2-reasoning-architecture" title="Permanent link">&para;</a></h3>
-<p>Transition from pattern matching to structured reasoning through exposure to:
-- Synthetic reasoning trajectories
-- Mathematical proofs
-- Multi-step problem-solving traces</p>
+<p>Transition from pattern matching to structured reasoning through exposure to:</p>
+<ul>
+<li>Synthetic reasoning trajectories</li>
+<li>Mathematical proofs</li>
+<li>Multi-step problem-solving traces</li>
+</ul>
 <h3 id="3-capability-extensions">3. Capability Extensions<a class="headerlink" href="#3-capability-extensions" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Long-context reasoning</li>
 <li>Tool usage priors</li>
 <li>Agentic behaviors</li>
 </ul>
-<hr />
 <hr />
 <h2 id="3-resource-requirements">3. Resource Requirements<a class="headerlink" href="#3-resource-requirements" title="Permanent link">&para;</a></h2>
 <table>
@@ -1880,7 +1828,6 @@
 </tr>
 </tbody>
 </table>
-<hr />
 <hr />
 <h2 id="4-training-configuration">4. Training Configuration<a class="headerlink" href="#4-training-configuration" title="Permanent link">&para;</a></h2>
 <h3 id="data-mixture-typical-2026-recipe">Data Mixture (Typical 2026 Recipe)<a class="headerlink" href="#data-mixture-typical-2026-recipe" title="Permanent link">&para;</a></h3>
@@ -1922,7 +1869,6 @@
 </ul>
 <p><strong>Benefits:</strong> Reduced forgetting, improved stability, lower compute cost</p>
 <hr />
-<hr />
 <h2 id="5-common-failure-modes">5. Common Failure Modes<a class="headerlink" href="#5-common-failure-modes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1956,7 +1902,6 @@
 </tbody>
 </table>
 <hr />
-<hr />
 <h2 id="6-evaluation-strategy">6. Evaluation Strategy<a class="headerlink" href="#6-evaluation-strategy" title="Permanent link">&para;</a></h2>
 <h3 id="online-metrics-during-training">Online Metrics (During Training)<a class="headerlink" href="#online-metrics-during-training" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1973,14 +1918,14 @@
 </ul>
 <p><strong>Why it matters:</strong> High rollback costs make early regression detection critical.</p>
 <hr />
-<hr />
 <h2 id="7-impact-on-downstream-stages">7. Impact on Downstream Stages<a class="headerlink" href="#7-impact-on-downstream-stages" title="Permanent link">&para;</a></h2>
-<p>A well-executed mid-training phase:
-- ✅ Reduces SFT data needs by 2-5×
-- ✅ Improves RLHF stability
-- ✅ Lowers reward hacking risk
-- ✅ Pre-internalizes reasoning norms</p>
-<hr />
+<p>A well-executed mid-training phase:</p>
+<ul>
+<li>✅ Reduces SFT data needs by 2-5×</li>
+<li>✅ Improves RLHF stability</li>
+<li>✅ Lowers reward hacking risk</li>
+<li>✅ Pre-internalizes reasoning norms</li>
+</ul>
 <hr />
 <h2 id="8-recent-advances-2025-2026">8. Recent Advances (2025-2026)<a class="headerlink" href="#8-recent-advances-2025-2026" title="Permanent link">&para;</a></h2>
 <h3 id="agentic-synthesis">Agentic Synthesis<a class="headerlink" href="#agentic-synthesis" title="Permanent link">&para;</a></h3>
@@ -1989,7 +1934,6 @@
 <p>Applying RL during mid-training to reward correct reasoning paths in math and code domains.</p>
 <h3 id="dynamic-curriculum-mixing">Dynamic Curriculum Mixing<a class="headerlink" href="#dynamic-curriculum-mixing" title="Permanent link">&para;</a></h3>
 <p>Using a "proctor" model to adjust data mixture in real-time based on primary model's loss patterns.</p>
-<hr />
 <hr />
 <h2 id="9-training-phase-comparison">9. Training Phase Comparison<a class="headerlink" href="#9-training-phase-comparison" title="Permanent link">&para;</a></h2>
 <table>
@@ -2035,41 +1979,31 @@
 </tbody>
 </table>
 <hr />
-<hr />
-<h2 id="10-common-interview-questions">10. Common Interview Questions<a class="headerlink" href="#10-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="conceptual-understanding">Conceptual Understanding<a class="headerlink" href="#conceptual-understanding" title="Permanent link">&para;</a></h3>
-<p><strong>Q1: What is the primary difference between pre-training and mid-training?</strong></p>
-<p><strong>A:</strong> Pre-training focuses on broad language understanding from diverse web data (5-15T tokens), while mid-training specializes the model on curated/synthetic data (100-500B tokens) for reasoning and domain expertise. Pre-training builds breadth; mid-training builds depth.</p>
-<hr />
-<p><strong>Q2: Why can't we just add specialized data during pre-training?</strong></p>
-<p><strong>A:</strong> Specialized data (math proofs, code, domain texts) would be diluted in the massive pre-training corpus. Mid-training allows controlled, high-concentration exposure after general capabilities are established, preventing domain data from being "drowned out."</p>
-<hr />
-<p><strong>Q3: What is catastrophic forgetting and how does mid-training address it?</strong></p>
-<p><strong>A:</strong> Catastrophic forgetting occurs when training on new data causes the model to lose previously learned knowledge. Mid-training mitigates this by:
-- Including 10-20% general data in the replay buffer
-- Using lower learning rates (annealing)
-- Selectively freezing early layers
-- Continuous evaluation on general benchmarks</p>
-<hr />
 <h3 id="technical-implementation">Technical Implementation<a class="headerlink" href="#technical-implementation" title="Permanent link">&para;</a></h3>
 <p><strong>Q4: Why is full optimizer state restoration critical in mid-training?</strong></p>
-<p><strong>A:</strong> Optimizer states (Adam/AdamW momentum and variance) encode the training trajectory and landscape geometry. Resetting them causes:
-- Loss spikes and divergence
-- Inefficient exploration of the new data distribution
-- Potential inability to recover model quality</p>
+<p><strong>A:</strong> Optimizer states (Adam/AdamW momentum and variance) encode the training trajectory and landscape geometry. Resetting them causes:</p>
+<ul>
+<li>Loss spikes and divergence</li>
+<li>Inefficient exploration of the new data distribution</li>
+<li>Potential inability to recover model quality</li>
+</ul>
 <p>Full state restoration ensures smooth continuation from pre-training.</p>
 <hr />
 <p><strong>Q5: Explain the learning rate schedule used in mid-training and why it differs from pre-training.</strong></p>
-<p><strong>A:</strong> Mid-training uses a <strong>re-warmup + cosine decay</strong> schedule:
-1. <strong>Re-warmup:</strong> Briefly increases LR to help the model adapt to the new data distribution
-2. <strong>Cosine decay to near-zero:</strong> Ensures weights settle deeply into specialized loss landscape valleys</p>
+<p><strong>A:</strong> Mid-training uses a <strong>re-warmup + cosine decay</strong> schedule:</p>
+<ol>
+<li><strong>Re-warmup:</strong> Briefly increases LR to help the model adapt to the new data distribution</li>
+<li><strong>Cosine decay to near-zero:</strong> Ensures weights settle deeply into specialized loss landscape valleys</li>
+</ol>
 <p>This differs from pre-training's longer, more gradual decay because mid-training starts from an already-trained model.</p>
 <hr />
 <p><strong>Q6: How does RoPE scaling enable long-context understanding?</strong></p>
-<p><strong>A:</strong> RoPE (Rotary Positional Embeddings) encodes position through rotation in embedding space. By increasing the base frequency θ (base scaling), we:
-- Compress the positional encoding frequency
-- Allow the model to interpret larger token distances
-- Extend the effective context window beyond pre-training limits</p>
+<p><strong>A:</strong> RoPE (Rotary Positional Embeddings) encodes position through rotation in embedding space. By increasing the base frequency θ (base scaling), we:</p>
+<ul>
+<li>Compress the positional encoding frequency</li>
+<li>Allow the model to interpret larger token distances</li>
+<li>Extend the effective context window beyond pre-training limits</li>
+</ul>
 <p>The model then learns to reason over these extended contexts during mid-training.</p>
 <hr />
 <h3 id="design-decisions">Design Decisions<a class="headerlink" href="#design-decisions" title="Permanent link">&para;</a></h3>
@@ -2099,71 +2033,88 @@
 <p>Choice depends on available compute, forgetting tolerance, and desired specialization depth.</p>
 <hr />
 <p><strong>Q8: Why include synthetic reasoning trajectories in the data mixture?</strong></p>
-<p><strong>A:</strong> Synthetic data from larger "teacher" models provides:
-- Explicit reasoning chains (step-by-step logic)
-- Higher density of correct reasoning patterns than web data
-- Controlled difficulty and coverage of reasoning types
-- Scalability beyond human-annotated examples</p>
+<p><strong>A:</strong> Synthetic data from larger "teacher" models provides:</p>
+<ul>
+<li>Explicit reasoning chains (step-by-step logic)</li>
+<li>Higher density of correct reasoning patterns than web data</li>
+<li>Controlled difficulty and coverage of reasoning types</li>
+<li>Scalability beyond human-annotated examples</li>
+</ul>
 <p>This has proven more effective for reasoning than raw data alone.</p>
 <hr />
 <h3 id="debugging-evaluation">Debugging &amp; Evaluation<a class="headerlink" href="#debugging-evaluation" title="Permanent link">&para;</a></h3>
 <p><strong>Q9: Your mid-training run shows increasing perplexity on general benchmarks despite improving on domain tasks. What's happening and how do you fix it?</strong></p>
-<p><strong>A:</strong> This indicates <strong>catastrophic forgetting</strong>. Solutions:
-1. Increase replay buffer proportion (from 10% to 20-30%)
-2. Reduce learning rate more aggressively
-3. Freeze more early layers
-4. Add explicit general knowledge checkpointing
-5. Mix in more diverse general data</p>
+<p><strong>A:</strong> This indicates <strong>catastrophic forgetting</strong>. Solutions:</p>
+<ol>
+<li>Increase replay buffer proportion (from 10% to 20-30%)</li>
+<li>Reduce learning rate more aggressively</li>
+<li>Freeze more early layers</li>
+<li>Add explicit general knowledge checkpointing</li>
+<li>Mix in more diverse general data</li>
+</ol>
 <p>Monitor the ratio of domain improvement to general degradation.</p>
 <hr />
 <p><strong>Q10: How do you detect "context length illusions" where the model appears to handle long contexts but isn't actually reasoning over them?</strong></p>
-<p><strong>A:</strong> Use <strong>needle-in-haystack</strong> tests:
-- Place specific information at various positions in long contexts
-- Ask questions requiring that information
-- Verify the model retrieves from all positions (especially middle)
-- Check if removal of key information changes answers</p>
+<p><strong>A:</strong> Use <strong>needle-in-haystack</strong> tests:</p>
+<ul>
+<li>Place specific information at various positions in long contexts</li>
+<li>Ask questions requiring that information</li>
+<li>Verify the model retrieves from all positions (especially middle)</li>
+<li>Check if removal of key information changes answers</li>
+</ul>
 <p>Also analyze loss by token position—true long-context models show stable loss across positions.</p>
 <hr />
 <h3 id="advanced-topics">Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permanent link">&para;</a></h3>
 <p><strong>Q11: Describe the concept of "Internalized RL" during mid-training.</strong></p>
-<p><strong>A:</strong> Instead of applying RL only during post-training, some recent approaches apply lightweight RL during mid-training to:
-- Reward correct reasoning paths in real-time
-- Shape the model's reasoning prior before behavioral alignment
-- Reduce need for heavy RLHF later</p>
+<p><strong>A:</strong> Instead of applying RL only during post-training, some recent approaches apply lightweight RL during mid-training to:</p>
+<ul>
+<li>Reward correct reasoning paths in real-time</li>
+<li>Shape the model's reasoning prior before behavioral alignment</li>
+<li>Reduce need for heavy RLHF later</li>
+</ul>
 <p>This creates models that inherently prefer correct reasoning structures.</p>
 <hr />
 <p><strong>Q12: You have limited compute budget. Should you extend pre-training or invest in mid-training?</strong></p>
-<p><strong>A:</strong> <strong>Generally mid-training</strong> if:
-- You need domain specialization or reasoning
-- Pre-training already achieved good general capabilities
-- You have high-quality curated/synthetic data
-- Downstream efficiency (less SFT data) matters</p>
-<p><strong>Extend pre-training</strong> if:
-- General knowledge gaps remain
-- You have abundant diverse web data
-- Target domains are broad and varied</p>
+<p><strong>A:</strong> <strong>Generally mid-training</strong> if:</p>
+<ul>
+<li>You need domain specialization or reasoning</li>
+<li>Pre-training already achieved good general capabilities</li>
+<li>You have high-quality curated/synthetic data</li>
+<li>Downstream efficiency (less SFT data) matters</li>
+</ul>
+<p><strong>Extend pre-training</strong> if:</p>
+<ul>
+<li>General knowledge gaps remain</li>
+<li>You have abundant diverse web data</li>
+<li>Target domains are broad and varied</li>
+</ul>
 <p>Mid-training offers better ROI for specialization at 5-15% of pre-training cost.</p>
 <hr />
-<hr />
 <h2 id="quick-reference-checklist">Quick Reference Checklist<a class="headerlink" href="#quick-reference-checklist" title="Permanent link">&para;</a></h2>
-<p><strong>Before Mid-Training:</strong>
-- [ ] Full optimizer state saved from pre-training
-- [ ] Data mixture designed and validated (&gt;95% quality)
-- [ ] Replay buffer prepared (10-20% general data)
-- [ ] Evaluation suite ready (general + domain tests)
-- [ ] RoPE scaling strategy defined (if extending context)</p>
-<p><strong>During Mid-Training:</strong>
-- [ ] Monitor replay buffer perplexity
-- [ ] Track reasoning consistency metrics
-- [ ] Check loss by token position
-- [ ] Validate context length understanding
-- [ ] Test tool-use capabilities (if applicable)</p>
-<p><strong>After Mid-Training:</strong>
-- [ ] Run full eval suite (general + specialized)
-- [ ] Conduct needle-in-haystack tests
-- [ ] Measure SFT data efficiency gains
-- [ ] Document mixture recipe and outcomes
-- [ ] Save final checkpoint + optimizer state</p>
+<p><strong>Before Mid-Training:</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Full optimizer state saved from pre-training</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Data mixture designed and validated (&gt;95% quality)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Replay buffer prepared (10-20% general data)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Evaluation suite ready (general + domain tests)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> RoPE scaling strategy defined (if extending context)</li>
+</ul>
+<p><strong>During Mid-Training:</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Monitor replay buffer perplexity</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Track reasoning consistency metrics</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Check loss by token position</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Validate context length understanding</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Test tool-use capabilities (if applicable)</li>
+</ul>
+<p><strong>After Mid-Training:</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Run full eval suite (general + specialized)</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Conduct needle-in-haystack tests</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Measure SFT data efficiency gains</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Document mixture recipe and outcomes</li>
+<li class="task-list-item"><input type="checkbox" disabled/> Save final checkpoint + optimizer state</li>
+</ul>
 <hr />
 
 

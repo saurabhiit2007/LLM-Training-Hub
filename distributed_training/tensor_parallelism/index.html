@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-core-concept" class="md-skip">
+        <a href="#tensor-parallelism" class="md-skip">
           Skip to content
         </a>
       
@@ -485,6 +485,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -516,6 +518,8 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
+  
+    
   
   
     <label class="md-nav__title" for="__toc">
@@ -683,66 +687,6 @@
       8. Memory Savings
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-whats-the-difference-between-column-and-row-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "What's the difference between column and row parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-why-is-tp-usually-limited-to-within-a-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "Why is TP usually limited to within a node?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-how-does-tp-interact-with-batch-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "How does TP interact with batch size?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "What's the communication pattern for TP compared to DP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-how-would-you-debug-slow-tp-training" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "How would you debug slow TP training?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1273,29 +1217,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../optimization/prefix_caching/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Prefix Caching
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -1505,6 +1426,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1675,66 +1598,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#9-common-interview-questions" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Common Interview Questions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. Common Interview Questions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#q1-whats-the-difference-between-column-and-row-parallelism" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q1: "What's the difference between column and row parallelism?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q2-why-is-tp-usually-limited-to-within-a-node" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q2: "Why is TP usually limited to within a node?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q3-how-does-tp-interact-with-batch-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q3: "How does TP interact with batch size?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q4: "What's the communication pattern for TP compared to DP?"
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#q5-how-would-you-debug-slow-tp-training" class="md-nav__link">
-    <span class="md-ellipsis">
-      Q5: "How would you debug slow TP training?"
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#10-sequence-parallelism-extension" class="md-nav__link">
     <span class="md-ellipsis">
       10. Sequence Parallelism Extension
@@ -1855,22 +1718,21 @@
   
 
 
-  <h1>Tensor Parallelism</h1>
-
+<h1 id="tensor-parallelism">Tensor Parallelism<a class="headerlink" href="#tensor-parallelism" title="Permanent link">&para;</a></h1>
 <h2 id="1-core-concept">1. Core Concept<a class="headerlink" href="#1-core-concept" title="Permanent link">&para;</a></h2>
 <p>Tensor Parallelism splits <strong>individual layers</strong> across devices so that a single layer's computation is distributed.</p>
 <p><strong>When to use</strong>: When individual layers are too large to fit on a single GPU</p>
 <hr />
-<hr />
 <h2 id="2-the-basic-idea">2. The Basic Idea<a class="headerlink" href="#2-the-basic-idea" title="Permanent link">&para;</a></h2>
 <p>Consider a linear layer: <strong>Y = XW</strong></p>
-<p>Where:
-- X: <code>[batch, hidden_in]</code>
-- W: <code>[hidden_in, hidden_out]</code>
-- Y: <code>[batch, hidden_out]</code></p>
+<p>Where:</p>
+<ul>
+<li>X: <code>[batch, hidden_in]</code></li>
+<li>W: <code>[hidden_in, hidden_out]</code></li>
+<li>Y: <code>[batch, hidden_out]</code></li>
+</ul>
 <p><strong>Problem</strong>: If <code>hidden_out</code> is very large (e.g., 50,000), W doesn't fit on one GPU.</p>
 <p><strong>Solution</strong>: Split W across GPUs and compute partial results.</p>
-<hr />
 <hr />
 <h2 id="3-column-parallelism-output-dimension-split">3. Column Parallelism (Output Dimension Split)<a class="headerlink" href="#3-column-parallelism-output-dimension-split" title="Permanent link">&para;</a></h2>
 <h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
@@ -1888,11 +1750,15 @@ Y₂ = X · W₂  (shape: [batch, hidden_out/k])
 <p><strong>Result</strong>: Each Yᵢ is a <strong>partial output</strong> (different features).</p>
 <hr />
 <h3 id="communication-pattern">Communication Pattern<a class="headerlink" href="#communication-pattern" title="Permanent link">&para;</a></h3>
-<p><strong>Forward Pass</strong>:
-- All-Gather to concatenate [Y₁, Y₂, ...] → Y
-- Each GPU gets the full output</p>
-<p><strong>Backward Pass</strong>:
-- Gradients w.r.t. X require All-Reduce</p>
+<p><strong>Forward Pass</strong>:</p>
+<ul>
+<li>All-Gather to concatenate [Y₁, Y₂, ...] → Y</li>
+<li>Each GPU gets the full output</li>
+</ul>
+<p><strong>Backward Pass</strong>:</p>
+<ul>
+<li>Gradients w.r.t. X require All-Reduce</li>
+</ul>
 <div class="highlight"><pre><span></span><code>Forward:  X → [Y₁, Y₂, Y₃] → All-Gather → Y
 Backward: Y_grad → [X_grad₁, X_grad₂, X_grad₃] → All-Reduce → X_grad
 </code></pre></div>
@@ -1902,7 +1768,6 @@ Backward: Y_grad → [X_grad₁, X_grad₂, X_grad₃] → All-Reduce → X_grad
 <li>Feed-forward network (FFN) in transformers</li>
 <li>First linear projection in attention (Q, K, V)</li>
 </ul>
-<hr />
 <hr />
 <h2 id="4-row-parallelism-input-dimension-split">4. Row Parallelism (Input Dimension Split)<a class="headerlink" href="#4-row-parallelism-input-dimension-split" title="Permanent link">&para;</a></h2>
 <h3 id="how-it-works_1">How It Works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h3>
@@ -1925,11 +1790,15 @@ Y₂ = X₂ · W₂  (shape: [batch, hidden_out])
 <p><strong>Result</strong>: Each Yᵢ is a <strong>partial sum</strong> for the same output features.</p>
 <hr />
 <h3 id="communication-pattern_1">Communication Pattern<a class="headerlink" href="#communication-pattern_1" title="Permanent link">&para;</a></h3>
-<p><strong>Forward Pass</strong>:
-- All-Reduce to sum [Y₁, Y₂, ...] → Y
-- Each GPU gets the same final output</p>
-<p><strong>Backward Pass</strong>:
-- Gradient flow mirrors forward communication</p>
+<p><strong>Forward Pass</strong>:</p>
+<ul>
+<li>All-Reduce to sum [Y₁, Y₂, ...] → Y</li>
+<li>Each GPU gets the same final output</li>
+</ul>
+<p><strong>Backward Pass</strong>:</p>
+<ul>
+<li>Gradient flow mirrors forward communication</li>
+</ul>
 <div class="highlight"><pre><span></span><code>Forward:  [X₁, X₂] → [Y₁, Y₂] → All-Reduce → Y
 Backward: Y_grad → All-Reduce → [X₁_grad, X₂_grad]
 </code></pre></div>
@@ -1939,7 +1808,6 @@ Backward: Y_grad → All-Reduce → [X₁_grad, X₂_grad]
 <li>Output projection in attention</li>
 <li>Second FFN layer in transformers</li>
 </ul>
-<hr />
 <hr />
 <h2 id="5-why-both-exist-complementary-design">5. Why Both Exist: Complementary Design<a class="headerlink" href="#5-why-both-exist-complementary-design" title="Permanent link">&para;</a></h2>
 <p>Column and row parallelism are <strong>complementary</strong> and minimize total communication:</p>
@@ -1963,7 +1831,6 @@ Output
 </code></pre></div>
 <p><strong>Key Insight</strong>: Alternating column/row avoids redundant communication and balances memory.</p>
 <hr />
-<hr />
 <h2 id="6-megatron-lm-style-tp">6. Megatron-LM Style TP<a class="headerlink" href="#6-megatron-lm-style-tp" title="Permanent link">&para;</a></h2>
 <p>Megatron-LM popularized this pattern for transformers:</p>
 <h3 id="self-attention">Self-Attention<a class="headerlink" href="#self-attention" title="Permanent link">&para;</a></h3>
@@ -1986,20 +1853,22 @@ Output
 <span class="n">output</span> <span class="o">=</span> <span class="n">row_parallel_linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">)</span>  <span class="c1"># All-Reduce</span>
 </code></pre></div>
 <hr />
-<hr />
 <h2 id="7-communication-cost">7. Communication Cost<a class="headerlink" href="#7-communication-cost" title="Permanent link">&para;</a></h2>
 <p>For a single linear layer with Ψ parameters:</p>
-<p><strong>Column Parallelism</strong>:
-- Forward: All-Gather → <code>2Ψ/k</code> communicated per GPU
-- Backward: All-Reduce → <code>2Ψ/k</code> communicated per GPU</p>
-<p><strong>Row Parallelism</strong>:
-- Forward: All-Reduce → <code>2Ψ/k</code> communicated per GPU
-- Backward: Similar</p>
+<p><strong>Column Parallelism</strong>:</p>
+<ul>
+<li>Forward: All-Gather → <code>2Ψ/k</code> communicated per GPU</li>
+<li>Backward: All-Reduce → <code>2Ψ/k</code> communicated per GPU</li>
+</ul>
+<p><strong>Row Parallelism</strong>:</p>
+<ul>
+<li>Forward: All-Reduce → <code>2Ψ/k</code> communicated per GPU</li>
+<li>Backward: Similar</li>
+</ul>
 <p><strong>Total per layer</strong>: ~<code>4Ψ/k</code> per GPU</p>
 <blockquote>
 <p><strong>Critical</strong>: Communication happens <strong>inside forward/backward pass</strong>, making TP very latency-sensitive.</p>
 </blockquote>
-<hr />
 <hr />
 <h2 id="8-memory-savings">8. Memory Savings<a class="headerlink" href="#8-memory-savings" title="Permanent link">&para;</a></h2>
 <p>For model with Ψ parameters across k GPUs:</p>
@@ -2029,90 +1898,11 @@ Output
 </tr>
 </tbody>
 </table>
-<p><strong>Example</strong>: 7B model with 8-way TP
-- Parameters: 14GB / 8 = 1.75GB per GPU
-- Optimizer: 84GB / 8 = 10.5GB per GPU</p>
-<hr />
-<hr />
-<h2 id="9-common-interview-questions">9. Common Interview Questions<a class="headerlink" href="#9-common-interview-questions" title="Permanent link">&para;</a></h2>
-<h3 id="q1-whats-the-difference-between-column-and-row-parallelism">Q1: "What's the difference between column and row parallelism?"<a class="headerlink" href="#q1-whats-the-difference-between-column-and-row-parallelism" title="Permanent link">&para;</a></h3>
-<p><strong>Strong Answer</strong>:
-- <strong>Column Parallelism</strong>: Splits output features
-  - Each GPU computes different output dimensions
-  - Needs All-Gather to reconstruct full output
-  - Used for: QKV projection, first FFN layer</p>
+<p><strong>Example</strong>: 7B model with 8-way TP</p>
 <ul>
-<li><strong>Row Parallelism</strong>: Splits input features</li>
-<li>Each GPU computes partial sums</li>
-<li>Needs All-Reduce to sum results</li>
-<li>Used for: Attention output, second FFN layer</li>
+<li>Parameters: 14GB / 8 = 1.75GB per GPU</li>
+<li>Optimizer: 84GB / 8 = 10.5GB per GPU</li>
 </ul>
-<p>They're <strong>complementary</strong> - alternating minimizes communication.</p>
-<hr />
-<h3 id="q2-why-is-tp-usually-limited-to-within-a-node">Q2: "Why is TP usually limited to within a node?"<a class="headerlink" href="#q2-why-is-tp-usually-limited-to-within-a-node" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:
-1. <strong>Latency sensitivity</strong>: Communication happens inside fwd/bwd pass
-2. <strong>Bandwidth requirements</strong>: NVLink (900 GB/s) &gt;&gt; Ethernet (100 Gb/s)
-3. <strong>Frequent communication</strong>: Every layer needs All-Gather or All-Reduce</p>
-<p><strong>Typical setup</strong>:
-- 8-way TP within a node (8 GPUs on NVLink)
-- Data Parallelism or Pipeline Parallelism across nodes</p>
-<hr />
-<h3 id="q3-how-does-tp-interact-with-batch-size">Q3: "How does TP interact with batch size?"<a class="headerlink" href="#q3-how-does-tp-interact-with-batch-size" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:
-- TP <strong>does NOT split the batch</strong> - that's Data Parallelism
-- All GPUs process the <strong>same batch</strong>
-- Each GPU holds different parameters/activations
-- Batch size per GPU remains the same
-- Total compute is distributed across model dimensions, not data</p>
-<hr />
-<h3 id="q4-whats-the-communication-pattern-for-tp-compared-to-dp">Q4: "What's the communication pattern for TP compared to DP?"<a class="headerlink" href="#q4-whats-the-communication-pattern-for-tp-compared-to-dp" title="Permanent link">&para;</a></h3>
-<p><strong>Answer</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Data Parallelism</th>
-<th>Tensor Parallelism</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>When</strong></td>
-<td>Once per iteration (after backward)</td>
-<td>Multiple times per fwd/bwd (every layer)</td>
-</tr>
-<tr>
-<td><strong>What</strong></td>
-<td>Gradients (2Ψ)</td>
-<td>Activations and gradients (varies)</td>
-</tr>
-<tr>
-<td><strong>Latency</strong></td>
-<td>Can be hidden with async</td>
-<td>Critical bottleneck</td>
-</tr>
-<tr>
-<td><strong>Bandwidth</strong></td>
-<td>Ethernet OK</td>
-<td>Needs NVLink/InfiniBand</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="q5-how-would-you-debug-slow-tp-training">Q5: "How would you debug slow TP training?"<a class="headerlink" href="#q5-how-would-you-debug-slow-tp-training" title="Permanent link">&para;</a></h3>
-<p><strong>Checklist</strong>:
-1. <strong>Check interconnect</strong>: Are GPUs on same node? Using NVLink?
-2. <strong>Profile communication</strong>: Is All-Reduce/All-Gather taking &gt;20% of time?
-3. <strong>Check tensor sizes</strong>: Imbalanced shards cause stragglers
-4. <strong>Verify overlap</strong>: Is communication truly async?</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Profile with PyTorch profiler</span>
-<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span> <span class="k">as</span> <span class="n">prof</span><span class="p">:</span>
-    <span class="n">model</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">prof</span><span class="o">.</span><span class="n">key_averages</span><span class="p">()</span><span class="o">.</span><span class="n">table</span><span class="p">(</span><span class="n">sort_by</span><span class="o">=</span><span class="s2">&quot;cuda_time_total&quot;</span><span class="p">))</span>
-<span class="c1"># Look for NCCL kernels</span>
-</code></pre></div>
-<hr />
 <hr />
 <h2 id="10-sequence-parallelism-extension">10. Sequence Parallelism Extension<a class="headerlink" href="#10-sequence-parallelism-extension" title="Permanent link">&para;</a></h2>
 <p><strong>Problem</strong>: Even with TP, activation memory from long sequences is huge.</p>
@@ -2123,11 +1913,12 @@ Each GPU: [batch, full_sequence, hidden/k]
 Sequence Parallelism:
 Each GPU: [batch, sequence/k, hidden/k]
 </code></pre></div>
-<p><strong>Communication</strong>:
-- All-Gather for operations that need full sequence (attention)
-- All-Reduce for operations that can work on shards</p>
+<p><strong>Communication</strong>:</p>
+<ul>
+<li>All-Gather for operations that need full sequence (attention)</li>
+<li>All-Reduce for operations that can work on shards</li>
+</ul>
 <p><strong>Use case</strong>: Very long context models (32k+, 128k+ tokens)</p>
-<hr />
 <hr />
 <h2 id="11-tp-other-parallelisms">11. TP + Other Parallelisms<a class="headerlink" href="#11-tp-other-parallelisms" title="Permanent link">&para;</a></h2>
 <h3 id="tp-dp-most-common">TP + DP (Most Common)<a class="headerlink" href="#tp-dp-most-common" title="Permanent link">&para;</a></h3>
@@ -2148,7 +1939,6 @@ Each GPU: [batch, sequence/k, hidden/k]
 <li>ZeRO for optimizer state sharding</li>
 <li>Best of both worlds</li>
 </ul>
-<hr />
 <hr />
 <h2 id="12-implementation-tips">12. Implementation Tips<a class="headerlink" href="#12-implementation-tips" title="Permanent link">&para;</a></h2>
 <h3 id="1-communication-backend">1. Communication Backend<a class="headerlink" href="#1-communication-backend" title="Permanent link">&para;</a></h3>
@@ -2173,7 +1963,6 @@ Each GPU: [batch, sequence/k, hidden/k]
         <span class="n">output</span> <span class="o">=</span> <span class="n">all_gather</span><span class="p">(</span><span class="n">output_parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tp_group</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">output</span>
 </code></pre></div>
-<hr />
 <hr />
 <h2 id="13-key-takeaways">13. Key Takeaways<a class="headerlink" href="#13-key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
