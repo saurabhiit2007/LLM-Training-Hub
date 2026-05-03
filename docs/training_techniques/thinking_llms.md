@@ -97,6 +97,7 @@ This removes reliance on large teacher models and enables reasoning capability t
 Reasoning capabilities are **distillable**, even when learned via reinforcement learning.
 
 ### Distillation Pipeline
+
 1. Run a large System 2 model with high inference compute
 2. Collect validated reasoning traces
 3. Use them as supervised fine-tuning data for smaller models
@@ -109,12 +110,14 @@ This has enabled 7B–14B models to exhibit structured reasoning previously limi
 
 ### 7.1 Reward Hacking
 Models may learn that:
+
 - Longer reasoning chains yield higher rewards
 - Redundancy masquerades as correctness
 
 Mitigations include length penalties, diversity rewards, and consistency checks.
 
 ### 7.2 Overthinking
+
 - Excessive inference compute yields diminishing returns
 - Latency increases without accuracy gains
 
@@ -140,6 +143,7 @@ Evaluation must consider **accuracy versus compute trade-offs**, not accuracy al
 ## 9. Deployment Decision Framework
 
 Choosing between System 1 and System 2 depends on:
+
 - Latency tolerance
 - Cost constraints
 - Error sensitivity

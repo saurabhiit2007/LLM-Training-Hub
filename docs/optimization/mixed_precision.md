@@ -7,6 +7,7 @@
 ### Why Mixed-Precision?
 
 Training large language models faces three key bottlenecks:
+
 - **Memory**: Model parameters, gradients, and optimizer states
 - **Compute**: Matrix multiplications during forward/backward passes
 - **Communication**: Gradient synchronization in distributed training
@@ -93,32 +94,38 @@ trainer = Trainer(
 #### **FP16 (Half Precision)**
 
 **Pros:**
+
 - Wider hardware support (V100, T4, older GPUs)
 - Slightly higher precision for small values
 - Mature tooling
 
 **Cons:**
+
 - Limited range causes gradient underflow/overflow
 - Requires loss scaling
 - More tuning needed
 
 **Use when:**
+
 - Training on V100 or older NVIDIA GPUs
 - Model is small-to-medium (< 1B parameters)
 
 #### **BF16 (Brain Float 16)**
 
 **Pros:**
+
 - Same range as FP32 (no overflow/underflow)
 - No loss scaling needed
 - Drop-in replacement for FP32
 - More stable for large models
 
 **Cons:**
+
 - Requires A100, H100, or newer hardware
 - Lower precision for very small values (rarely matters)
 
 **Use when:**
+
 - Training on A100, H100, or TPUs
 - Training large models (> 1B parameters)
 - You want stability without tuning
@@ -183,6 +190,7 @@ scaler = GradScaler(
 ```
 
 **Algorithm:**
+
 - If no overflow for N steps → increase scale
 - If overflow detected → decrease scale, skip update
 
@@ -193,6 +201,7 @@ scaler = GradScaler(
 ### 5.1 What Stays in FP32?
 
 Critical operations that should remain in FP32:
+
 - **Master weights** (copy of parameters)
 - **Optimizer states** (momentum, variance for Adam)
 - **Loss computation** (optional, helps stability)
@@ -232,6 +241,7 @@ with autocast():
 ### 6.1 TF32 (NVIDIA A100+)
 
 TF32 is automatically used for matrix multiplications on A100/H100:
+
 - Stores as FP32
 - Computes with 10-bit mantissa
 - ~8x faster than FP32
@@ -246,6 +256,7 @@ torch.backends.cudnn.allow_tf32 = True
 ### 6.2 FP8 (H100, Cutting Edge)
 
 Next-generation format for H100:
+
 - 8-bit floating point
 - Requires special scaling strategies
 - 2-4x faster than FP16/BF16

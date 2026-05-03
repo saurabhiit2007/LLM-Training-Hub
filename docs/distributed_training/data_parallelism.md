@@ -3,6 +3,7 @@
 ## 1. Overview
 
 The most widely used baseline parallelism strategy:
+
 - **Full model replicated** across N workers
 - Each worker processes a **different shard** of the input batch
 - Gradients are **synchronized** after backward pass
@@ -34,6 +35,7 @@ GPU 0,1,2,3: Averaged Gradients → Optimizer Step (synchronized)
 **Problem**: Waiting for all gradients before communication wastes time.
 
 **Solution**: Group parameters into ~25MB buckets
+
 - Communication starts as soon as a bucket is ready
 - Reduces idle time by avoiding one large sync at the end
 
@@ -57,6 +59,7 @@ model = DDP(model, bucket_cap_mb=25)  # Default: 25MB
 **Key Optimization**: Overlap communication with computation
 
 **How it works**:
+
 1. Backward pass computes gradients layer-by-layer (last → first)
 2. When a bucket's gradients are ready, DDP launches **async All-Reduce**
 3. While communication runs in background, backward continues on earlier layers
@@ -88,6 +91,7 @@ Comm:        [Bucket 1 All-Reduce─────────────]
 ## 4. Memory Requirements
 
 Each GPU must store:
+
 - **Model parameters**: 2Ψ (FP16) or 4Ψ (FP32)
 - **Gradients**: 2Ψ (FP16) or 4Ψ (FP32)
 - **Optimizer states (Adam)**: 12Ψ (FP32 master + momentum + variance)
@@ -102,6 +106,7 @@ Each GPU must store:
 ### All-Reduce Complexity
 
 For N GPUs and Ψ parameters:
+
 - **Data transferred**: 2Ψ(N-1)/N per GPU (ring All-Reduce)
 - **Latency**: O(log N) for tree-based, O(N) for ring-based
 - Grows **linearly** with number of GPUs
@@ -111,6 +116,7 @@ For N GPUs and Ψ parameters:
 ### Bandwidth Requirements
 
 For 7B model (14GB gradients in FP16):
+
 - 100Gbps network: ~1.1 seconds just for communication
 - 400Gbps network: ~0.28 seconds
 
@@ -134,6 +140,7 @@ for i, batch in enumerate(dataloader):
 ```
 
 **Benefits**:
+
 - Effective batch = `accumulation_steps × local_batch × num_gpus`
 - **Reduces sync frequency** from every step to every K steps
 - Saves communication bandwidth
@@ -191,6 +198,7 @@ torch.distributed.barrier()
 ### Issue: "Out of Memory with DDP"
 
 **Checklist**:
+
 1. Check if activation memory is the issue (use activation checkpointing)
 2. Reduce local batch size
 3. Switch to ZeRO-2/FSDP to shard optimizer and gradients

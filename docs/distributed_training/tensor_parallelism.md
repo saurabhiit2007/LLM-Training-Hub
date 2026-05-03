@@ -13,6 +13,7 @@ Tensor Parallelism splits **individual layers** across devices so that a single 
 Consider a linear layer: **Y = XW**
 
 Where:
+
 - X: `[batch, hidden_in]`
 - W: `[hidden_in, hidden_out]`
 - Y: `[batch, hidden_out]`
@@ -50,10 +51,12 @@ Y₂ = X · W₂  (shape: [batch, hidden_out/k])
 ### Communication Pattern
 
 **Forward Pass**:
+
 - All-Gather to concatenate [Y₁, Y₂, ...] → Y
 - Each GPU gets the full output
 
 **Backward Pass**:
+
 - Gradients w.r.t. X require All-Reduce
 
 ```
@@ -64,6 +67,7 @@ Backward: Y_grad → [X_grad₁, X_grad₂, X_grad₃] → All-Reduce → X_grad
 ---
 
 ### Use Case
+
 - Feed-forward network (FFN) in transformers
 - First linear projection in attention (Q, K, V)
 
@@ -103,10 +107,12 @@ Y₂ = X₂ · W₂  (shape: [batch, hidden_out])
 ### Communication Pattern
 
 **Forward Pass**:
+
 - All-Reduce to sum [Y₁, Y₂, ...] → Y
 - Each GPU gets the same final output
 
 **Backward Pass**:
+
 - Gradient flow mirrors forward communication
 
 ```
@@ -117,6 +123,7 @@ Backward: Y_grad → All-Reduce → [X₁_grad, X₂_grad]
 ---
 
 ### Use Case
+
 - Output projection in attention
 - Second FFN layer in transformers
 
@@ -185,10 +192,12 @@ output = row_parallel_linear(hidden)  # All-Reduce
 For a single linear layer with Ψ parameters:
 
 **Column Parallelism**:
+
 - Forward: All-Gather → `2Ψ/k` communicated per GPU
 - Backward: All-Reduce → `2Ψ/k` communicated per GPU
 
 **Row Parallelism**:
+
 - Forward: All-Reduce → `2Ψ/k` communicated per GPU
 - Backward: Similar
 
@@ -210,6 +219,7 @@ For model with Ψ parameters across k GPUs:
 | **Activations** | Depends (also reduced due to smaller intermediate tensors) |
 
 **Example**: 7B model with 8-way TP
+
 - Parameters: 14GB / 8 = 1.75GB per GPU
 - Optimizer: 84GB / 8 = 10.5GB per GPU
 
@@ -230,6 +240,7 @@ Each GPU: [batch, sequence/k, hidden/k]
 ```
 
 **Communication**:
+
 - All-Gather for operations that need full sequence (attention)
 - All-Reduce for operations that can work on shards
 
@@ -249,10 +260,12 @@ Each GPU: [batch, sequence/k, hidden/k]
 ```
 
 ### TP + PP
+
 - TP within each pipeline stage
 - Reduces per-stage memory further
 
 ### TP + ZeRO
+
 - TP for model parallelism
 - ZeRO for optimizer state sharding
 - Best of both worlds

@@ -5,6 +5,7 @@
 **Quantization** reduces the precision of model weights, activations, and gradients from high-precision formats (FP32, BF16) to lower-precision formats (INT8, INT4) to save memory and accelerate computation.
 
 **Key distinction:**
+
 - **Quantization-Aware Training (QAT):** Quantization applied during training
 - **Post-Training Quantization (PTQ):** Quantization applied after training (more common for LLMs)
 - **Training with Quantized Components:** Using quantized optimizers, activations during training (not quantizing the final model)
@@ -27,18 +28,21 @@ This guide focuses on **quantization techniques used during LLM training** to re
 | INT4 | 0.5 | 3.5 GB |
 
 **Typical training memory (7B model, no quantization):**
+
 - Weights (BF16): 14 GB
 - Gradients (BF16): 14 GB
 - Optimizer states (FP32): 56 GB
 - **Total:** 84 GB (before activations)
 
 **With quantization:**
+
 - 8-bit optimizer states: 56 GB → 14 GB (75% reduction)
 - 4-bit base model (QLoRA): 14 GB → 3.5 GB (75% reduction)
 
 ### 2.2 Speed Benefits
 
 Lower precision enables:
+
 - Faster memory transfers (less data movement)
 - Hardware acceleration (INT8 ops faster than FP16 on some hardware)
 - Larger batch sizes (more memory available)
@@ -58,6 +62,7 @@ Store optimizer states in INT8 instead of FP32 — 4× memory reduction with no 
 ### 3.2 4-bit Quantization (QLoRA)
 
 **QLoRA** (Quantized LoRA) combines:
+
 1. **4-bit NormalFloat (NF4)** quantization of base model
 2. **LoRA adapters** (only train small rank decomposition matrices)
 3. **Double quantization** (quantize the quantization constants)
@@ -68,10 +73,12 @@ Store optimizer states in INT8 instead of FP32 — 4× memory reduction with no 
 **Key insight:** Neural network weights follow a normal distribution, not uniform.
 
 **Standard quantization (uniform):**
+
 - Divides range into equal intervals
 - Wastes precision where weights are dense (near zero)
 
 **NF4 (information-theoretic optimal):**
+
 - Bins chosen to have equal number of weights per bin
 - More precision near zero (where most weights are)
 - Less precision at extremes
@@ -93,12 +100,14 @@ Designed so that bins have equal expected number of values from a standard norma
 **Solution:** Quantize the quantization constants themselves.
 
 **Example:**
+
 - Block size: 64 parameters
 - Each block needs a FP32 scale factor (4 bytes)
 - For 7B parameters: $\frac{7 \times 10^9}{64} \times 4 = 437$ MB just for scales
 - Double quantization: 437 MB → 109 MB (quantize scales to 8-bit)
 
 **Total memory savings:**
+
 - Base model: 14 GB → 3.5 GB (4-bit weights)
 - Quantization constants: 0.44 GB → 0.11 GB (double quantization)
 
@@ -156,6 +165,7 @@ model = get_peft_model(model, lora_config)
 **Concept:** Divide weights into blocks and quantize each block independently with its own scale factor.
 
 **Why block-wise?**
+
 - Different layers have different weight magnitudes
 - Even within a layer, weight distributions vary
 - Per-tensor quantization loses too much precision
@@ -246,6 +256,7 @@ def dequantize_blockwise(quantized, scale, original_numel):
 | **Master weights** | FP32 | Accumulate updates accurately |
 
 **QLoRA example:**
+
 - Base model: 4-bit NF4
 - LoRA adapters: BF16
 - Gradients: BF16
@@ -261,6 +272,7 @@ def dequantize_blockwise(quantized, scale, original_numel):
 **Problem:** A few extreme values (outliers) dominate the quantization range, forcing lower precision for majority of values.
 
 **Example:**
+
 - 99% of weights in range [-1, 1]
 - 1% of weights in range [-10, 10]
 - Quantization range must cover [-10, 10], wasting precision on the 99%
@@ -268,15 +280,18 @@ def dequantize_blockwise(quantized, scale, original_numel):
 **Solutions:**
 
 **1. Per-channel quantization:**
+
 - Separate scale factor per output channel
 - Isolates outliers to specific channels
 
 **2. Outlier extraction (LLM.int8()):**
+
 - Keep outlier weights in FP16
 - Quantize rest to INT8
 - Mixed precision matmul
 
 **3. SmoothQuant:**
+
 - Migrate difficulty from weights to activations
 - Apply scaling to smooth distributions
 
@@ -287,6 +302,7 @@ def dequantize_blockwise(quantized, scale, original_numel):
 **Solution:** Always use at least BF16 for gradients, even if weights are 4-bit.
 
 **QLoRA approach:**
+
 - 4-bit weights dequantized to BF16 before computation
 - Gradients computed in BF16
 - Only LoRA adapter gradients exist (base model frozen)
@@ -296,6 +312,7 @@ def dequantize_blockwise(quantized, scale, original_numel):
 **Problem:** Quantization error accumulates over training steps.
 
 **Mitigation:**
+
 - Use higher precision for optimizer states (even if weights are quantized)
 - Maintain FP32 master weights
 - Use larger learning rates to overcome noise
@@ -337,28 +354,33 @@ Extremely constrained (<16GB):
 **Key Takeaways:**
 
 ### Quantization for Training
+
 - **8-bit Adam:** 4× optimizer state memory reduction, no quality loss, widely used
 - **QLoRA:** 4-bit base model + LoRA adapters, enables fine-tuning on consumer GPUs
 - **Block-wise quantization:** Sweet spot between precision and memory (block size 64-128)
 - **NF4:** Information-theoretically optimal for normal distributions (neural network weights)
 
 ### Memory Savings
+
 - 8-bit optimizer: 75% reduction in optimizer states
 - 4-bit model: 75% reduction in model size
 - Combined (QLoRA): ~90% total memory reduction
 
 ### Quality vs Compression
+
 - 8-bit: No degradation for optimizer states
 - 4-bit + LoRA: ~2-5% quality loss (compared to full fine-tuning)
 - 4-bit full model (post-training): ~1-3% quality loss with good methods (GPTQ, AWQ)
 
 ### When to Use
+
 - **Training large models:** 8-bit Adam (standard practice)
 - **Fine-tuning on limited hardware:** QLoRA
 - **Inference:** Post-training quantization (GPTQ, AWQ, not covered here)
 - **Serving at scale:** Mixed precision + quantization
 
 ### Implementation Tips
+
 1. Always use block-wise quantization (not per-tensor)
 2. Start with block size 64, tune if needed
 3. Monitor training loss closely for divergence

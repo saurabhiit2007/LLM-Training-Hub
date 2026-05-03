@@ -70,6 +70,7 @@ Data movement between GPU and CPU happens over interconnects.
 | **Compute** | Arithmetic capability | ~312 TFLOPs (BF16) | Matrix multiplications |
 
 **In practice:**
+
 - Many LLM workloads are **memory bandwidth bound**, not compute bound
 - Compute units often wait on memory due to limited data reuse
 
@@ -143,6 +144,7 @@ $$
 Where $C$ is a constant (typically 10-20 without gradient checkpointing).
 
 **For 7B model:**
+
 - Without checkpointing: ~32 GB
 - With checkpointing: ~2-5 GB
 
@@ -172,6 +174,7 @@ $$
 | **Mixed precision (BF16)** | 50% (weights/grads/acts) | Requires compatible hardware |
 
 **Typical combination for 7B on 80GB A100:**
+
 - BF16 mixed precision
 - Gradient checkpointing
 - 8-bit Adam
@@ -182,6 +185,7 @@ $$
 ### 3.3 CPU Offloading
 
 **What can be offloaded:**
+
 - Optimizer states (ZeRO-Offload, Paged Adam)
 - Parameters (ZeRO-Infinity with NVMe)
 
@@ -211,6 +215,7 @@ $$
 **Key insight:** Training requires 3-5× more memory than inference for the same model.
 
 **Why inference fits models that training cannot:**
+
 - No gradients
 - No optimizer states
 - Minimal activation storage
@@ -251,6 +256,7 @@ M_{\text{KV}} = 2 \times L \times B \times S \times d \times \text{bytes per ele
 $$
 
 Where:
+
 - Factor of 2: both K and V
 - $L$: number of layers
 - $B$: batch size
@@ -299,6 +305,7 @@ $$
 ### 6.1 Data Parallelism (DP)
 
 **Memory per GPU:**
+
 - Each GPU holds full model copy
 - Activations/gradients split across batch
 
@@ -336,10 +343,12 @@ Enables training on GPUs with <16 GB memory.
 ### 6.3 Tensor and Pipeline Parallelism
 
 **Tensor Parallelism (TP):**
+
 - Model weights sharded across GPUs
 - Each GPU computes a slice (e.g., split attention heads)
 
 **Pipeline Parallelism (PP):**
+
 - Layers distributed across GPUs
 - Sequential processing with pipeline stages
 
@@ -352,21 +361,25 @@ Enables training on GPUs with <16 GB memory.
 **Key takeaways:**
 
 ### Memory Hierarchy
+
 - GPU HBM: ~1.6 TB/s, 40-80 GB capacity (keep hot data here)
 - CPU RAM: ~80 GB/s, 64GB-2TB capacity (offload cold data)
 - PCIe: ~32 GB/s (minimize transfers)
 
 ### Training vs Inference
+
 - Training: 3-5× more memory (gradients + optimizer states dominate)
 - Inference: KV cache dominates for long contexts
 - Can infer models that won't fit for training
 
 ### Compute vs Memory Bound
+
 - Most Transformer ops are memory-bound (attention, LayerNorm, embeddings)
 - Only large matrix multiplications are compute-bound
 - Optimize for memory bandwidth, not just FLOPs
 
 ### Key Optimization Techniques
+
 - **Gradient checkpointing:** 80-90% activation memory reduction
 - **8-bit optimizers:** 75% optimizer state reduction
 - **LoRA:** 100-1000× trainable parameter reduction
@@ -375,6 +388,7 @@ Enables training on GPUs with <16 GB memory.
 - **PagedAttention:** 10-30% better KV cache utilization
 
 ### Design Principles
+
 1. Keep hot data on GPU (avoid CPU-GPU transfers)
 2. Use gradient checkpointing for memory-constrained training
 3. Consider LoRA/PEFT before full fine-tuning

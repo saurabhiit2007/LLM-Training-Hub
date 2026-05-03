@@ -7,6 +7,7 @@
 **Core Purpose:** Transform a general-purpose foundation model into a high-reasoning, domain-specialized system while minimizing catastrophic forgetting.
 
 **Key Benefits:**
+
 - Domain specialization at scale
 - Enhanced reasoning capabilities
 - Reduced downstream alignment complexity
@@ -23,11 +24,13 @@ Injection of large-scale, curated domain corpora (law, biomedical, mathematics, 
 
 ### 2. Reasoning Architecture
 Transition from pattern matching to structured reasoning through exposure to:
+
 - Synthetic reasoning trajectories
 - Mathematical proofs
 - Multi-step problem-solving traces
 
 ### 3. Capability Extensions
+
 - Long-context reasoning
 - Tool usage priors
 - Agentic behaviors
@@ -48,6 +51,7 @@ Transition from pattern matching to structured reasoning through exposure to:
 ## 4. Training Configuration
 
 ### Data Mixture (Typical 2026 Recipe)
+
 - **40%** Specialist corpora (textbooks, technical manuals, papers)
 - **30%** Synthetic reasoning (teacher model trajectories)
 - **20%** High-quality web data (e.g., FineWeb-Edu)
@@ -89,6 +93,7 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 ## Parameter Efficiency Strategies
 
 ### Selective Training Options
+
 - **Frozen components:** Token embeddings, early layers, normalization stats
 - **Progressive unfreezing:** Gradually activate higher layers
 - **Adapter-based:** Train low-rank adapters, merge later
@@ -111,11 +116,13 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 ## 6. Evaluation Strategy
 
 ### Online Metrics (During Training)
+
 - Replay buffer perplexity
 - Long-context loss by position
 - Reasoning trace self-consistency
 
 ### Offline Probes (Checkpoints)
+
 - Needle-in-haystack retrieval
 - Math/code reasoning benchmarks
 - Tool-use simulation accuracy
@@ -128,6 +135,7 @@ Increase base frequency θ (base scaling) to extend interpretable token distance
 ## 7. Impact on Downstream Stages
 
 A well-executed mid-training phase:
+
 - ✅ Reduces SFT data needs by 2-5×
 - ✅ Improves RLHF stability
 - ✅ Lowers reward hacking risk
@@ -165,6 +173,7 @@ Using a "proctor" model to adjust data mixture in real-time based on primary mod
 **Q4: Why is full optimizer state restoration critical in mid-training?**
 
 **A:** Optimizer states (Adam/AdamW momentum and variance) encode the training trajectory and landscape geometry. Resetting them causes:
+
 - Loss spikes and divergence
 - Inefficient exploration of the new data distribution
 - Potential inability to recover model quality
@@ -176,6 +185,7 @@ Full state restoration ensures smooth continuation from pre-training.
 **Q5: Explain the learning rate schedule used in mid-training and why it differs from pre-training.**
 
 **A:** Mid-training uses a **re-warmup + cosine decay** schedule:
+
 1. **Re-warmup:** Briefly increases LR to help the model adapt to the new data distribution
 2. **Cosine decay to near-zero:** Ensures weights settle deeply into specialized loss landscape valleys
 
@@ -186,6 +196,7 @@ This differs from pre-training's longer, more gradual decay because mid-training
 **Q6: How does RoPE scaling enable long-context understanding?**
 
 **A:** RoPE (Rotary Positional Embeddings) encodes position through rotation in embedding space. By increasing the base frequency θ (base scaling), we:
+
 - Compress the positional encoding frequency
 - Allow the model to interpret larger token distances
 - Extend the effective context window beyond pre-training limits
@@ -212,6 +223,7 @@ Choice depends on available compute, forgetting tolerance, and desired specializ
 **Q8: Why include synthetic reasoning trajectories in the data mixture?**
 
 **A:** Synthetic data from larger "teacher" models provides:
+
 - Explicit reasoning chains (step-by-step logic)
 - Higher density of correct reasoning patterns than web data
 - Controlled difficulty and coverage of reasoning types
@@ -226,6 +238,7 @@ This has proven more effective for reasoning than raw data alone.
 **Q9: Your mid-training run shows increasing perplexity on general benchmarks despite improving on domain tasks. What's happening and how do you fix it?**
 
 **A:** This indicates **catastrophic forgetting**. Solutions:
+
 1. Increase replay buffer proportion (from 10% to 20-30%)
 2. Reduce learning rate more aggressively
 3. Freeze more early layers
@@ -239,6 +252,7 @@ Monitor the ratio of domain improvement to general degradation.
 **Q10: How do you detect "context length illusions" where the model appears to handle long contexts but isn't actually reasoning over them?**
 
 **A:** Use **needle-in-haystack** tests:
+
 - Place specific information at various positions in long contexts
 - Ask questions requiring that information
 - Verify the model retrieves from all positions (especially middle)
@@ -253,6 +267,7 @@ Also analyze loss by token position—true long-context models show stable loss 
 **Q11: Describe the concept of "Internalized RL" during mid-training.**
 
 **A:** Instead of applying RL only during post-training, some recent approaches apply lightweight RL during mid-training to:
+
 - Reward correct reasoning paths in real-time
 - Shape the model's reasoning prior before behavioral alignment
 - Reduce need for heavy RLHF later
@@ -264,12 +279,14 @@ This creates models that inherently prefer correct reasoning structures.
 **Q12: You have limited compute budget. Should you extend pre-training or invest in mid-training?**
 
 **A:** **Generally mid-training** if:
+
 - You need domain specialization or reasoning
 - Pre-training already achieved good general capabilities
 - You have high-quality curated/synthetic data
 - Downstream efficiency (less SFT data) matters
 
 **Extend pre-training** if:
+
 - General knowledge gaps remain
 - You have abundant diverse web data
 - Target domains are broad and varied
@@ -281,6 +298,7 @@ Mid-training offers better ROI for specialization at 5-15% of pre-training cost.
 ## Quick Reference Checklist
 
 **Before Mid-Training:**
+
 - [ ] Full optimizer state saved from pre-training
 - [ ] Data mixture designed and validated (>95% quality)
 - [ ] Replay buffer prepared (10-20% general data)
@@ -288,6 +306,7 @@ Mid-training offers better ROI for specialization at 5-15% of pre-training cost.
 - [ ] RoPE scaling strategy defined (if extending context)
 
 **During Mid-Training:**
+
 - [ ] Monitor replay buffer perplexity
 - [ ] Track reasoning consistency metrics
 - [ ] Check loss by token position
@@ -295,6 +314,7 @@ Mid-training offers better ROI for specialization at 5-15% of pre-training cost.
 - [ ] Test tool-use capabilities (if applicable)
 
 **After Mid-Training:**
+
 - [ ] Run full eval suite (general + specialized)
 - [ ] Conduct needle-in-haystack tests
 - [ ] Measure SFT data efficiency gains

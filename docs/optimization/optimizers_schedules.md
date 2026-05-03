@@ -3,6 +3,7 @@
 ## 1. Overview
 
 Training large language models requires careful selection of **optimization algorithms** and **learning rate schedules**. The wrong choice can lead to:
+
 - Divergence (loss → NaN)
 - Slow convergence (wasted compute)
 - Suboptimal final performance
@@ -29,6 +30,7 @@ v_t &= \beta_2 v_{t-1} + (1 - \beta_2) g_t^2 \\
 $$
 
 Where:
+
 - $m_t$: First moment (momentum)
 - $v_t$: Second moment (variance)
 - $\beta_1, \beta_2$: Decay rates
@@ -36,6 +38,7 @@ Where:
 - $\lambda$: Weight decay (decoupled in AdamW)
 
 **Why Adam works for Transformers:**
+
 1. **Adaptive learning rates**: Different layers need different learning rates
 2. **Momentum**: Smooths noisy gradients
 3. **Sparse gradients**: Many parameters updated infrequently (embeddings)
@@ -56,6 +59,7 @@ optimizer = torch.optim.AdamW(
 ```
 
 **Typical ranges:**
+
 - Learning rate: `1e-5` to `1e-3` (varies with model size)
 - β₁: `0.9` (rarely changed)
 - β₂: `0.95` to `0.999` (higher for larger models)
@@ -76,6 +80,7 @@ $$
 Weight decay is applied directly to parameters.
 
 **Why AdamW is better:**
+
 - Weight decay effectiveness doesn't depend on gradient magnitude
 - More consistent regularization across layers
 - Better generalization in practice
@@ -96,10 +101,12 @@ optimizer = torch.optim.SGD(
 ```
 
 **Pros:**
+
 - Simple, well-understood
 - Lower memory (1× state vs Adam's 2×)
 
 **Cons:**
+
 - Requires careful learning rate tuning
 - Slower convergence for Transformers
 - Not adaptive (all parameters share same LR)
@@ -123,10 +130,12 @@ optimizer = Adafactor(
 **Key difference:** Factorized second moment (see memory-efficient optimizers doc)
 
 **Pros:**
+
 - 50% memory vs Adam
 - Designed for T5/encoder-decoder models
 
 **Cons:**
+
 - Different convergence behavior
 - Requires tuning for new architectures
 
@@ -148,11 +157,13 @@ optimizer = LION(
 **Key idea:** Only use sign of momentum, not magnitude
 
 **Pros:**
+
 - 50% memory vs Adam
 - Competitive performance on some tasks
 - Simpler algorithm
 
 **Cons:**
+
 - Less proven at scale
 - Requires different LR tuning
 
@@ -165,6 +176,7 @@ optimizer = LION(
 ### 3.1 Why Schedules Matter
 
 A **fixed learning rate** is rarely optimal:
+
 - **Too high initially**: Divergence or instability
 - **Too high later**: Oscillation around optimum
 - **Too low throughout**: Slow convergence
@@ -174,6 +186,7 @@ A **fixed learning rate** is rarely optimal:
 ### 3.2 Warmup: The Critical First Phase
 
 **Problem without warmup:**
+
 - Early in training, gradients are large and noisy
 - Adam's second moment estimate $v_t$ is inaccurate (based on few samples)
 - High LR + inaccurate estimates → divergence
@@ -196,6 +209,7 @@ def get_warmup_schedule(optimizer, num_warmup_steps):
 ```
 
 **Typical warmup durations:**
+
 - Small models (<1B): 500-2000 steps
 - Medium models (1-10B): 2000-10000 steps
 - Large models (>10B): 10000-50000 steps
@@ -247,10 +261,12 @@ LR
 ```
 
 **Pros:**
+
 - Simple, predictable
 - Works well for fine-tuning
 
 **Cons:**
+
 - LR drops to zero at end (may hurt final performance)
 
 #### **Cosine Decay with Warmup**
@@ -289,11 +305,13 @@ LR
 ```
 
 **Pros:**
+
 - Smooth decay (no sharp drops)
 - Better final performance than linear
 - Used in GPT-3, LLaMA, most modern LLMs
 
 **Cons:**
+
 - Requires knowing total training steps upfront
 
 **Used in:** GPT-3, LLaMA, PaLM, Chinchilla
@@ -324,10 +342,12 @@ LR
 ```
 
 **Pros:**
+
 - Escape local minima
 - Good for long training runs
 
 **Cons:**
+
 - Spikes in LR can destabilize training
 - Less common for LLMs
 
@@ -363,10 +383,12 @@ LR
 ```
 
 **Pros:**
+
 - Decays slowly (good for long training)
 - Simple formula
 
 **Cons:**
+
 - Never reaches zero
 - Less popular than cosine
 
@@ -386,10 +408,12 @@ scheduler = get_constant_schedule_with_warmup(
 ```
 
 **Pros:**
+
 - Simplest schedule
 - Good for short fine-tuning
 
 **Cons:**
+
 - No decay may hurt final performance
 
 **Usage:** Quick fine-tuning, LoRA, experimentation
@@ -401,6 +425,7 @@ scheduler = get_constant_schedule_with_warmup(
 ### 4.1 Scaling Laws
 
 Learning rate should scale with:
+
 1. **Model size**: Larger models need smaller LR
 2. **Batch size**: Larger batches need larger LR (approximately linear)
 3. **Sequence length**: Longer sequences may need smaller LR
@@ -541,6 +566,7 @@ optimizer = torch.optim.AdamW(
 ### 5.1 Why Clip Gradients?
 
 Large gradients can:
+
 - Cause exploding gradients (loss → NaN)
 - Destabilize optimizer state
 - Waste training steps
@@ -565,6 +591,7 @@ optimizer.step()
 ```
 
 **Typical values:**
+
 - Pretraining: `max_norm=1.0`
 - Fine-tuning: `max_norm=0.3` to `1.0`
 - Unstable training: `max_norm=0.1` to `0.5`
@@ -644,6 +671,7 @@ $$
 $$
 
 **Example:**
+
 - Base LR: `1e-4` with batch size `256`
 - New batch size: `2048` (8× larger)
 - New LR: `8e-4`

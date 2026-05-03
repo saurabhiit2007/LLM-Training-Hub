@@ -7,6 +7,7 @@
 ### Why PEFT?
 
 Full fine-tuning of a 7B model requires:
+
 - Weights: 14 GB
 - Gradients: 14 GB
 - Optimizer states: 56 GB
@@ -92,6 +93,7 @@ Output
 ### 3.2 Adapter Architecture
 
 Each adapter module contains:
+
 1. **Down-projection:** $d \rightarrow r$ (compress to bottleneck)
 2. **Non-linearity:** ReLU or GELU
 3. **Up-projection:** $r \rightarrow d$ (expand back)
@@ -102,6 +104,7 @@ $$
 $$
 
 Where:
+
 - $h \in \mathbb{R}^d$: input hidden state
 - $W_{\text{down}} \in \mathbb{R}^{r \times d}$: down-projection
 - $W_{\text{up}} \in \mathbb{R}^{d \times r}$: up-projection
@@ -194,6 +197,7 @@ Prefix attention:
 **Memory:** Prefixes stored per layer → $L \times k \times 2d$ parameters.
 
 **Characteristics:**
+
 - No architecture changes to base model
 - Different from LoRA: influences attention differently
 - Works well for generation tasks (summarization, translation)
@@ -213,6 +217,7 @@ Prompted input: [soft₁, ..., softₖ, token₁, ..., tokenₙ]
 **Key difference from prefix tuning:** Only input layer modified (not all layers).
 
 **Characteristics:**
+
 - Very few parameters ($k \times d$ total)
 - Only competitive with full fine-tuning at 10B+ scale
 - Simple to implement
@@ -243,6 +248,7 @@ $$
 Where $l_k, l_q, l_v$ are **learned scaling vectors**.
 
 **Characteristics:**
+
 - ~0.01% trainable params (10× less than LoRA)
 - Good for few-shot and continual learning scenarios
 - Less capacity than LoRA for complex tasks
@@ -342,6 +348,7 @@ merged = model.merge_and_unload()  # Single adapter, no overhead
 **TIES merging (multiple adapters):**
 
 Combine multiple LoRA adapters by:
+
 1. Trim small values (sparsify)
 2. Elect sign based on majority vote
 3. Disjoint merge (no conflicts)

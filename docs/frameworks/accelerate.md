@@ -8,6 +8,7 @@ Accelerate works as an orchestration layer on top of PyTorch DDP, FSDP, DeepSpee
 ---
 
 ### Key Features
+
 - Multi-GPU, multi-node, and TPU training with minimal code changes
 - Mixed precision support (FP16, BF16)
 - Gradient accumulation
@@ -71,6 +72,7 @@ Benefit: Prevents CUDA placement errors and maximizes hardware utilization.
 Each device holds a replica of the model and processes a shard of data.
 
 ##### ⚙️ Workflow
+
 1. Each GPU computes gradients on its **local data shard**.  
 2. Gradients are **averaged across all GPUs**.  
 3. Parameter updates are **synchronized globally**.

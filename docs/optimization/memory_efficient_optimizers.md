@@ -17,6 +17,7 @@ Training large language models requires storing not just model parameters, but a
 **Key insight:** Optimizer states remain in FP32 even during mixed-precision training, making them the primary memory bottleneck.
 
 Memory-efficient optimizers address this by:
+
 1. **Reducing precision** of optimizer states (8-bit optimizers)
 2. **Offloading** states to CPU memory (Paged Adam, ZeRO-Offload)
 3. **Changing the algorithm** to use less state (Adafactor, LION)
@@ -43,6 +44,7 @@ $$
 ### 2.2 Memory Requirements
 
 For **N parameters**, Adam stores:
+
 - Parameters $\theta$: **4N bytes** (FP32) or **2N bytes** (BF16)
 - First moment $m$: **4N bytes** (always FP32)
 - Second moment $v$: **4N bytes** (always FP32)
@@ -50,6 +52,7 @@ For **N parameters**, Adam stores:
 **Total optimizer state memory: 8N bytes**, regardless of parameter precision.
 
 **Example:**
+
 - 7B model in BF16: 14 GB parameters + 56 GB optimizer states = **70 GB** just for training setup
 - Without optimizer states: 14 GB parameters + 14 GB gradients = **28 GB**
 
@@ -95,6 +98,7 @@ Store optimizer states in **8-bit integers** instead of 32-bit floats, reducing 
 **Challenge:** Naive quantization destroys training dynamics.
 
 **Solution (Dynamic Block-wise Quantization):**
+
 1. Divide optimizer states into blocks (e.g., 2048 elements)
 2. Compute block-specific scaling factors
 3. Quantize each block independently
@@ -129,6 +133,7 @@ optimizer = bnb.optim.Adam8bit(model.parameters(), lr=1e-4)
 ```
 
 **Memory savings:**
+
 - 7B model: 56 GB → 14 GB (75% reduction)
 - No performance degradation in practice
 - Slightly slower optimizer step (10-15%)
@@ -136,6 +141,7 @@ optimizer = bnb.optim.Adam8bit(model.parameters(), lr=1e-4)
 ### 4.4 Why 8-bit Works for Optimizer States
 
 Optimizer states are **exponential moving averages** that:
+
 - Accumulate slowly over many steps
 - Don't require high precision at each step
 - Tolerate quantization noise
@@ -211,15 +217,18 @@ for batch in dataloader:
 **Bottleneck:** PCIe bandwidth (typically 16-32 GB/s)
 
 **Impact on throughput:**
+
 - Standard Adam: ~1ms optimizer step
 - Paged Adam: ~50-100ms optimizer step (50-100× slower)
 
 **When overhead is acceptable:**
+
 - Fine-tuning (fewer total steps)
 - Small batch sizes (more time in forward/backward)
 - Parameter-efficient methods (LoRA reduces parameter count)
 
 **Not suitable for:**
+
 - Large-scale pretraining
 - High-throughput multi-GPU training
 - Latency-critical applications
@@ -252,6 +261,7 @@ optimizer = bnb.optim.PagedAdam8bit(model.parameters(), lr=1e-4)
 | **Throughput** | ~50× slower optimizer | Better pipelining |
 
 **Decision guide:**
+
 - Single GPU + memory constraints → **Paged Adam**
 - Multi-GPU + need full model training → **ZeRO-Offload**
 
@@ -293,10 +303,12 @@ optimizer = Adafactor(
 ```
 
 **Pros:**
+
 - ~2× memory reduction vs Adam
 - Works well for Transformers (designed for T5)
 
 **Cons:**
+
 - Slightly different convergence behavior
 - Less well-tested than Adam
 - Sensitive to hyperparameters

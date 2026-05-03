@@ -43,12 +43,14 @@ grad_x0 = layer1.backward(grad_x1, x0)  # Uses stored x0
 **Memory:** All activations $x_1, x_2, x_3, ...$ must be kept in memory.
 
 For a Transformer with **L layers**, each layer stores:
+
 - Query, Key, Value projections
 - Attention scores
 - Attention outputs
 - MLP intermediate activations
 
 **Total activation memory scales as:** $O(L \times B \times S \times d)$
+
 - $L$ = number of layers
 - $B$ = batch size
 - $S$ = sequence length
@@ -75,6 +77,7 @@ With batch_size=8, this doubles to ~15 GB just for activations.
 ### 3.1 The Trade-off
 
 **Instead of storing all activations:**
+
 1. Store activations only at **checkpoint boundaries** (e.g., every K layers)
 2. During backward pass, **recompute** activations between checkpoints
 
@@ -102,6 +105,7 @@ grad_x0 = layer1.backward(grad_x1, x0)
 ```
 
 **Result:**
+
 - Memory: $O(L/K)$ instead of $O(L)$
 - Compute: +33% (one extra forward pass per checkpoint segment)
 
@@ -135,6 +139,7 @@ class TransformerWithCheckpointing(nn.Module):
 ```
 
 **Key parameter: `use_reentrant=False`**
+
 - Newer, more memory-efficient implementation
 - Avoids issues with control flow and RNGs
 - Recommended for all new code
@@ -160,6 +165,7 @@ class SelectiveCheckpointTransformer(nn.Module):
 ```
 
 **Trade-off tuning:**
+
 - `checkpoint_every=1`: Max memory savings (~50%), +33% compute
 - `checkpoint_every=4`: Moderate savings (~30%), +10% compute
 - `checkpoint_every=∞`: No savings, baseline speed
@@ -205,6 +211,7 @@ model_engine, optimizer, _, _ = deepspeed.initialize(
 ```
 
 **Advanced features:**
+
 - **Activation partitioning**: Shard checkpoints across GPUs
 - **CPU offloading**: Store checkpoints in CPU memory
 - **Contiguous memory**: Reduce fragmentation
@@ -230,6 +237,7 @@ $$
 This minimizes total memory while keeping recomputation reasonable.
 
 **Example: 32-layer model**
+
 - No checkpointing: $M \propto 32$
 - Checkpoint every 6 layers: $M \propto 32/6 + 6 \approx 11.3$ (65% reduction)
 - Optimal ($\sqrt{32} \approx 6$): Best memory/compute trade-off
@@ -275,12 +283,14 @@ Where $H$ = number of attention heads.
 ### 6.1 When to Use Gradient Checkpointing
 
 ✅ **Use when:**
+
 - Training large models (>1B parameters)
 - Long sequence lengths (>2048)
 - Limited GPU memory
 - Batch size is already at minimum (can't reduce further)
 
 ❌ **Don't use when:**
+
 - Small models (<100M parameters)
 - GPU memory is not a bottleneck
 - Inference (no backward pass needed)
@@ -319,6 +329,7 @@ for i, batch in enumerate(dataloader):
 ```
 
 **Memory savings stack:**
+
 - Mixed precision: -40%
 - Gradient checkpointing: -50% (activations)
 - 8-bit optimizer: -75% (optimizer states)
@@ -376,6 +387,7 @@ For extreme memory constraints, offload checkpoints to CPU:
 ```
 
 **Trade-off:**
+
 - Memory: Can handle arbitrarily large models
 - Speed: ~2-3× slower due to PCIe transfers
 

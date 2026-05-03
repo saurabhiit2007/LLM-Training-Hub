@@ -27,6 +27,7 @@ $$
 $$
 
 Where:
+
 - $\theta$ are the model parameters
 - $x_{<t}$ is the context window
 - $P_\theta$ is the predicted probability distribution produced by a Softmax layer
@@ -156,6 +157,7 @@ This is why perplexity is often described as the model’s **average branching f
 #### Important Clarification
 
 Perplexity is **not** a direct measure of:
+
 - Reasoning ability
 - Factual correctness
 - Alignment or instruction following

@@ -3,6 +3,7 @@
 ## 1. The Core Problem
 
 **Standard Data Parallelism** replicates everything on each GPU:
+
 - Model parameters (Ψ)
 - Gradients (Ψ)
 - Optimizer states (12Ψ for Adam)
@@ -10,6 +11,7 @@
 **Total per GPU**: ~16Ψ bytes
 
 For a 7B model:
+
 - 7B × 16 bytes = **112 GB** (doesn't fit on 80GB GPU!)
 
 **ZeRO's insight**: This redundancy is unnecessary. Share the memory burden.
@@ -39,11 +41,13 @@ For a 7B model:
 **What's sharded**: Only optimizer states (momentum, variance)
 
 **Each GPU stores**:
+
 - Full parameters (2Ψ)
 - Full gradients (2Ψ)
 - 1/N of optimizer states (12Ψ / N)
 
 **Communication**:
+
 - Standard All-Reduce for gradients
 - Gather optimizer state shards when needed for update
 
@@ -58,11 +62,13 @@ For a 7B model:
 **What's sharded**: Optimizer states + gradients
 
 **Each GPU stores**:
+
 - Full parameters (2Ψ)
 - 1/N of gradients (2Ψ / N)
 - 1/N of optimizer states (12Ψ / N)
 
 **Communication**:
+
 - **Reduce-Scatter** instead of All-Reduce during backward
   - Each GPU receives only its gradient shard
 - Gather optimizer shards for update (same as ZeRO-1)
@@ -78,6 +84,7 @@ For a 7B model:
 **What's sharded**: Everything (optimizer states + gradients + parameters)
 
 **Each GPU stores**:
+
 - 1/N of parameters (2Ψ / N)
 - 1/N of gradients (2Ψ / N)
 - 1/N of optimizer states (12Ψ / N)
@@ -85,11 +92,13 @@ For a 7B model:
 **Communication**:
 
 **Forward pass**:
+
 1. All-Gather to reconstruct layer parameters
 2. Compute forward
 3. Discard parameters
 
 **Backward pass**:
+
 1. All-Gather to reconstruct layer parameters (again)
 2. Compute backward
 3. Reduce-Scatter gradients to owning GPU
@@ -134,6 +143,7 @@ grad_shard = reduce_scatter(grad_params)  # Each GPU gets its shard
 ### CPU Offload
 
 **What's offloaded**:
+
 - Optimizer states (always)
 - Parameters (optional)
 - Gradients (optional)
@@ -146,6 +156,7 @@ CPU: Store optimizer states, occasionally parameters
 ```
 
 **When to use**:
+
 - Training 10B+ models on consumer GPUs (e.g., RTX 3090)
 - Limited GPU memory
 - Have sufficient CPU RAM
@@ -228,6 +239,7 @@ CPU: Store optimizer states, occasionally parameters
 
 ### Without ZeRO (Standard DP)
 Per GPU:
+
 - Parameters: 14 GB
 - Gradients: 14 GB
 - Optimizer: 84 GB
@@ -235,6 +247,7 @@ Per GPU:
 
 ### With ZeRO-1
 Per GPU:
+
 - Parameters: 14 GB
 - Gradients: 14 GB
 - Optimizer: 84/8 = 10.5 GB
@@ -242,6 +255,7 @@ Per GPU:
 
 ### With ZeRO-2
 Per GPU:
+
 - Parameters: 14 GB
 - Gradients: 14/8 = 1.75 GB
 - Optimizer: 84/8 = 10.5 GB
@@ -249,6 +263,7 @@ Per GPU:
 
 ### With ZeRO-3
 Per GPU:
+
 - Parameters: 14/8 = 1.75 GB
 - Gradients: 14/8 = 1.75 GB
 - Optimizer: 84/8 = 10.5 GB

@@ -68,6 +68,7 @@ For P pipeline stages and M micro-batches:
 - Bubble time = `(P - 1) / M`
 
 **Example**:
+
 - 4 stages, 1 micro-batch: 3/1 = **75% bubble** ❌
 - 4 stages, 8 micro-batches: 3/8 = **37.5% bubble** ⚠️
 - 4 stages, 16 micro-batches: 3/16 = **18.75% bubble** ✅
@@ -136,6 +137,7 @@ GPU 3: Stages 4, 8
 Unlike DP or TP, PP **increases activation memory**.
 
 **Why?**
+
 - Must store activations for all in-flight micro-batches
 - Each micro-batch's activations held until backward pass
 
@@ -160,10 +162,12 @@ Example: GPT-3 175B
 ## 7. Communication Pattern
 
 ### Forward Pass
+
 - Send activations from stage i to stage i+1
 - Point-to-point communication (Send/Recv)
 
 ### Backward Pass
+
 - Send gradients from stage i+1 to stage i
 - Reverse order of forward pass
 
@@ -245,6 +249,7 @@ GPU 0: micro_batch_2 → ...
 **Symptoms**: GPUs idle most of the time
 
 **Solutions**:
+
 - Increase number of micro-batches (4× pipeline stages minimum)
 - Use 1F1B schedule instead of GPipe
 - Profile bubble time
@@ -253,6 +258,7 @@ GPU 0: micro_batch_2 → ...
 **Symptoms**: OOM during training
 
 **Solutions**:
+
 - Reduce number of micro-batches (less activation memory)
 - Use activation checkpointing
 - Reduce batch size per micro-batch
@@ -261,6 +267,7 @@ GPU 0: micro_batch_2 → ...
 **Symptoms**: High time in Send/Recv
 
 **Solutions**:
+
 - Check inter-node bandwidth
 - Ensure balanced stage sizes
 - Consider hybrid TP+PP (TP within node, PP across nodes)
@@ -286,6 +293,7 @@ Most efficient setup for large models:
 ```
 
 **Benefits**:
+
 - TP reduces per-stage memory (use NVLink within node)
 - PP reduces total parameter memory (across nodes)
 - Minimizes cross-node communication (only inter-stage activations)

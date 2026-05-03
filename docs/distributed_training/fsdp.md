@@ -5,6 +5,7 @@
 **FSDP** is PyTorch's native implementation of the **ZeRO-3** algorithm.
 
 **Key difference from DeepSpeed**: Built directly into PyTorch, offering:
+
 - Better integration with PyTorch ecosystem
 - Compatibility with `torch.compile`
 - More Pythonic API
@@ -15,6 +16,7 @@
 ## 2. Core Concept
 
 Like ZeRO-3, FSDP shards **all model states** across GPUs:
+
 - Parameters (Ψ/N per GPU)
 - Gradients (Ψ/N per GPU)
 - Optimizer states (12Ψ/N per GPU)
@@ -149,6 +151,7 @@ model = FSDP(model)  # No auto_wrap_policy
 ```
 
 **Problem**: All parameters gathered at once
+
 - Peak memory = full model size (defeats purpose of FSDP!)
 - No parameter overlap
 
@@ -162,6 +165,7 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 ```
 
 **Benefit**: 
+
 - Layer 1 gathers → computes → frees
 - Layer 2 gathers → computes → frees
 - Peak memory = single layer + activations
@@ -182,12 +186,14 @@ model = FSDP(model, auto_wrap_policy=transformer_auto_wrap_policy)
 | **Optimized Kernels** | Standard PyTorch | Custom CUDA kernels |
 
 **When to use FSDP**:
+
 - PyTorch-native workflow
 - Using `torch.compile` for speedup
 - Models <20B parameters
 - Want simple Python API
 
 **When to use DeepSpeed**:
+
 - Extreme scale (100B+ parameters)
 - Need NVMe offload
 - Want maximum optimization
@@ -236,6 +242,7 @@ Node 1: [GPU 8-15] ← 8-way FSDP (same parameters, different data)
 ```
 
 **Benefits**:
+
 - Fast NVLink communication within nodes (900 GB/s)
 - Avoid slow inter-node all-gather (100 Gb/s Ethernet)
 - Scale to thousands of GPUs
@@ -261,12 +268,14 @@ model = FSDP(
 **7B model, 8 GPUs, FP16, Adam**
 
 ### Standard DP (No FSDP)
+
 - Parameters: 14 GB
 - Gradients: 14 GB
 - Optimizer: 84 GB
 - **Total per GPU: 112 GB** ❌
 
 ### FSDP (Full Sharding)
+
 - Parameters: 14/8 = 1.75 GB
 - Gradients: 14/8 = 1.75 GB
 - Optimizer: 84/8 = 10.5 GB
@@ -358,6 +367,7 @@ model = FSDP(model)
 ### Issue: OOM During Training
 
 **Solutions**:
+
 1. **Check wrapping**:
    ```python
    # Print FSDP structure
@@ -382,6 +392,7 @@ model = FSDP(model)
 ### Issue: Slow Training
 
 **Checklist**:
+
 1. **Communication overhead**: Profile with PyTorch profiler
    ```python
    with torch.profiler.profile() as prof:

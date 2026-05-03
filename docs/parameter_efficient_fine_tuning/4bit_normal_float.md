@@ -12,6 +12,7 @@ NF4 is most effective when used with **block-wise quantization** and **QLoRA fin
 ### 2. Key Concepts
 
 #### 2.1. Gaussian-Aware Quantization
+
 - Neural network weights approximately follow a **zero-mean, Gaussian distribution**.  
 - NF4’s quantization codebook is optimized for this shape - placing denser quantization levels near 0, where most weights reside.  
 - This allows NF4 to maintain precision in the region that matters most.
@@ -112,11 +113,13 @@ the LoRA adapters $A, B$ shift the activations $x \to x' = x + \Delta x$, which 
 This does not change the quantized weights themselves, but it can reduce the effective precision in the computation because the quantized bins may now be used differently than during calibration.
 
 #### 5.2. Effects
+
 - Slight reduction in representational fidelity of quantized weights  
 - Minor degradation in numerical stability or perplexity  
 - Potential loss of precision in downstream layers if activation shifts are large  
 
 #### 5.3. Mitigation Strategies
+
 - **Recalibrate** quantization scales after fine-tuning or periodically during long runs  
 - Apply **SmoothQuant** to shift scaling between weights and activations  
 - Use **Quantization-Aware Fine-Tuning (QAFT)** to make adapters robust to quantization noise  
@@ -128,6 +131,7 @@ In practice, QLoRA’s frozen-weight design and low-rank adapters keep drift min
 ---
 
 ### 6. Practical Notes
+
 * **Precision Trade-off:** `4-bit NF4` achieves near-float accuracy while reducing memory up to `4x`.
 * **Block Dependency:** `NF4` inherently requires per-block normalization (mean & std). Without it, a global scale would fail due to outliers.
 * **Compatibility:** Used in QLoRA, bitsandbytes, and PEFT libraries for efficient 4-bit fine-tuning.

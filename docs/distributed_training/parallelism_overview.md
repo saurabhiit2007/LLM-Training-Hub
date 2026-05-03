@@ -73,6 +73,7 @@ Real systems combine multiple strategies:
 ## 5. Training vs Inference Optimization
 
 ### Training (Throughput-Oriented)
+
 - Goal: **Maximum tokens/second**
 - Large batch sizes
 - Heavy parallelism with communication overlap
@@ -87,6 +88,7 @@ Real systems combine multiple strategies:
 ---
 
 ### Inference (Latency-Oriented)
+
 - Goal: **Fast response per request**
 - Small/dynamic batch sizes
 - Minimize synchronization
@@ -104,16 +106,19 @@ Real systems combine multiple strategies:
 ## 6. Memory Reduction Techniques
 
 ### Activation Checkpointing
+
 - **What**: Discard activations during forward, recompute in backward
 - **Trade-off**: Memory ↓, Compute ↑ (20-40% overhead)
 - **When**: Memory-constrained, compute is not bottleneck
 
 ### Mixed Precision Training
+
 - **What**: FP16/BF16 compute, FP32 optimizer states
 - **Benefit**: 2× memory savings, faster compute
 - **Risk**: Numerical instability (use loss scaling)
 
 ### Gradient Accumulation
+
 - **What**: Accumulate gradients over K steps before optimizer update
 - **Benefit**: Simulates larger batch size, reduces sync frequency
 - **Effective batch**: K × mini_batch_size

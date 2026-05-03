@@ -140,6 +140,7 @@ class LoRALinear(nn.Module):
 ### 9. Common Issues and Concrete Solutions
 
 #### 🧠 OOM / CUDA Out of Memory
+
 - Lower `rank (r)`.  
 - Use **QLoRA (4-bit)** or **mixed precision**.  
 - Reduce **batch size** and use **gradient accumulation**.  
@@ -148,6 +149,7 @@ class LoRALinear(nn.Module):
 ---
 
 #### ⚡ Training Instability / Divergence
+
 - Lower `learning rate` and/or `α`.  
 - Add a small **LoRA dropout**.  
 - Use **warmup** and **learning rate schedulers** (e.g., cosine or linear).  
@@ -155,12 +157,14 @@ class LoRALinear(nn.Module):
 ---
 
 #### 🪫 Underfitting (Insufficient Capacity)
+
 - Gradually increase **rank (r)**.  
 - Add adapters to more modules (e.g., **MLP layers**).  
 
 ---
 
 #### 🧩 Overfitting on Small Datasets
+
 - Reduce **epochs** and **learning rate**.  
 - Add **dropout** and **data augmentation**.  
 - Use **early stopping** and **validation checks**.  
@@ -168,12 +172,14 @@ class LoRALinear(nn.Module):
 ---
 
 #### ⚙️ Quantization Compatibility Issues
+
 - Prefer tested stacks: `bitsandbytes` + **Hugging Face** + `peft`.  
 - Validate numeric stability on a small subset before full training.  
 
 ---
 
 #### 🔗 Adapter Conflicts When Stacking
+
 - Avoid overlapping **target modules** unless intentionally merging adapters.  
 - Use explicit **adapter fusion tools** when combining multiple adapters.
 
@@ -220,6 +226,7 @@ Combines 4-bit quantization of base model with LoRA adapters.
 **Problem:** LoRA uses same learning rate for both $A$ and $B$ matrices.
 
 **Insight:** $A$ and $B$ have different roles:
+
 - $A$: Input projection (processes raw features)
 - $B$: Output projection (maps to output space)
 
@@ -247,6 +254,7 @@ optimizer = LoraPlus(
 **Problem:** LoRA modifies both magnitude and direction of weight updates together, limiting expressiveness.
 
 **DoRA** decomposes weights into:
+
 - **Magnitude:** Scalar $m$ per column
 - **Direction:** Unit vector $V$
 
@@ -257,6 +265,7 @@ $$
 Where $\Delta V$ is the LoRA update.
 
 **Results:**
+
 - ~1-3% better than standard LoRA
 - Works especially well for complex tasks
 - Adopted in **LLaMA-3 fine-tuning recommendations**

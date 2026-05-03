@@ -13,6 +13,7 @@ Supervised Fine-Tuning (SFT) transforms a **pre-trained base model** into a **us
 SFT maps broad knowledge into a consistent, controllable interface.
 
 **Conceptual shift:**
+
 - **Pre-training:** "Continue this text"
 - **SFT:** "Respond appropriately to a user instruction"
 
@@ -32,6 +33,7 @@ This transformation happens through supervised learning, not reinforcement learn
 Standard cross-entropy loss with **selective loss masking**.
 
 Given:
+
 - $x$ = prompt tokens (system + user)
 - $y$ = assistant response tokens
 
@@ -44,6 +46,7 @@ $$
 **Key:** Tokens in $x$ are excluded from the loss.
 
 **Why masking matters:**
+
 - Prevents prompt memorization
 - Ensures gradients only optimize response generation
 - Stabilizes alignment behavior
@@ -76,6 +79,7 @@ Modern SFT uses **structured role-based templates** (ChatML, LLaMA-style):
 Diversity prevents shortcut learning and maintains circuit coverage.
 
 **Semantic diversity:**
+
 - Math and symbolic reasoning
 - Code synthesis
 - Creative generation
@@ -83,6 +87,7 @@ Diversity prevents shortcut learning and maintains circuit coverage.
 - Conversational grounding
 
 **Structural diversity:**
+
 - Paraphrased intents → prevents lexical memorization
 - Variable verbosity → avoids length priors
 - Explicit vs implicit constraints → forces instruction parsing
@@ -98,6 +103,7 @@ Diversity prevents shortcut learning and maintains circuit coverage.
 ~1,000 high-quality examples can outperform tens of thousands of noisy ones.
 
 **Implications:**
+
 - Curation > scale
 - Labeler expertise is critical
 - Reduces overfitting and style bias
@@ -127,12 +133,14 @@ Diversity prevents shortcut learning and maintains circuit coverage.
 ### 4.2 Evol-Instruct as Curriculum Learning
 
 Creates implicit difficulty progression:
+
 - Base instruction
 - Added constraints
 - Multi-hop reasoning
 - Strict formatting/safety requirements
 
 **Improves:**
+
 - Instruction decomposition
 - Constraint satisfaction
 - Planning depth
@@ -142,17 +150,20 @@ Creates implicit difficulty progression:
 ### 4.3 Rejection Sampling (Best-of-N)
 
 **Process:**
+
 1. Generate $K$ responses per prompt
 2. Score using reward model or stronger reference model
 3. Select best response
 4. Fine-tune on selected outputs
 
 **Benefits:**
+
 - Sharpens instruction adherence without RL
 - Reduces variance vs RLHF
 - Biases toward high-reward modes
 
 **Risks:**
+
 - Over-optimization toward reward model
 - Reduced output diversity
 - Reward hacking with weak scorers
@@ -172,6 +183,7 @@ Creates implicit difficulty progression:
 ### 5.1 Packing vs Padding
 
 **Padding:** All sequences padded to longest length
+
 - Wastes compute on `[PAD]` tokens
 - Low token utilization
 - Simple implementation
@@ -182,11 +194,13 @@ Creates implicit difficulty progression:
 ```
 
 **Benefits:**
+
 - 2-3x throughput improvement
 - Higher gradient signal density
 - Better GPU utilization
 
 **Implementation requirements:**
+
 - Loss masking at sample boundaries
 - Attention masking to prevent cross-example leakage
 - Proper EOS handling
@@ -198,16 +212,19 @@ Creates implicit difficulty progression:
 **Core idea:** Inject controlled noise into embeddings during training.
 
 **Why it works:**
+
 - Prevents token memorization
 - Improves OOD robustness
 - Smooths loss landscape
 
 **How:**
+
 - Add Gaussian noise $\epsilon \sim \mathcal{N}(0, \sigma^2)$ to embeddings
 - Keep $\sigma$ small to preserve semantics
 - Noise shapes gradient updates continuously
 
 **Recent trends (2025-2026):**
+
 - Standard in instruction-tuning pipelines
 - Layer-wise noise schedules common
 - Combined with packing for long-context dialogues
@@ -221,11 +238,13 @@ Creates implicit difficulty progression:
 Model loses pre-training knowledge.
 
 **Causes:**
+
 - Narrow SFT domain
 - High learning rates
 - Full fine-tuning on small datasets
 
 **Mitigations:**
+
 - Mix 5-10% pre-training data
 - Use LoRA/PEFT methods
 - Lower learning rates
@@ -237,11 +256,13 @@ Model loses pre-training knowledge.
 Model learns labeler style, not task intent.
 
 **Symptoms:**
+
 - Over-politeness
 - Repetitive phrasing
 - Template-like answers
 
 **Mitigations:**
+
 - Prompt diversity
 - Early stopping
 - NEFTune noise injection
@@ -253,6 +274,7 @@ Model learns labeler style, not task intent.
 Caused by knowledge contradiction between SFT and pre-training data.
 
 **Mitigations:**
+
 - Fact-consistent SFT data
 - Retrieval-augmented generation
 - Post-SFT preference optimization
@@ -262,12 +284,14 @@ Caused by knowledge contradiction between SFT and pre-training data.
 ## 7. LoRA vs Full Fine-Tuning
 
 ### LoRA (PEFT)
+
 - ✅ Low compute cost
 - ✅ Preserves base model knowledge
 - ✅ Lower forgetting risk
 - **Use for:** Behavior/style changes
 
 ### Full Fine-Tuning
+
 - ✅ Handles large domain shifts
 - ⚠️ Higher forgetting risk
 - ⚠️ Requires careful regularization
@@ -322,6 +346,7 @@ Catastrophic forgetting occurs when the model loses pre-training knowledge while
 **Diagnosis:** The model is overfitting to labeler style rather than learning instruction semantics. This happens with insufficient prompt diversity or training too long.
 
 **Solutions:**
+
 - Increase structural diversity (paraphrasing, variable verbosity)
 - Apply early stopping based on validation metrics
 - Use NEFTune to inject noise
@@ -332,12 +357,14 @@ Catastrophic forgetting occurs when the model loses pre-training knowledge while
 **Q9: When would you choose LoRA over full fine-tuning for SFT?**
 
 **Choose LoRA when:**
+
 - Making behavioral/style changes (tone, format, refusals)
 - Working with limited compute
 - Want to preserve pre-training knowledge
 - Need to deploy multiple adapters
 
 **Choose full fine-tuning when:**
+
 - Large domain shift (e.g., medical → legal)
 - Need to inject significant new knowledge
 - Have compute budget and careful regularization strategy
@@ -347,11 +374,13 @@ Catastrophic forgetting occurs when the model loses pre-training knowledge while
 **Q10: Your SFT model hallucinates more than the base model. Why and how do you debug?**
 
 **Likely causes:**
+
 1. SFT data contradicts pre-training facts
 2. Model prioritizes format compliance over correctness
 3. Overfitting to confident but wrong labeler responses
 
 **Debug steps:**
+
 1. Sample hallucination cases and trace to training data
 2. Check for fact contradictions between SFT and base model knowledge
 3. Evaluate on factual QA benchmarks
@@ -395,11 +424,13 @@ Catastrophic forgetting occurs when the model loses pre-training knowledge while
 **Q12: How would you diagnose and fix a model that refuses benign requests after SFT?**
 
 **Diagnosis:**
+
 - Over-indexed on safety/refusal examples
 - Poor prompt diversity in refusal data
 - Model learned conservative heuristics
 
 **Fixes:**
+
 1. Audit refusal training data for false positives
 2. Add positive examples for borderline benign cases
 3. Use contrastive pairs (safe vs unsafe versions of similar prompts)
