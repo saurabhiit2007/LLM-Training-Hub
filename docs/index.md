@@ -4,8 +4,7 @@ A technical reference for training large language models — covering pre-traini
 
 Use the sidebar to explore:
 
-- **Training Phases** — pre-training objectives, mid-training domain adaptation, and supervised fine-tuning
+- **Training Phases** — pre-training objectives, mid-training domain adaptation, SFT, and reasoning/thinking model training
 - **Distributed Training** — data parallelism, tensor/pipeline parallelism, ZeRO/FSDP
 - **PEFT** — LoRA, QLoRA, adapters, and the bitsandbytes library
 - **Optimization** — mixed precision, gradient checkpointing, memory-efficient optimizers, quantization
-- **Training Pipeline** — LLM foundations and reasoning/thinking model training

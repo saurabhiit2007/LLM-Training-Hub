@@ -6,71 +6,100 @@ Pre-training defines the raw capability ceiling of a Large Language Model. The a
 
 ---
 
-## 2. Training Objectives and Scaling Laws
+## 2. Training Objective
 
-### Self-Supervised Learning
+### Autoregressive Language Modeling
 
-LLMs are trained using self-supervision, where labels are derived directly from the data. Given a sequence of tokens x = (x₁, x₂, ..., xₜ), the model learns to predict the next token $P(xₜ | x₁, ..., xₜ₋₁)$
+Most LLMs use an **autoregressive (causal language modeling)** objective. The joint probability of a token sequence is factorized as a product of conditional probabilities:
 
-This approach requires no human annotation, scales naturally with data size, and supports emergent behaviors like reasoning and in-context learning. Despite its simplicity, this objective implicitly captures syntax, semantics, world knowledge, and procedural patterns.
+$$P(x_1, \dots, x_T) = \prod_{t=1}^{T} P(x_t \mid x_{<t})$$
+
+This formulation requires no human annotation, scales naturally with data size, and implicitly captures syntax, semantics, world knowledge, and procedural reasoning from text alone.
 
 ---
 
-### Negative Log Likelihood (NLL) Objective
+### Negative Log-Likelihood Loss
 
-Training minimizes the Negative Log Likelihood, which is equivalent to minimizing cross-entropy. The loss function strongly penalizes confident incorrect predictions and encourages model calibration.
+Training minimizes the **Negative Log-Likelihood (NLL)**, equivalent to cross-entropy:
+
+$$\mathcal{L}(\theta) = -\mathbb{E}_{x \sim D} \sum_{t=1}^{T} \log P_\theta(x_t \mid x_{<t})$$
+
+Minimizing NLL is equivalent to minimizing the **KL divergence** between the data distribution $P_{data}$ and model distribution $P_\theta$:
+
+$$H(P_{data}, P_\theta) = H(P_{data}) + D_{KL}(P_{data} \| P_\theta)$$
+
+Since $H(P_{data})$ is fixed, training directly minimizes the divergence — connecting LLM training to information theory and lossless compression.
 
 **Critical limitation:** NLL optimizes average token prediction accuracy, not task success, reasoning correctness, or truthfulness. This is why post-training alignment is necessary.
 
 ---
 
-### Chinchilla Scaling Laws: Training Optimality
+### Why Next-Token Prediction Works
 
-The Chinchilla results (Hoffmann et al.) demonstrated that many prior models were over-parameterized and under-trained. The core insight: for a fixed compute budget, model performance is maximized when model size and training tokens are scaled proportionally (roughly 20 tokens per parameter).
+To compress diverse text well, the model must internalize structure across domains:
 
-This shifted industry practice from "bigger models" to "compute-optimal training" with massive, high-quality corpora.
+- **Compression implies abstraction:** Predicting well across syntax, semantics, facts, and procedures requires reusable internal representations that later appear as reasoning or coding ability.
+- **Softmax competition:** Increasing probability for the correct token necessarily decreases it for all alternatives, encouraging fine-grained distinctions.
+
+---
+
+### Teacher Forcing and Exposure Bias
+
+During training the model is conditioned on **ground-truth previous tokens**, not its own predictions. This enables full parallelization of the loss computation across all positions in a single forward pass with stable gradients.
+
+**Exposure bias:** At inference, the model must condition on its own (potentially wrong) predictions. Errors compound forward. This train-inference mismatch is a key motivation for post-training techniques like SFT and RLHF.
+
+---
+
+### Perplexity
+
+$$\text{PPL} = \exp(\mathcal{L})$$
+
+Perplexity converts average NLL into an interpretable scale: the model's **effective branching factor** — roughly how many tokens it is uniformly choosing between at each step. PPL = 10 means ~10 equally plausible candidates.
+
+Perplexity measures distributional fit to the training data, not reasoning ability, factual correctness, or instruction following. Downstream task performance requires separate evaluation.
+
+---
+
+## 3. Scaling Laws
+
+### Kaplan and Chinchilla
+
+Early results (Kaplan et al., 2020) showed loss scales as a power-law in parameter count, with data treated as effectively unlimited. Later work (Hoffmann et al., 2022 — "Chinchilla") showed most prior models were under-trained relative to their size.
+
+**Chinchilla finding:** For a fixed compute budget, roughly **20 training tokens per parameter** is compute-optimal. Smaller models trained on more data can outperform larger, under-trained ones.
+
+This shifted practice from "bigger models" toward compute-optimal training on massive, high-quality corpora.
 
 ---
 
 ### Inference-Optimal Scaling: The LLaMA Paradigm
 
-#### Why Chinchilla Isn't the Full Story
+Chinchilla optimizes training compute. But in production, models are trained once and served millions of times — inference cost depends on model size, not training tokens.
 
-Chinchilla scaling laws optimize for training compute efficiency. However, they ignore a critical constraint: most LLM costs are paid after training, during inference.
+| | Chinchilla-Optimal | Inference-Optimal |
+|---|---|---|
+| **Model size** | Large | Small |
+| **Training tokens** | ~20× parameters | 100×+ parameters |
+| **Inference cost** | High | Low |
+| **Use case** | Research | Production |
 
-In production, models are trained once but served millions of times. This fundamentally changes the optimization objective.
-
-#### Training Cost vs Inference Cost
-
-| Cost Type | Scales With | Frequency |
-|-----------|-------------|-----------|
-| Training | Parameters × Tokens | Paid once |
-| Inference | Active parameters | Per request |
-
-**Key insight:** Inference cost depends on model size, not training tokens. Chinchilla-optimal models may be cheap to train but expensive to serve.
-
-#### Chinchilla-Optimal vs Inference-Optimal
-
-| Chinchilla-Optimal | Inference-Optimal |
-|-------------------|-------------------|
-| Large models, fewer tokens | Small models, massive tokens |
-| ~20 tokens per parameter | 100+ tokens per parameter |
-| High inference cost | Low inference cost |
-| Research-optimal | Production-optimal |
-
-Modern open models like LLaMA 3 follow inference-optimal scaling, training smaller models on vastly more data than Chinchilla recommends. This approach maximizes quality for a fixed deployment footprint.
-
-#### Why Over-Training Works
-
-Smaller models are capacity-limited, not data-limited. By exposing them to vastly more data, representations become more robust, rare patterns are reinforced, and generalization improves significantly.
-
-Even though labeled as "over-training" by Chinchilla standards, additional data continues to reduce error, improve reasoning, and make smaller models competitive with larger alternatives.
+Modern open models (LLaMA 3, Mistral) follow inference-optimal scaling: smaller models trained far beyond Chinchilla's recommendation. "Over-training" a smaller model makes it competitive with larger alternatives at a fraction of serving cost.
 
 ---
 
-## 3. Data Pipeline and Quality
+### Where Scaling Breaks
 
-Data quality often matters more than model size. The principle "garbage in, garbage out" applies strictly to LLMs. A well-curated dataset can outperform a larger, noisier one.
+- **Data scarcity:** High-quality human text is finite; synthetic data risks diversity collapse and self-training loops can cause model collapse.
+- **Capability saturation:** Reasoning and planning emerge discontinuously — small loss improvements can hide large behavioral differences.
+- **Inference cost:** Larger models increase memory, latency, and cost, motivating efficient architectures (MoE, GQA) rather than raw scale.
+- **Test-time scaling:** Recent systems (o1, DeepSeek-R1) scale inference compute rather than parameters, shifting the optimization axis from training to inference. See [Reasoning & Thinking Models](../training_techniques/thinking_llms.md).
+
+---
+
+## 4. Data Pipeline and Quality
+
+Data quality often matters more than model size. A well-curated dataset can outperform a larger, noisier one.
 
 ### Raw Data Sources
 
@@ -109,9 +138,9 @@ Duplicates cause inflated frequency biases, artificially low validation loss, an
 
 ### Benchmark Contamination
 
-Leakage sources include public benchmark solutions, GitHub repositories with answers, and overlapping evaluation sets. This leads to inflated scores and misleading claims about capabilities.
+Leakage sources include public benchmark solutions, GitHub repositories with answers, and overlapping evaluation sets, leading to inflated scores and misleading capability claims.
 
-Mitigation requires proactive filtering using n-gram matching against test sets and post-hoc auditing of model outputs.
+Mitigation requires proactive filtering using n-gram matching against test sets and post-hoc memorization audits.
 
 ---
 
@@ -121,19 +150,17 @@ How data sources are combined determines model characteristics:
 
 - **Static mixing:** Pre-assigned weights (e.g., 60% web, 20% code, 10% math)
 - **Dynamic selection (DoReMi):** Continuously adjusts sampling weights using proxy model feedback, prioritizing data that improves validation loss
-- **Annealing:** Curriculum learning where high-quality data (textbooks, math) is upsampled in final 5-10% of training to polish skills
+- **Annealing:** Curriculum learning where high-quality data (textbooks, math) is upsampled in the final 5–10% of training to polish skills
 
 ---
 
 ### Synthetic Data: Opportunities and Risks
 
-Synthetic data fills gaps and emphasizes rare skills. However, uncontrolled use risks model collapse—reinforcement of errors leading to distribution narrowing and reduced creativity.
-
-Synthetic feedback loops can permanently damage model quality if not carefully managed.
+Synthetic data fills gaps and emphasizes rare skills. However, uncontrolled use risks model collapse — reinforcement of errors leading to distribution narrowing and reduced creativity. Synthetic feedback loops can permanently damage model quality if not carefully managed.
 
 ---
 
-## 4. Architecture Choices
+## 5. Architecture Choices
 
 ### Decoder-Only Transformers
 
@@ -194,64 +221,13 @@ Increasing context length impacts memory quadratically and causes training stabi
 
 ---
 
-## 5. Key Takeaways
+## 6. Key Takeaways
 
 1. **Scaling laws are objective-dependent:** Chinchilla optimizes training compute; inference-optimal scaling optimizes deployment cost
-2. **Data quality trumps quantity:** Clean, diverse, deduplicated data outperforms larger noisy datasets
-3. **Modern architectures diverge from vanilla Transformers:** RMSNorm, Pre-Norm, SwiGLU, RoPE are now standard
-4. **Tokenization matters:** Byte-fallback and digit splitting significantly impact performance
-5. **Pre-training decisions are hard to fix:** Most limitations observed later trace back to architecture, data, or scaling choices made here
-
----
-
-### Technical Deep Dives
-
-**Q5: How does Mixture of Experts (MoE) reduce inference cost while maintaining capacity?**
-
-MoE splits the FFN layer into multiple expert networks. A learned router selects top-k experts (typically k=2) for each token, activating only a fraction of total parameters. For example, a model might have 8×7B total parameters but only activate 2×7B=14B per token. This maintains high capacity (many experts) while keeping compute proportional to active parameters.
-
----
-
-**Q6: What is the difference between Multi-Query Attention (MQA) and Grouped-Query Attention (GQA)?**
-
-MQA uses a single shared KV head for all query heads, maximizing KV cache reduction but potentially limiting expressiveness. GQA is a compromise where groups of query heads share a KV head (e.g., 8 query heads might share 2 KV heads). GQA balances memory efficiency with model quality and is the standard in models like LLaMA.
-
----
-
-**Q7: Why do modern tokenizers split numbers digit-by-digit instead of keeping them as single tokens?**
-
-Digit splitting (2025 → 2, 0, 2, 5) dramatically improves arithmetic reasoning because it allows the model to learn place-value operations compositionally. When numbers are single tokens, the model must memorize arithmetic facts for every possible number. With digit splitting, it learns generalizable operations on individual digits.
-
----
-
-**Q8: What is data annealing and why is it effective?**
-
-Data annealing is a form of curriculum learning where high-quality data (textbooks, mathematical proofs, structured reasoning) is heavily upsampled in the final 5-10% of training. This "polishes" the model by reinforcing desirable patterns after it has learned general capabilities from diverse data. It's effective because the model can leverage its broad knowledge to better absorb refined, high-signal data.
-
----
-
-### System Design & Trade-offs
-
-**Q9: You have a fixed compute budget. How do you decide between training a 70B parameter model for 1 epoch vs a 7B parameter model for 10 epochs?**
-
-This depends on your deployment constraints. If you need low-latency inference and can't afford to serve 70B parameters, choose the 7B model trained longer (inference-optimal). If training is one-time and you can afford the inference cost, the 70B model may achieve better final performance (Chinchilla-optimal). Modern production systems heavily favor smaller models trained longer due to recurring inference costs dominating total expenditure.
-
----
-
-**Q10: How would you detect and mitigate benchmark contamination in your pre-training dataset?**
-
-Proactive approach: Use n-gram overlap detection (e.g., 13-gram matching) against all evaluation benchmarks before training, and filter out documents with high overlap. Reactive approach: After training, perform memorization audits by checking if the model can complete exact benchmark sequences. Additionally, use diverse private evaluation sets that are never released publicly to get uncontaminated performance estimates.
-
----
-
-**Q11: Your model's validation loss stopped decreasing but training loss continues to drop. What's happening and what should you do?**
-
-This is classic overfitting—the model is memorizing training data instead of learning generalizable patterns. Solutions: increase data diversity, add stronger deduplication, reduce model capacity, implement early stopping, or add regularization. In modern LLM pre-training with massive datasets, this often indicates data quality issues (too many duplicates, narrow domain coverage) rather than insufficient model size.
-
----
-
-**Q12: Why do we use causal (autoregressive) masking instead of bidirectional attention like BERT during pre-training?**
-
-Causal masking aligns with the natural generation task: predicting the next token given prior context. This creates a model that can generate coherent text. Bidirectional models like BERT use masked language modeling (predicting masked tokens with full context) which excels at understanding but cannot generate autoregressively. For general-purpose LLMs that need both understanding and generation, causal masking is preferred. BERT-style models require separate decoder components for generation tasks.
+2. **NLL has a ceiling:** The training objective optimizes token prediction, not task success — post-training alignment is always required
+3. **Data quality trumps quantity:** Clean, diverse, deduplicated data outperforms larger noisy datasets
+4. **Modern architectures diverge from vanilla Transformers:** RMSNorm, Pre-Norm, SwiGLU, RoPE are now standard
+5. **Tokenization matters:** Byte-fallback and digit splitting significantly impact performance
+6. **Pre-training decisions are hard to fix:** Most limitations observed later trace back to architecture, data, or scaling choices made here
 
 ---
