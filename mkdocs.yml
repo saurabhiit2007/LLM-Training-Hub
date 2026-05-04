@@ -34,7 +34,6 @@ nav:
       - Pre-Training: ./training_phases/pre_training.md
       - Mid-Training: ./training_phases/mid_training.md
       - Post-Training (SFT): ./training_phases/post_training.md
-      - Reasoning & Thinking Models: ./training_techniques/thinking_llms.md
   - Distributed Training:
       - Parallelism Overview: ./distributed_training/parallelism_overview.md
       - Data Parallelism: ./distributed_training/data_parallelism.md

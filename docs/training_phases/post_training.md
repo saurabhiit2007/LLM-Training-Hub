@@ -170,6 +170,14 @@ Creates implicit difficulty progression:
 
 ---
 
+### 4.4 Reasoning Distillation
+
+A variant specific to reasoning models: run a large System 2 model (o1, DeepSeek-R1) with high inference compute, collect its verified reasoning traces, then SFT a smaller model on those traces. This has enabled 7B–14B models to exhibit structured step-by-step reasoning previously limited to frontier-scale systems.
+
+Unlike standard rejection sampling (which samples from the model being trained), reasoning distillation uses a stronger teacher — the small model learns reasoning patterns it could not discover independently.
+
+---
+
 ## 5. Training Optimizations
 
 | Technique | Purpose | Explanation |
@@ -322,5 +330,13 @@ Caused by knowledge contradiction between SFT and pre-training data.
 5. **Balance is critical** – avoid forgetting pre-training knowledge while learning new behavior
 6. **Synthetic data is powerful** – but requires careful quality control and diversity
 7. **Monitor for alignment taxes** – hallucinations, over-refusal, and repetitive style
+
+---
+
+## 11. RL Post-Training and Reasoning Models
+
+SFT is one form of post-training. RL-based post-training — using RLHF, PPO, DPO, or GRPO with outcome or process reward models — is what activates inference-time reasoning strategies in models like o1 and DeepSeek-R1. These techniques are covered in the [LLM Alignment & Reasoning](https://github.com/saurabhiit2007/LLM-Alignment-Reasoning) repo.
+
+The reasoning distillation approach (§4.4) is the bridge back: RL-trained reasoning traces from a large model become SFT training data for smaller models.
 
 ---
