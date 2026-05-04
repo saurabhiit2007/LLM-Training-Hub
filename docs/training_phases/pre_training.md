@@ -93,7 +93,7 @@ Modern open models (LLaMA 3, Mistral) follow inference-optimal scaling: smaller 
 - **Data scarcity:** High-quality human text is finite; synthetic data risks diversity collapse and self-training loops can cause model collapse.
 - **Capability saturation:** Reasoning and planning emerge discontinuously — small loss improvements can hide large behavioral differences.
 - **Inference cost:** Larger models increase memory, latency, and cost, motivating efficient architectures (MoE, GQA) rather than raw scale.
-- **Test-time scaling:** Recent systems (o1, DeepSeek-R1) scale inference compute rather than parameters, shifting the optimization axis from training to inference. See [Reasoning & Thinking Models](../training_techniques/thinking_llms.md).
+- **Test-time scaling:** Recent systems (o1, DeepSeek-R1) scale inference compute rather than parameters, shifting the optimization axis from training to inference. See the LLM Alignment & Reasoning repo.
 
 ---
 

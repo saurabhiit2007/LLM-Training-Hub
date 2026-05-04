@@ -6,7 +6,7 @@
 
 **QLoRA** (Quantized Low-Rank Adaptation) is a parameter-efficient fine-tuning (PEFT) technique designed to adapt large pre-trained LLMs to downstream tasks without modifying all the model weights.
 
-It achieves this by combining **4-bit quantization** (using [NormalFloat-4, or NF4](../optimization/4bit_normal_float.md)) with [Low-Rank Adaptation (LoRA)](./lora.md), enabling fine-tuning of massive models (e.g., 65B parameters) on a single 48 GB GPU - with performance close to full fine-tuning.
+It achieves this by combining **4-bit quantization** (using [NormalFloat-4, or NF4](./4bit_normal_float.md)) with [Low-Rank Adaptation (LoRA)](./lora.md), enabling fine-tuning of massive models (e.g., 65B parameters) on a single 48 GB GPU - with performance close to full fine-tuning.
 
 ---
 
@@ -28,7 +28,7 @@ Fine-tuning large LLMs poses major computational and memory challenges. QLoRA ad
 The base model’s parameters are quantized into **4-bit NormalFloat (NF4)** values and kept frozen during fine-tuning.
 NF4 uses a **normal-distribution-aware quantization** scheme that minimizes the quantization error between original FP16 weights and 4-bit representations.
 
-> 🔗 *Detailed explanation:* [NF4 Quantization: Principles and Implementation](../optimization/4bit_normal_float.md)
+> 🔗 *Detailed explanation:* [NF4 Quantization: Principles and Implementation](./4bit_normal_float.md)
 
 In addition, QLoRA leverages **block quantization** and **double quantization** to optimize memory even further:
 
